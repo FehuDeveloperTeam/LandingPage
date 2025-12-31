@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
+
     
 
 if os.environ.get('DATABASE_URL'):
@@ -93,7 +93,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-}
+
 
 
 # Password validation
