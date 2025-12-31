@@ -5,4 +5,4 @@ nixPkgs = ["python311"]
 cmds = ["pip install -r requirements.txt"]
 
 [start]
-cmd = "python manage.py migrate && gunicorn core.wsgi"
+cmd = "python manage.py migrate && gunicorn backend.wsgi"
