@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-@import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -13,6 +14,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: left;
   line-height: 1.3;
 }
+
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -27,4 +29,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .rotate-y-180 {
   transform: rotateY(180deg);
+}
+
+.dark {
+  color-scheme: dark;
 }
