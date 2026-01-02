@@ -51,6 +51,9 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+import resend
+import os
+
 def enviar_correos_async(contacto):
     """Envía correos usando Resend"""
     resend.api_key = os.environ.get('RESEND_API_KEY', '')
@@ -62,7 +65,7 @@ def enviar_correos_async(contacto):
     # Correo al cliente
     try:
         resend.Emails.send({
-            "from": "Fehu Developers <onboarding@resend.dev>",
+            "from": "Fehu Developers <contacto@fehudevelopers.cl>",
             "to": [contacto.correo],
             "subject": f"Hemos recibido tu solicitud - {contacto.ticket}",
             "text": f"""
@@ -84,6 +87,28 @@ Fehu Developers
         print(f"Correo enviado al cliente: {contacto.correo}")
     except Exception as e:
         print(f"ERROR enviando correo al cliente: {e}")
+
+    # Correo al administrador
+    try:
+        resend.Emails.send({
+            "from": "Fehu Developers <contacto@fehudevelopers.cl>",
+            "to": ["fehu.developers@gmail.com"],
+            "subject": f"Nueva solicitud de contacto - {contacto.ticket}",
+            "text": f"""
+Nueva solicitud de contacto recibida:
+
+Ticket: {contacto.ticket}
+Nombre: {contacto.nombre} {contacto.apellido}
+Teléfono: {contacto.telefono}
+Correo: {contacto.correo}
+
+Mensaje:
+{contacto.mensaje}
+            """
+        })
+        print(f"Correo enviado al admin")
+    except Exception as e:
+        print(f"ERROR enviando correo al admin: {e}")
 
     # Correo al administrador
     try:
