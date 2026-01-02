@@ -51,9 +51,13 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
 
 def enviar_correos_async(contacto):
     """Envía correos en un hilo separado para no bloquear la respuesta"""
+    print(f"Iniciando envío de correos...")
+    print(f"EMAIL_HOST_USER: {settings.EMAIL_HOST_USER}")
+    print(f"EMAIL_HOST_PASSWORD configurado: {'Sí' if settings.EMAIL_HOST_PASSWORD else 'No'}")
+    
     # Correo al cliente
     try:
-        send_mail(
+        result = send_mail(
             subject=f'Hemos recibido tu solicitud - {contacto.ticket}',
             message=f'''
 Hola {contacto.nombre},
@@ -72,15 +76,15 @@ Fehu Developers
             ''',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[contacto.correo],
-            fail_silently=True,
+            fail_silently=False,  # Cambiado a False para ver errores
         )
-        print(f"Correo enviado al cliente: {contacto.correo}")
+        print(f"Correo enviado al cliente: {contacto.correo}, resultado: {result}")
     except Exception as e:
-        print(f"Error enviando correo al cliente: {e}")
+        print(f"ERROR enviando correo al cliente: {type(e).__name__}: {e}")
 
     # Correo al administrador
     try:
-        send_mail(
+        result = send_mail(
             subject=f'Nueva solicitud de contacto - {contacto.ticket}',
             message=f'''
 Nueva solicitud de contacto recibida:
@@ -97,12 +101,11 @@ Fecha: {contacto.fecha}
             ''',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=['fehu.developers@gmail.com'],
-            fail_silently=True,
+            fail_silently=False,  # Cambiado a False para ver errores
         )
-        print(f"Correo enviado al admin")
+        print(f"Correo enviado al admin, resultado: {result}")
     except Exception as e:
-        print(f"Error enviando correo al admin: {e}")
-
+        print(f"ERROR enviando correo al admin: {type(e).__name__}: {e}")
 
 class ContactoViewSet(viewsets.ModelViewSet):
     queryset = Contacto.objects.all()
