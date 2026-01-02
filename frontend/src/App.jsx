@@ -36,10 +36,10 @@ function App() {
   return (
     <CartProvider>
       <BrowserRouter>
-        <div className="h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
           <Navbar />
-          <main className="flex-grow overflow-y-auto">
-            <div className="max-w-6xl mx-auto px-8 py-12">
+          <main className="flex-grow">
+            <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12">
               <AnimatedRoutes />
             </div>
           </main>
