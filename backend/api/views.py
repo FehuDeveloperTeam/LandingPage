@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Proyecto, Tecnologia, Producto, Contacto
 from .serializers import ProyectoSerializer, TecnologiaSerializer, ProductoSerializer, ContactoSerializer
+import threading
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Proyecto.objects.all()
@@ -47,20 +48,14 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
         
         return queryset
 
-class ContactoViewSet(viewsets.ModelViewSet):
-    queryset = Contacto.objects.all()
-    serializer_class = ContactoSerializer
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        contacto = serializer.save()
-
-        # Correo al cliente
-        try:
-            send_mail(
-                subject=f'Hemos recibido tu solicitud - {contacto.ticket}',
-                message=f'''
+def enviar_correos_async(contacto):
+    """Envía correos en un hilo separado para no bloquear la respuesta"""
+    # Correo al cliente
+    try:
+        send_mail(
+            subject=f'Hemos recibido tu solicitud - {contacto.ticket}',
+            message=f'''
 Hola {contacto.nombre},
 
 Gracias por contactarnos. Hemos recibido tu solicitud correctamente.
@@ -74,19 +69,20 @@ Nos pondremos en contacto contigo a la brevedad.
 
 Saludos,
 Fehu Developers
-                ''',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[contacto.correo],
-                fail_silently=True,
-            )
-        except Exception as e:
-            print(f"Error enviando correo al cliente: {e}")
+            ''',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[contacto.correo],
+            fail_silently=True,
+        )
+        print(f"Correo enviado al cliente: {contacto.correo}")
+    except Exception as e:
+        print(f"Error enviando correo al cliente: {e}")
 
-        # Correo al administrador
-        try:
-            send_mail(
-                subject=f'Nueva solicitud de contacto - {contacto.ticket}',
-                message=f'''
+    # Correo al administrador
+    try:
+        send_mail(
+            subject=f'Nueva solicitud de contacto - {contacto.ticket}',
+            message=f'''
 Nueva solicitud de contacto recibida:
 
 Ticket: {contacto.ticket}
@@ -98,12 +94,27 @@ Mensaje:
 {contacto.mensaje}
 
 Fecha: {contacto.fecha}
-                ''',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=['fehu.developers@gmail.com'],
-                fail_silently=True,
-            )
-        except Exception as e:
-            print(f"Error enviando correo al admin: {e}")
+            ''',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['fehu.developers@gmail.com'],
+            fail_silently=True,
+        )
+        print(f"Correo enviado al admin")
+    except Exception as e:
+        print(f"Error enviando correo al admin: {e}")
+
+
+class ContactoViewSet(viewsets.ModelViewSet):
+    queryset = Contacto.objects.all()
+    serializer_class = ContactoSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        contacto = serializer.save()
+
+        # Enviar correos en segundo plano
+        thread = threading.Thread(target=enviar_correos_async, args=(contacto,))
+        thread.start()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
