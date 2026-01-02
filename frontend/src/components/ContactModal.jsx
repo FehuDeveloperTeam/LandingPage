@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { enviarContacto } from '../services/api'
 
 function ContactModal({ isOpen, onClose, servicioPreseleccionado = null }) {
   const [formData, setFormData] = useState({
@@ -35,22 +36,11 @@ function ContactModal({ isOpen, onClose, servicioPreseleccionado = null }) {
     setTicket(nuevoTicket)
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/contacto/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          ticket: nuevoTicket
-        })
+      await enviarContacto({
+        ...formData,
+        ticket: nuevoTicket
       })
-
-      if (response.ok) {
-        setEnviado(true)
-      } else {
-        alert('Error al enviar. Intenta nuevamente.')
-      }
+      setEnviado(true)
     } catch (error) {
       console.error('Error:', error)
       alert('Error de conexión. Intenta nuevamente.')
@@ -87,7 +77,6 @@ function ContactModal({ isOpen, onClose, servicioPreseleccionado = null }) {
         </button>
 
         {enviado ? (
-          /* Mensaje de éxito */
           <div className="text-center py-8">
             <div className="text-6xl mb-4">✅</div>
             <h3 className="text-2xl font-bold mb-2">¡Solicitud recibida!</h3>
@@ -108,7 +97,6 @@ function ContactModal({ isOpen, onClose, servicioPreseleccionado = null }) {
             </button>
           </div>
         ) : (
-          /* Formulario */
           <>
             <h3 className="text-2xl font-bold mb-2">Contacto</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
