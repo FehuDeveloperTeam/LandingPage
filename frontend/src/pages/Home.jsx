@@ -11,7 +11,7 @@ function ProjectCard({ proyecto }) {
   const imagenes = {
     'SimpleCuenta': '/images/proyectos/SimpleCuenta.png',
     'ConexionDiaria': '/images/proyectos/ConexionDiaria.png',
-    'HHM Neonatología': '/images/proyectos/Hospital.png',
+    'HHM Neonatologia': '/images/proyectos/Hospital.png',
   }
 
   const imagen = imagenes[proyecto.nombre]
