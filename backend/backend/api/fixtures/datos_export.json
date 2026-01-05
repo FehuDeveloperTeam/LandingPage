@@ -1,0 +1,2513 @@
+[
+{
+  "model": "api.proyecto",
+  "pk": 1,
+  "fields": {
+    "nombre": "SimpleCuenta",
+    "descripcion": "App móvil dirigida al consumo personal y del hogar, con opciones de ahorro y analisis con IA para lograr los objetivos a corto, mediano y largo plazo.\r\n\r\nEstado de producción.",
+    "tecnologias": [
+      "TypeScript",
+      "Node.js",
+      "Expo",
+      "Render",
+      "SQL",
+      "BootStrap"
+    ],
+    "orden": 0
+  }
+},
+{
+  "model": "api.proyecto",
+  "pk": 2,
+  "fields": {
+    "nombre": "ConexionDiaria",
+    "descripcion": "ConexionDiaria es la app que reúne TODO lo que una pareja necesita en un solo lugar privado: chat sin distracciones, álbum de recuerdos, tareas compartidas, lista de deseos para regalos, y hasta un 'extrañómetro' para mandar corazones cuando extrañas a tu pareja. Es como tener un WhatsApp, Google Calendar, Trello y álbum de fotos, pero diseñado SOLO para ustedes dos. Sin publicidad, sin grupos familiares, sin spam. Solo su espacio para crecer juntos día a día.",
+    "tecnologias": [
+      "TypeScript",
+      "Expo",
+      "FireBase"
+    ],
+    "orden": 1
+  }
+},
+{
+  "model": "api.proyecto",
+  "pk": 3,
+  "fields": {
+    "nombre": "HHM Neonatología",
+    "descripcion": "App web diseñada para el departamento de Neonatología del Hospital Herminda Martin de Chillán. Soluciona los problemas de ingreso de datos y generación de informes.\r\n\r\nAtención a todos los detalles de UX/UI",
+    "tecnologias": [
+      "Danjo",
+      "TypeScript",
+      "SQL",
+      "React+Vite"
+    ],
+    "orden": 2
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 1,
+  "fields": {
+    "nombre": "React",
+    "orden": 0
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 2,
+  "fields": {
+    "nombre": "React native",
+    "orden": 1
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 3,
+  "fields": {
+    "nombre": "React+Vite",
+    "orden": 2
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 4,
+  "fields": {
+    "nombre": "TypeSript",
+    "orden": 3
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 5,
+  "fields": {
+    "nombre": "JAVA",
+    "orden": 4
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 6,
+  "fields": {
+    "nombre": "JavaScript",
+    "orden": 5
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 7,
+  "fields": {
+    "nombre": "Firebase",
+    "orden": 6
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 8,
+  "fields": {
+    "nombre": "SQL",
+    "orden": 7
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 9,
+  "fields": {
+    "nombre": "NoSQL",
+    "orden": 8
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 10,
+  "fields": {
+    "nombre": "Node.js",
+    "orden": 9
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 11,
+  "fields": {
+    "nombre": "Python",
+    "orden": 10
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 12,
+  "fields": {
+    "nombre": "Django",
+    "orden": 11
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 13,
+  "fields": {
+    "nombre": "Kotlin",
+    "orden": 18
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 14,
+  "fields": {
+    "nombre": "C#",
+    "orden": 12
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 15,
+  "fields": {
+    "nombre": "Vuforia",
+    "orden": 13
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 16,
+  "fields": {
+    "nombre": "Unity3D",
+    "orden": 14
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 17,
+  "fields": {
+    "nombre": "Unity2D",
+    "orden": 15
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 18,
+  "fields": {
+    "nombre": "IA Prompts",
+    "orden": 16
+  }
+},
+{
+  "model": "api.tecnologia",
+  "pk": 19,
+  "fields": {
+    "nombre": "Android Studio",
+    "orden": 17
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 1,
+  "fields": {
+    "id_producto": "ACC000001",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD81015",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "CHEVROLET",
+    "modelo": "SAIL",
+    "anio_desde": 2018,
+    "anio_hasta": 2022,
+    "version": "LTZ",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "22721",
+    "cantidad": 18
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 2,
+  "fields": {
+    "id_producto": "REP000001",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD26313",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "TRASERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2017,
+    "anio_hasta": 2021,
+    "version": "ADVENTURE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "25607",
+    "cantidad": 24
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 3,
+  "fields": {
+    "id_producto": "REP000002",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD31729",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "NISSAN",
+    "modelo": "QASHQAI",
+    "anio_desde": 2016,
+    "anio_hasta": 2022,
+    "version": "EXCLUSIVE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "76402",
+    "cantidad": 44
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 4,
+  "fields": {
+    "id_producto": "REP000003",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD15276",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2013,
+    "anio_hasta": 2015,
+    "version": "GLI",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "41197",
+    "cantidad": 26
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 5,
+  "fields": {
+    "id_producto": "REP000004",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD40585",
+    "descripcion": "RADIADOR",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2019,
+    "anio_hasta": 2021,
+    "version": "SEDAN",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "60077",
+    "cantidad": 42
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 6,
+  "fields": {
+    "id_producto": "ACC000002",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD38313",
+    "descripcion": "MOLDURA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "KIA",
+    "modelo": "CERATO",
+    "anio_desde": 2010,
+    "anio_hasta": 2016,
+    "version": "EX",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "11157",
+    "cantidad": 5
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 7,
+  "fields": {
+    "id_producto": "ACC000003",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD19621",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "SUPERIOR",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2018,
+    "anio_hasta": 2022,
+    "version": "SPORT",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "21137",
+    "cantidad": 41
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 8,
+  "fields": {
+    "id_producto": "REP000005",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD96162",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2012,
+    "anio_hasta": 2015,
+    "version": "SEG",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "100816",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 9,
+  "fields": {
+    "id_producto": "REP000006",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD32598",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2012,
+    "anio_hasta": 2014,
+    "version": "LE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "72943",
+    "cantidad": 19
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 10,
+  "fields": {
+    "id_producto": "ACC000004",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD16633",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "INFERIOR",
+    "lado": "",
+    "marca": "MITSUBISHI",
+    "modelo": "L200",
+    "anio_desde": 2010,
+    "anio_hasta": 2012,
+    "version": "KATANA",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "22715",
+    "cantidad": 45
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 11,
+  "fields": {
+    "id_producto": "ACC000005",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD76802",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "INTERIOR",
+    "lado": "LH",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2014,
+    "anio_hasta": 2020,
+    "version": "GT",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "4221",
+    "cantidad": 5
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 12,
+  "fields": {
+    "id_producto": "REP000007",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD25197",
+    "descripcion": "RADIADOR",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "HYUNDAI",
+    "modelo": "TUCSON",
+    "anio_desde": 2019,
+    "anio_hasta": 2024,
+    "version": "GL",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "69149",
+    "cantidad": 32
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 13,
+  "fields": {
+    "id_producto": "ACC000006",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD56704",
+    "descripcion": "TAPABARROS",
+    "posicion": "DELANTERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "HYUNDAI",
+    "modelo": "TUCSON",
+    "anio_desde": 2020,
+    "anio_hasta": 2023,
+    "version": "LIMITED",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "6644",
+    "cantidad": 27
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 14,
+  "fields": {
+    "id_producto": "ACC000007",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD78081",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "SUPERIOR",
+    "lado": "",
+    "marca": "KIA",
+    "modelo": "CERATO",
+    "anio_desde": 2010,
+    "anio_hasta": 2015,
+    "version": "LX",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "15231",
+    "cantidad": 30
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 15,
+  "fields": {
+    "id_producto": "REP000008",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD88609",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2014,
+    "anio_hasta": 2020,
+    "version": "SPORT",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "82517",
+    "cantidad": 22
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 16,
+  "fields": {
+    "id_producto": "REP000009",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD78624",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "HYUNDAI",
+    "modelo": "TUCSON",
+    "anio_desde": 2018,
+    "anio_hasta": 2024,
+    "version": "GL",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "41452",
+    "cantidad": 11
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 17,
+  "fields": {
+    "id_producto": "REP000010",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD38031",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2010,
+    "anio_hasta": 2016,
+    "version": "SIGNATURE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "108705",
+    "cantidad": 21
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 18,
+  "fields": {
+    "id_producto": "ACC000008",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD44765",
+    "descripcion": "MOLDURA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2013,
+    "anio_hasta": 2018,
+    "version": "SEG",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "14918",
+    "cantidad": 36
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 19,
+  "fields": {
+    "id_producto": "ACC000009",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD99068",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "QASHQAI",
+    "anio_desde": 2012,
+    "anio_hasta": 2016,
+    "version": "EXCLUSIVE",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "28303",
+    "cantidad": 14
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 20,
+  "fields": {
+    "id_producto": "REP000011",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD70419",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2013,
+    "anio_hasta": 2017,
+    "version": "SPORT",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "53259",
+    "cantidad": 25
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 21,
+  "fields": {
+    "id_producto": "REP000012",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD45914",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "TRASERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "HYUNDAI",
+    "modelo": "TUCSON",
+    "anio_desde": 2020,
+    "anio_hasta": 2025,
+    "version": "GL",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "29427",
+    "cantidad": 45
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 22,
+  "fields": {
+    "id_producto": "REP000013",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD66701",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "TRASERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2016,
+    "anio_hasta": 2018,
+    "version": "GL",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "41398",
+    "cantidad": 41
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 23,
+  "fields": {
+    "id_producto": "ACC000010",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD33615",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "INFERIOR",
+    "lado": "",
+    "marca": "CHEVROLET",
+    "modelo": "SAIL",
+    "anio_desde": 2012,
+    "anio_hasta": 2014,
+    "version": "LTZ",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "18855",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 24,
+  "fields": {
+    "id_producto": "ACC000011",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD47198",
+    "descripcion": "TAPABARROS",
+    "posicion": "TRASERO",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2015,
+    "anio_hasta": 2021,
+    "version": "GLX",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "9608",
+    "cantidad": 17
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 25,
+  "fields": {
+    "id_producto": "REP000014",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD29662",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "MITSUBISHI",
+    "modelo": "ASX",
+    "anio_desde": 2018,
+    "anio_hasta": 2024,
+    "version": "GL",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "67520",
+    "cantidad": 34
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 26,
+  "fields": {
+    "id_producto": "ACC000012",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD47266",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2010,
+    "anio_hasta": 2015,
+    "version": "LE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "28493",
+    "cantidad": 0
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 27,
+  "fields": {
+    "id_producto": "REP000015",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD86563",
+    "descripcion": "PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "TRASERO",
+    "lado": "",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2017,
+    "anio_hasta": 2022,
+    "version": "GT",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "38565",
+    "cantidad": 16
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 28,
+  "fields": {
+    "id_producto": "ACC000013",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD54468",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "RH",
+    "marca": "NISSAN",
+    "modelo": "QASHQAI",
+    "anio_desde": 2011,
+    "anio_hasta": 2017,
+    "version": "SENSE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "27545",
+    "cantidad": 29
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 29,
+  "fields": {
+    "id_producto": "REP000016",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD23900",
+    "descripcion": "FOCO TRASERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "HYUNDAI",
+    "modelo": "TUCSON",
+    "anio_desde": 2010,
+    "anio_hasta": 2012,
+    "version": "GLS",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "26708",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 30,
+  "fields": {
+    "id_producto": "REP000017",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD45672",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2017,
+    "anio_hasta": 2022,
+    "version": "XLE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "86660",
+    "cantidad": 10
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 31,
+  "fields": {
+    "id_producto": "REP000018",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD91799",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2018,
+    "anio_hasta": 2024,
+    "version": "SPORT",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "35349",
+    "cantidad": 2
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 32,
+  "fields": {
+    "id_producto": "ACC000014",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD27845",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2019,
+    "anio_hasta": 2024,
+    "version": "SE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "22459",
+    "cantidad": 27
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 33,
+  "fields": {
+    "id_producto": "REP000019",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD24098",
+    "descripcion": "PANEL PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "INTERIOR",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "QASHQAI",
+    "anio_desde": 2010,
+    "anio_hasta": 2016,
+    "version": "ADVANCE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "58235",
+    "cantidad": 7
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 34,
+  "fields": {
+    "id_producto": "REP000020",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD13980",
+    "descripcion": "RADIADOR",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "MITSUBISHI",
+    "modelo": "ASX",
+    "anio_desde": 2012,
+    "anio_hasta": 2015,
+    "version": "GLS",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "84475",
+    "cantidad": 4
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 35,
+  "fields": {
+    "id_producto": "REP000021",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD53917",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2010,
+    "anio_hasta": 2014,
+    "version": "ADVENTURE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "59373",
+    "cantidad": 34
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 36,
+  "fields": {
+    "id_producto": "ACC000015",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD17862",
+    "descripcion": "MOLDURA PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "KIA",
+    "modelo": "SPORTAGE",
+    "anio_desde": 2014,
+    "anio_hasta": 2017,
+    "version": "GT LINE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "15356",
+    "cantidad": 19
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 37,
+  "fields": {
+    "id_producto": "ACC000016",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD85813",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "RH",
+    "marca": "MITSUBISHI",
+    "modelo": "ASX",
+    "anio_desde": 2014,
+    "anio_hasta": 2017,
+    "version": "GL",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "21635",
+    "cantidad": 8
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 38,
+  "fields": {
+    "id_producto": "REP000022",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD62494",
+    "descripcion": "RADIADOR",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "KIA",
+    "modelo": "CERATO",
+    "anio_desde": 2015,
+    "anio_hasta": 2020,
+    "version": "SX",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "60740",
+    "cantidad": 43
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 39,
+  "fields": {
+    "id_producto": "ACC000017",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD96072",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2011,
+    "anio_hasta": 2013,
+    "version": "SE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "4939",
+    "cantidad": 40
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 40,
+  "fields": {
+    "id_producto": "REP000023",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD97407",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2015,
+    "anio_hasta": 2021,
+    "version": "SEDAN",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "96733",
+    "cantidad": 9
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 41,
+  "fields": {
+    "id_producto": "REP000024",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD88560",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2017,
+    "anio_hasta": 2023,
+    "version": "GLI",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "35154",
+    "cantidad": 27
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 42,
+  "fields": {
+    "id_producto": "ACC000018",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD52296",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2010,
+    "anio_hasta": 2015,
+    "version": "LE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "23473",
+    "cantidad": 8
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 43,
+  "fields": {
+    "id_producto": "ACC000019",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD26232",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "KIA",
+    "modelo": "SPORTAGE",
+    "anio_desde": 2010,
+    "anio_hasta": 2015,
+    "version": "EX",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "4871",
+    "cantidad": 42
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 44,
+  "fields": {
+    "id_producto": "REP000025",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD76412",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "HYUNDAI",
+    "modelo": "TUCSON",
+    "anio_desde": 2012,
+    "anio_hasta": 2016,
+    "version": "LIMITED",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "53975",
+    "cantidad": 14
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 45,
+  "fields": {
+    "id_producto": "REP000026",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD21068",
+    "descripcion": "PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2014,
+    "anio_hasta": 2019,
+    "version": "ADVENTURE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "40483",
+    "cantidad": 19
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 46,
+  "fields": {
+    "id_producto": "ACC000020",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD87677",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "SUPERIOR",
+    "lado": "",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2010,
+    "anio_hasta": 2016,
+    "version": "GL",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "22793",
+    "cantidad": 23
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 47,
+  "fields": {
+    "id_producto": "REP000027",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD78842",
+    "descripcion": "RADIADOR",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2017,
+    "anio_hasta": 2023,
+    "version": "SEDAN",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "60477",
+    "cantidad": 12
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 48,
+  "fields": {
+    "id_producto": "REP000028",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD16159",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "HILUX",
+    "anio_desde": 2020,
+    "anio_hasta": 2026,
+    "version": "SRV",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "71023",
+    "cantidad": 39
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 49,
+  "fields": {
+    "id_producto": "REP000029",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD57529",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2011,
+    "anio_hasta": 2016,
+    "version": "PREMIER",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "56486",
+    "cantidad": 0
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 50,
+  "fields": {
+    "id_producto": "REP000030",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD98747",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "CHEVROLET",
+    "modelo": "SAIL",
+    "anio_desde": 2016,
+    "anio_hasta": 2022,
+    "version": "LS",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "29813",
+    "cantidad": 31
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 51,
+  "fields": {
+    "id_producto": "ACC000021",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD78483",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "SUPERIOR",
+    "lado": "",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2014,
+    "anio_hasta": 2020,
+    "version": "SE",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "18240",
+    "cantidad": 22
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 52,
+  "fields": {
+    "id_producto": "REP000031",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD59102",
+    "descripcion": "PANEL PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "INTERIOR",
+    "lado": "LH",
+    "marca": "HYUNDAI",
+    "modelo": "ACCENT",
+    "anio_desde": 2012,
+    "anio_hasta": 2016,
+    "version": "PREMIUM",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "71303",
+    "cantidad": 22
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 53,
+  "fields": {
+    "id_producto": "ACC000022",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD76615",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "RH",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2014,
+    "anio_hasta": 2016,
+    "version": "SPORT",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "24931",
+    "cantidad": 30
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 54,
+  "fields": {
+    "id_producto": "REP000032",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD87588",
+    "descripcion": "PANEL PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "INTERIOR",
+    "lado": "RH",
+    "marca": "HYUNDAI",
+    "modelo": "ACCENT",
+    "anio_desde": 2019,
+    "anio_hasta": 2025,
+    "version": "GL",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "46059",
+    "cantidad": 19
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 55,
+  "fields": {
+    "id_producto": "ACC000023",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD31927",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "LH",
+    "marca": "KIA",
+    "modelo": "CERATO",
+    "anio_desde": 2020,
+    "anio_hasta": 2023,
+    "version": "SX",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "21094",
+    "cantidad": 12
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 56,
+  "fields": {
+    "id_producto": "ACC000024",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD42407",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2019,
+    "anio_hasta": 2025,
+    "version": "LT",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "28502",
+    "cantidad": 35
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 57,
+  "fields": {
+    "id_producto": "REP000033",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD49235",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2018,
+    "anio_hasta": 2021,
+    "version": "LE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "67912",
+    "cantidad": 4
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 58,
+  "fields": {
+    "id_producto": "REP000034",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD84099",
+    "descripcion": "FOCO TRASERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2019,
+    "anio_hasta": 2022,
+    "version": "XLE",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "34452",
+    "cantidad": 31
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 59,
+  "fields": {
+    "id_producto": "REP000035",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD73312",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "DELANTERO",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "HILUX",
+    "anio_desde": 2011,
+    "anio_hasta": 2015,
+    "version": "SRV",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "37076",
+    "cantidad": 27
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 60,
+  "fields": {
+    "id_producto": "ACC000025",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD43137",
+    "descripcion": "MOLDURA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2015,
+    "anio_hasta": 2017,
+    "version": "LE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "10635",
+    "cantidad": 27
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 61,
+  "fields": {
+    "id_producto": "ACC000026",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD93776",
+    "descripcion": "TAPABARROS",
+    "posicion": "DELANTERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2019,
+    "anio_hasta": 2025,
+    "version": "SPORT",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "6947",
+    "cantidad": 9
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 62,
+  "fields": {
+    "id_producto": "REP000036",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD66235",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "DELANTERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2020,
+    "anio_hasta": 2022,
+    "version": "SIGNATURE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "30581",
+    "cantidad": 50
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 63,
+  "fields": {
+    "id_producto": "REP000037",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD64211",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "DELANTERO",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2013,
+    "anio_hasta": 2019,
+    "version": "R",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "34434",
+    "cantidad": 4
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 64,
+  "fields": {
+    "id_producto": "ACC000027",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD66192",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "SUPERIOR",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2015,
+    "anio_hasta": 2017,
+    "version": "SEG",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "20933",
+    "cantidad": 39
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 65,
+  "fields": {
+    "id_producto": "REP000038",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD98663",
+    "descripcion": "PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "TRASERO",
+    "lado": "",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2010,
+    "anio_hasta": 2016,
+    "version": "PREMIER",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "41945",
+    "cantidad": 21
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 66,
+  "fields": {
+    "id_producto": "ACC000028",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD67011",
+    "descripcion": "TAPABARROS",
+    "posicion": "DELANTERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2010,
+    "anio_hasta": 2015,
+    "version": "XE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "7330",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 67,
+  "fields": {
+    "id_producto": "ACC000029",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD54626",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "MITSUBISHI",
+    "modelo": "ASX",
+    "anio_desde": 2020,
+    "anio_hasta": 2023,
+    "version": "GLS",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "31842",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 68,
+  "fields": {
+    "id_producto": "REP000039",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD20618",
+    "descripcion": "GUARDAFANGO",
+    "posicion": "TRASERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2010,
+    "anio_hasta": 2012,
+    "version": "XE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "31113",
+    "cantidad": 1
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 69,
+  "fields": {
+    "id_producto": "ACC000030",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD23598",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "LH",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2013,
+    "anio_hasta": 2017,
+    "version": "SEG",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "23494",
+    "cantidad": 34
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 70,
+  "fields": {
+    "id_producto": "REP000040",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD19822",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "MITSUBISHI",
+    "modelo": "ASX",
+    "anio_desde": 2017,
+    "anio_hasta": 2019,
+    "version": "GL",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "28366",
+    "cantidad": 39
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 71,
+  "fields": {
+    "id_producto": "REP000041",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD96203",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "COROLLA",
+    "anio_desde": 2012,
+    "anio_hasta": 2014,
+    "version": "GLI",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "49166",
+    "cantidad": 37
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 72,
+  "fields": {
+    "id_producto": "ACC000031",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD75368",
+    "descripcion": "MOLDURA PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2018,
+    "anio_hasta": 2021,
+    "version": "ADVENTURE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "14330",
+    "cantidad": 11
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 73,
+  "fields": {
+    "id_producto": "REP000042",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD53112",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2018,
+    "anio_hasta": 2021,
+    "version": "LIMITED",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "70083",
+    "cantidad": 38
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 74,
+  "fields": {
+    "id_producto": "REP000043",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD29181",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "HILUX",
+    "anio_desde": 2013,
+    "anio_hasta": 2015,
+    "version": "SRV",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "31151",
+    "cantidad": 17
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 75,
+  "fields": {
+    "id_producto": "REP000044",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD12564",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2020,
+    "anio_hasta": 2025,
+    "version": "LT",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "93042",
+    "cantidad": 3
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 76,
+  "fields": {
+    "id_producto": "REP000045",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD19071",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2017,
+    "anio_hasta": 2022,
+    "version": "SPORT",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "102281",
+    "cantidad": 0
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 77,
+  "fields": {
+    "id_producto": "ACC000032",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD11636",
+    "descripcion": "REJILLA PARACHOQUE",
+    "posicion": "",
+    "ubicacion": "SUPERIOR",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2015,
+    "anio_hasta": 2019,
+    "version": "SPORT",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "16615",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 78,
+  "fields": {
+    "id_producto": "ACC000033",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD11177",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "KIA",
+    "modelo": "SPORTAGE",
+    "anio_desde": 2015,
+    "anio_hasta": 2019,
+    "version": "LX",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "3604",
+    "cantidad": 4
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 79,
+  "fields": {
+    "id_producto": "ACC000034",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD49572",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "MITSUBISHI",
+    "modelo": "L200",
+    "anio_desde": 2010,
+    "anio_hasta": 2014,
+    "version": "KATANA",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "29491",
+    "cantidad": 10
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 80,
+  "fields": {
+    "id_producto": "REP000046",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD39012",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "MITSUBISHI",
+    "modelo": "L200",
+    "anio_desde": 2015,
+    "anio_hasta": 2020,
+    "version": "HPE",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "51998",
+    "cantidad": 29
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 81,
+  "fields": {
+    "id_producto": "ACC000035",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD33920",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "RAV4",
+    "anio_desde": 2020,
+    "anio_hasta": 2026,
+    "version": "LIMITED",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "26941",
+    "cantidad": 2
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 82,
+  "fields": {
+    "id_producto": "REP000047",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD92103",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2020,
+    "anio_hasta": 2023,
+    "version": "SEDAN",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "33624",
+    "cantidad": 45
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 83,
+  "fields": {
+    "id_producto": "REP000048",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD27715",
+    "descripcion": "VIDRIO PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "HYUNDAI",
+    "modelo": "ACCENT",
+    "anio_desde": 2017,
+    "anio_hasta": 2020,
+    "version": "PREMIUM",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "42864",
+    "cantidad": 18
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 84,
+  "fields": {
+    "id_producto": "REP000049",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD36212",
+    "descripcion": "CONDENSADOR AC",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2020,
+    "anio_hasta": 2022,
+    "version": "SPORT",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "64698",
+    "cantidad": 15
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 85,
+  "fields": {
+    "id_producto": "ACC000036",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD62130",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "INTERIOR",
+    "lado": "LH",
+    "marca": "NISSAN",
+    "modelo": "QASHQAI",
+    "anio_desde": 2020,
+    "anio_hasta": 2023,
+    "version": "SENSE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "4488",
+    "cantidad": 50
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 86,
+  "fields": {
+    "id_producto": "ACC000037",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD61007",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "LH",
+    "marca": "KIA",
+    "modelo": "SPORTAGE",
+    "anio_desde": 2015,
+    "anio_hasta": 2018,
+    "version": "GT LINE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "26749",
+    "cantidad": 48
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 87,
+  "fields": {
+    "id_producto": "ACC000038",
+    "proveedor": "BICIMOTO",
+    "codigo_proveedor": "COD20028",
+    "descripcion": "ESPEJO RETROVISOR",
+    "posicion": "",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2016,
+    "anio_hasta": 2019,
+    "version": "LT",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "30837",
+    "cantidad": 45
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 88,
+  "fields": {
+    "id_producto": "ACC000039",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD97210",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "INTERIOR",
+    "lado": "RH",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2015,
+    "anio_hasta": 2018,
+    "version": "GT",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "3880",
+    "cantidad": 29
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 89,
+  "fields": {
+    "id_producto": "ACC000040",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD51998",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "RH",
+    "marca": "HYUNDAI",
+    "modelo": "ACCENT",
+    "anio_desde": 2019,
+    "anio_hasta": 2021,
+    "version": "GL",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "18345",
+    "cantidad": 29
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 90,
+  "fields": {
+    "id_producto": "REP000050",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD28359",
+    "descripcion": "PANEL PUERTA",
+    "posicion": "DELANTERA",
+    "ubicacion": "INTERIOR",
+    "lado": "RH",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2012,
+    "anio_hasta": 2014,
+    "version": "SE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "48632",
+    "cantidad": 28
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 91,
+  "fields": {
+    "id_producto": "ACC000041",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD72059",
+    "descripcion": "MOLDURA PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "KIA",
+    "modelo": "SPORTAGE",
+    "anio_desde": 2019,
+    "anio_hasta": 2021,
+    "version": "LX",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "13715",
+    "cantidad": 1
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 92,
+  "fields": {
+    "id_producto": "REP000051",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD83788",
+    "descripcion": "FOCO DELANTERO",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "RH",
+    "marca": "SUZUKI",
+    "modelo": "SWIFT",
+    "anio_desde": 2015,
+    "anio_hasta": 2018,
+    "version": "GLX",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "40790",
+    "cantidad": 50
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 93,
+  "fields": {
+    "id_producto": "ACC000042",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD92235",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "LH",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2020,
+    "anio_hasta": 2026,
+    "version": "GT",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "22967",
+    "cantidad": 41
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 94,
+  "fields": {
+    "id_producto": "REP000052",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD34525",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "YARIS",
+    "anio_desde": 2019,
+    "anio_hasta": 2025,
+    "version": "SPORT",
+    "marca_prod": "TAIWAN",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "91591",
+    "cantidad": 44
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 95,
+  "fields": {
+    "id_producto": "REP000053",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD68923",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "TOYOTA",
+    "modelo": "HILUX",
+    "anio_desde": 2020,
+    "anio_hasta": 2025,
+    "version": "SRV",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "86796",
+    "cantidad": 34
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 96,
+  "fields": {
+    "id_producto": "ACC000043",
+    "proveedor": "REPMAN",
+    "codigo_proveedor": "COD37704",
+    "descripcion": "MANILLA PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "EXTERIOR",
+    "lado": "RH",
+    "marca": "CHEVROLET",
+    "modelo": "SPARK",
+    "anio_desde": 2014,
+    "anio_hasta": 2016,
+    "version": "LT",
+    "marca_prod": "DIFORZA",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "3985",
+    "cantidad": 22
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 97,
+  "fields": {
+    "id_producto": "ACC000044",
+    "proveedor": "DERCO",
+    "codigo_proveedor": "COD28331",
+    "descripcion": "NEBLINERO",
+    "posicion": "",
+    "ubicacion": "DELANTERO",
+    "lado": "RH",
+    "marca": "KIA",
+    "modelo": "SPORTAGE",
+    "anio_desde": 2017,
+    "anio_hasta": 2019,
+    "version": "EX",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "18151",
+    "cantidad": 0
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 98,
+  "fields": {
+    "id_producto": "REP000054",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD88272",
+    "descripcion": "PANEL PUERTA",
+    "posicion": "TRASERA",
+    "ubicacion": "INTERIOR",
+    "lado": "RH",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2015,
+    "anio_hasta": 2018,
+    "version": "SIGNATURE",
+    "marca_prod": "FPI",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "53245",
+    "cantidad": 5
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 99,
+  "fields": {
+    "id_producto": "REP000055",
+    "proveedor": "AUTOPLANET",
+    "codigo_proveedor": "COD58539",
+    "descripcion": "CAPOT",
+    "posicion": "",
+    "ubicacion": "",
+    "lado": "",
+    "marca": "NISSAN",
+    "modelo": "FRONTIER",
+    "anio_desde": 2019,
+    "anio_hasta": 2021,
+    "version": "XE",
+    "marca_prod": "ORIGINAL",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "83077",
+    "cantidad": 46
+  }
+},
+{
+  "model": "api.producto",
+  "pk": 100,
+  "fields": {
+    "id_producto": "ACC000045",
+    "proveedor": "CHILE AUTOS",
+    "codigo_proveedor": "COD43556",
+    "descripcion": "TAPABARROS",
+    "posicion": "TRASERO",
+    "ubicacion": "",
+    "lado": "LH",
+    "marca": "MAZDA",
+    "modelo": "CX-5",
+    "anio_desde": 2011,
+    "anio_hasta": 2016,
+    "version": "SIGNATURE",
+    "marca_prod": "GENERICO",
+    "imagen0": "",
+    "imagen1": "",
+    "precio_costo": "6442",
+    "cantidad": 3
+  }
+},
+{
+  "model": "api.contacto",
+  "pk": 1,
+  "fields": {
+    "ticket": "TKT-20251229-8AV3LB",
+    "nombre": "Andres",
+    "apellido": "Zurita",
+    "telefono": "+56949231786",
+    "correo": "andres.ipschile@gmail.com",
+    "mensaje": "quiero desarrollar una app para android",
+    "fecha": "2025-12-29T21:13:51.658Z"
+  }
+}
+]
