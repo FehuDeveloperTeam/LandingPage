@@ -8,6 +8,9 @@ from .serializers import ProyectoSerializer, TecnologiaSerializer, ProductoSeria
 import threading
 import resend
 import os
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .pokemon_service import PokemonTCGService
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Proyecto.objects.all()
@@ -146,3 +149,50 @@ class ContactoViewSet(viewsets.ModelViewSet):
         thread.start()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def pokemon_search(request):
+    """Buscar cartas de Pokémon"""
+    name = request.query_params.get('name', '')
+    set_id = request.query_params.get('set', '')
+    types = request.query_params.get('types', '')
+    rarity = request.query_params.get('rarity', '')
+    page = int(request.query_params.get('page', 1))
+    page_size = int(request.query_params.get('pageSize', 20))
+    
+    result = PokemonTCGService.search_cards(
+        name=name if name else None,
+        set_id=set_id if set_id else None,
+        types=types if types else None,
+        rarity=rarity if rarity else None,
+        page=page,
+        page_size=page_size
+    )
+    
+    return Response(result)
+
+@api_view(['GET'])
+def pokemon_card_detail(request, card_id):
+    """Obtener detalle de una carta"""
+    card = PokemonTCGService.get_card(card_id)
+    if card:
+        return Response(card)
+    return Response({'error': 'Carta no encontrada'}, status=404)
+
+@api_view(['GET'])
+def pokemon_sets(request):
+    """Obtener todos los sets/ediciones"""
+    sets = PokemonTCGService.get_sets()
+    return Response(sets)
+
+@api_view(['GET'])
+def pokemon_rarities(request):
+    """Obtener todas las rarezas"""
+    rarities = PokemonTCGService.get_rarities()
+    return Response(rarities)
+
+@api_view(['GET'])
+def pokemon_types(request):
+    """Obtener todos los tipos"""
+    types = PokemonTCGService.get_types()
+    return Response(types)

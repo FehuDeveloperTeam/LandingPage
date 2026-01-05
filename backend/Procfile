@@ -1,1 +1,1 @@
-web: python manage.py migrate --noinput && python manage.py loaddata api/fixtures/datos_export.json && python manage.py collectstatic --noinput && gunicorn backend.wsgi
+web: python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn backend.wsgi

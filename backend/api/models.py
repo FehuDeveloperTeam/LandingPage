@@ -90,3 +90,60 @@ class Contacto(models.Model):
 
     def __str__(self):
         return f"{self.ticket} - {self.nombre} {self.apellido}"
+
+class PokemonCard(models.Model):
+    """Cache de cartas de la API pokemontcg.io"""
+    card_id = models.CharField(max_length=50, unique=True)  # ID de la API
+    name = models.CharField(max_length=100)
+    supertype = models.CharField(max_length=50, blank=True)  # Pokémon, Trainer, Energy
+    subtypes = models.JSONField(default=list, blank=True)  # Basic, Stage 1, etc.
+    types = models.JSONField(default=list, blank=True)  # Fire, Water, etc.
+    hp = models.CharField(max_length=10, blank=True)
+    
+    # Set/Edición
+    set_id = models.CharField(max_length=50)
+    set_name = models.CharField(max_length=100)
+    set_series = models.CharField(max_length=100, blank=True)
+    set_release_date = models.DateField(null=True, blank=True)
+    
+    # Rareza y número
+    rarity = models.CharField(max_length=50, blank=True)
+    number = models.CharField(max_length=20, blank=True)
+    artist = models.CharField(max_length=100, blank=True)
+    
+    # Imágenes
+    image_small = models.URLField(blank=True)
+    image_large = models.URLField(blank=True)
+    
+    # Precios (se actualizan periódicamente)
+    price_low = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_mid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_high = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_market = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_currency = models.CharField(max_length=10, default='USD')
+    
+    # Metadata
+    last_updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['name', 'set_release_date']
+    
+    def __str__(self):
+        return f"{self.name} - {self.set_name}"
+
+
+class PokemonSet(models.Model):
+    """Sets/Ediciones de cartas"""
+    set_id = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+    series = models.CharField(max_length=100)
+    total_cards = models.IntegerField(default=0)
+    release_date = models.DateField(null=True, blank=True)
+    logo_url = models.URLField(blank=True)
+    symbol_url = models.URLField(blank=True)
+    
+    class Meta:
+        ordering = ['-release_date']
+    
+    def __str__(self):
+        return f"{self.name} ({self.series})"
