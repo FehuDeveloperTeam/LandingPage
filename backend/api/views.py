@@ -149,21 +149,16 @@ class ContactoViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def pokemon_search(request):
-    """Buscar cartas de Pokémon"""
     name = request.query_params.get('name', '')
     set_id = request.query_params.get('set', '')
     types = request.query_params.get('types', '')
     rarity = request.query_params.get('rarity', '')
-    page = int(request.query_params.get('page', 1))
-    page_size = int(request.query_params.get('pageSize', 20))
     
     result = PokemonTCGService.search_cards(
         name=name if name else None,
         set_id=set_id if set_id else None,
         types=types if types else None,
-        rarity=rarity if rarity else None,
-        page=page,
-        page_size=page_size
+        rarity=rarity if rarity else None
     )
     
     return Response(result)
