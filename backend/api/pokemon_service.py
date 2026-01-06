@@ -1,15 +1,19 @@
 import requests
-from datetime import datetime, timedelta
-from .models import PokemonCard, PokemonSet
+import os
 
 POKEMON_API_URL = "https://api.pokemontcg.io/v2"
+API_KEY = os.environ.get('e66c02de-6a97-4284-876c-be2264129697', '')
+
+def get_headers():
+    headers = {}
+    if API_KEY:
+        headers['X-Api-Key'] = API_KEY
+    return headers
 
 class PokemonTCGService:
-    """Servicio para interactuar con la API de Pokemon TCG"""
     
     @staticmethod
     def search_cards(name=None, set_id=None, types=None, rarity=None, page=1, page_size=20):
-        """Busca cartas en la API"""
         query_parts = []
         
         if name:
@@ -31,7 +35,12 @@ class PokemonTCGService:
         }
         
         try:
-            response = requests.get(f"{POKEMON_API_URL}/cards", params=params, timeout=10)
+            response = requests.get(
+                f"{POKEMON_API_URL}/cards",
+                params=params,
+                headers=get_headers(),
+                timeout=15
+            )
             response.raise_for_status()
             data = response.json()
             
@@ -52,9 +61,12 @@ class PokemonTCGService:
     
     @staticmethod
     def get_card(card_id):
-        """Obtiene una carta específica por ID"""
         try:
-            response = requests.get(f"{POKEMON_API_URL}/cards/{card_id}", timeout=10)
+            response = requests.get(
+                f"{POKEMON_API_URL}/cards/{card_id}",
+                headers=get_headers(),
+                timeout=15
+            )
             response.raise_for_status()
             data = response.json()
             return PokemonTCGService._parse_card(data.get('data', {}))
@@ -64,9 +76,13 @@ class PokemonTCGService:
     
     @staticmethod
     def get_sets():
-        """Obtiene todos los sets disponibles"""
         try:
-            response = requests.get(f"{POKEMON_API_URL}/sets", params={'orderBy': '-releaseDate'}, timeout=10)
+            response = requests.get(
+                f"{POKEMON_API_URL}/sets",
+                params={'orderBy': '-releaseDate'},
+                headers=get_headers(),
+                timeout=15
+            )
             response.raise_for_status()
             data = response.json()
             
@@ -88,9 +104,12 @@ class PokemonTCGService:
     
     @staticmethod
     def get_rarities():
-        """Obtiene todas las rarezas disponibles"""
         try:
-            response = requests.get(f"{POKEMON_API_URL}/rarities", timeout=10)
+            response = requests.get(
+                f"{POKEMON_API_URL}/rarities",
+                headers=get_headers(),
+                timeout=15
+            )
             response.raise_for_status()
             return response.json().get('data', [])
         except requests.RequestException as e:
@@ -99,9 +118,12 @@ class PokemonTCGService:
     
     @staticmethod
     def get_types():
-        """Obtiene todos los tipos disponibles"""
         try:
-            response = requests.get(f"{POKEMON_API_URL}/types", timeout=10)
+            response = requests.get(
+                f"{POKEMON_API_URL}/types",
+                headers=get_headers(),
+                timeout=15
+            )
             response.raise_for_status()
             return response.json().get('data', [])
         except requests.RequestException as e:
@@ -110,11 +132,9 @@ class PokemonTCGService:
     
     @staticmethod
     def _parse_card(card_data):
-        """Parsea los datos de una carta de la API"""
         tcgplayer = card_data.get('tcgplayer', {})
         prices = tcgplayer.get('prices', {})
         
-        # Buscar precio en diferentes variantes
         price_data = (
             prices.get('holofoil') or 
             prices.get('reverseHolofoil') or 
