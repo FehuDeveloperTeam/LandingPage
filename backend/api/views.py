@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .pokemon_service import PokemonTCGService
 
+
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Proyecto.objects.all()
     serializer_class = ProyectoSerializer
@@ -52,10 +53,6 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(q)
         
         return queryset
-
-
-import resend
-import os
 
 def enviar_correos_async(contacto):
     """Envía correos usando Resend"""
