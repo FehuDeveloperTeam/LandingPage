@@ -5,7 +5,7 @@ import PokemonCard from '../../components/pokemon/PokemonCard'
 import PokemonFilters from '../../components/pokemon/PokemonFilters'
 import PokemonModal from '../../components/pokemon/PokemonModal'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+const POKEMON_API = 'https://api.pokemontcg.io/v2'
 
 function Pokemon() {
   const [cards, setCards] = useState([])
@@ -23,24 +23,26 @@ function Pokemon() {
     totalCount: 0
   })
 
-  // Opciones para filtros
   const [sets, setSets] = useState([])
   const [types, setTypes] = useState([])
   const [rarities, setRarities] = useState([])
 
-  // Cargar opciones de filtros al inicio
   useEffect(() => {
     const loadFilters = async () => {
       try {
         const [setsRes, typesRes, raritiesRes] = await Promise.all([
-          fetch(`${API_URL}/api/pokemon/sets/`),
-          fetch(`${API_URL}/api/pokemon/types/`),
-          fetch(`${API_URL}/api/pokemon/rarities/`)
+          fetch(`${POKEMON_API}/sets?orderBy=-releaseDate`),
+          fetch(`${POKEMON_API}/types`),
+          fetch(`${POKEMON_API}/rarities`)
         ])
         
-        setSets(await setsRes.json())
-        setTypes(await typesRes.json())
-        setRarities(await raritiesRes.json())
+        const setsData = await setsRes.json()
+        const typesData = await typesRes.json()
+        const raritiesData = await raritiesRes.json()
+        
+        setSets(setsData.data || [])
+        setTypes(typesData.data || [])
+        setRarities(raritiesData.data || [])
       } catch (error) {
         console.error('Error cargando filtros:', error)
       }
@@ -48,26 +50,32 @@ function Pokemon() {
     loadFilters()
   }, [])
 
-  // Buscar cartas
   const searchCards = async (page = 1) => {
     setLoading(true)
     try {
-      const params = new URLSearchParams()
-      if (search) params.append('name', search)
-      if (filters.set) params.append('set', filters.set)
-      if (filters.types) params.append('types', filters.types)
-      if (filters.rarity) params.append('rarity', filters.rarity)
-      params.append('page', page)
-      params.append('pageSize', 20)
+      const queryParts = []
+      if (search) queryParts.push(`name:"${search}*"`)
+      if (filters.set) queryParts.push(`set.id:${filters.set}`)
+      if (filters.types) queryParts.push(`types:${filters.types}`)
+      if (filters.rarity) queryParts.push(`rarity:"${filters.rarity}"`)
+      
+      const query = queryParts.length > 0 ? queryParts.join(' ') : '*'
+      
+      const params = new URLSearchParams({
+        q: query,
+        page: page,
+        pageSize: 20,
+        orderBy: '-set.releaseDate'
+      })
 
-      const response = await fetch(`${API_URL}/api/pokemon/search/?${params}`)
+      const response = await fetch(`${POKEMON_API}/cards?${params}`)
       const data = await response.json()
       
-      setCards(data.cards || [])
+      setCards(data.data || [])
       setPagination({
-        page: data.page,
-        pageSize: data.pageSize,
-        totalCount: data.totalCount
+        page: data.page || 1,
+        pageSize: data.pageSize || 20,
+        totalCount: data.totalCount || 0
       })
     } catch (error) {
       console.error('Error buscando cartas:', error)
@@ -76,20 +84,62 @@ function Pokemon() {
     }
   }
 
-  // Buscar al presionar Enter o click en buscar
   const handleSearch = (e) => {
     e?.preventDefault()
     searchCards(1)
   }
 
-  // Cargar detalle de carta
   const loadCardDetail = async (cardId) => {
     try {
-      const response = await fetch(`${API_URL}/api/pokemon/card/${cardId}/`)
+      const response = await fetch(`${POKEMON_API}/cards/${cardId}`)
       const data = await response.json()
-      setSelectedCard(data)
+      setSelectedCard(parseCard(data.data))
     } catch (error) {
       console.error('Error cargando carta:', error)
+    }
+  }
+
+  const parseCard = (card) => {
+    if (!card) return null
+    
+    const tcgplayer = card.tcgplayer || {}
+    const prices = tcgplayer.prices || {}
+    const priceData = prices.holofoil || prices.reverseHolofoil || prices.normal || {}
+    const cardmarket = card.cardmarket || {}
+    const cardmarketPrices = cardmarket.prices || {}
+
+    return {
+      id: card.id,
+      name: card.name,
+      types: card.types || [],
+      hp: card.hp,
+      set: {
+        id: card.set?.id,
+        name: card.set?.name,
+        series: card.set?.series,
+        symbol: card.set?.images?.symbol
+      },
+      rarity: card.rarity,
+      number: card.number,
+      artist: card.artist,
+      images: card.images || {},
+      attacks: card.attacks || [],
+      weaknesses: card.weaknesses || [],
+      resistances: card.resistances || [],
+      prices: {
+        tcgplayer: {
+          low: priceData.low,
+          mid: priceData.mid,
+          high: priceData.high,
+          market: priceData.market,
+          url: tcgplayer.url
+        },
+        cardmarket: {
+          averageSellPrice: cardmarketPrices.averageSellPrice,
+          trendPrice: cardmarketPrices.trendPrice,
+          url: cardmarket.url
+        }
+      }
     }
   }
 
@@ -97,11 +147,10 @@ function Pokemon() {
 
   return (
     <PageLayout
-      titulo="Pokémon TCG"
+      titulo="Pokemon TCG"
       subtitulo="Busca cartas de todas las ediciones y consulta precios del mercado"
       icono="🎴"
     >
-      {/* Buscador y Filtros */}
       <div className="mb-8">
         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-grow">
@@ -125,21 +174,19 @@ function Pokemon() {
         <PokemonFilters
           filters={filters}
           setFilters={setFilters}
-          sets={sets}
+          sets={sets.map(s => ({ id: s.id, name: s.name, series: s.series }))}
           types={types}
           rarities={rarities}
           onApply={() => searchCards(1)}
         />
       </div>
 
-      {/* Resultados */}
       {pagination.totalCount > 0 && (
         <p className="text-gray-600 dark:text-gray-400 mb-4">
           {pagination.totalCount} cartas encontradas
         </p>
       )}
 
-      {/* Grid de cartas */}
       {loading ? (
         <div className="flex justify-center items-center py-20">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -155,14 +202,13 @@ function Pokemon() {
                 transition={{ delay: index * 0.05 }}
               >
                 <PokemonCard
-                  card={card}
+                  card={parseCard(card)}
                   onClick={() => loadCardDetail(card.id)}
                 />
               </motion.div>
             ))}
           </div>
 
-          {/* Paginación */}
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 mt-8">
               <button
@@ -173,7 +219,7 @@ function Pokemon() {
                 Anterior
               </button>
               <span className="px-4 py-2">
-                Página {pagination.page} de {totalPages}
+                Pagina {pagination.page} de {totalPages}
               </span>
               <button
                 onClick={() => searchCards(pagination.page + 1)}
@@ -196,7 +242,6 @@ function Pokemon() {
         </div>
       )}
 
-      {/* Modal de detalle */}
       <PokemonModal
         card={selectedCard}
         onClose={() => setSelectedCard(null)}
