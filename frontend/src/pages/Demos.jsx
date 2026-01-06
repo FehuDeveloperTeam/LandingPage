@@ -40,6 +40,16 @@ function Demos() {
         { nombre: 'Ver Demo', url: '/demos/presentacion' },
       ]
     },
+    {
+      titulo: 'Pokemon TCG',
+      descripcion: 'Buscador de cartas Pokemon con información detallada, filtros por edición, tipo y rareza.',
+      icon: IconPokeball,
+      color: 'from-yellow-500 to-red-500',
+      shadow: 'shadow-yellow-500/20',
+      links: [
+        { nombre: 'Ver Demo', url: '/demos/pokemon' },
+      ]
+    },
   ]
 
   return (
@@ -115,6 +125,15 @@ function Demos() {
         onClose={() => setContactoAbierto(false)}
       />
     </PageLayout>
+  )
+}
+
+// Icono de Pokeball
+function IconPokeball({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2c3.07 0 5.64 2.18 6.22 5.08h-3.36c-.44-1.18-1.55-2.08-2.86-2.08s-2.42.9-2.86 2.08H5.78C6.36 6.18 8.93 4 12 4zm0 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-6.22 2.92h3.36c.44 1.18 1.55 2.08 2.86 2.08s2.42-.9 2.86-2.08h3.36C17.64 17.82 15.07 20 12 20s-5.64-2.18-6.22-5.08z"/>
+    </svg>
   )
 }
 

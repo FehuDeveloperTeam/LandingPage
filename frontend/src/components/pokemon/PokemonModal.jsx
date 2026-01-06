@@ -11,6 +11,10 @@ function PokemonModal({ card, onClose }) {
 
   if (!card) return null
 
+  const searchName = encodeURIComponent(card.name)
+  const tcgplayerUrl = `https://www.tcgplayer.com/search/pokemon/product?q=${searchName}`
+  const cardmarketUrl = `https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${searchName}`
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60" onClick={onClose}></div>
@@ -120,6 +124,34 @@ function PokemonModal({ card, onClose }) {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Precios de mercado */}
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+              <h3 className="font-semibold mb-3">Consultar precios de mercado</h3>
+              <div className="grid grid-cols-2 gap-3">
+                
+                  href={tcgplayerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
+                >
+                  <span>TCGPlayer</span>
+                  <span className="text-xs">(USD)</span>
+                </a>
+                
+                  href={cardmarketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 p-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition"
+                >
+                  <span>Cardmarket</span>
+                  <span className="text-xs">(EUR)</span>
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 mt-2 text-center">
+                Los precios varian segun condicion y edicion de la carta
+              </p>
             </div>
           </div>
         </div>
