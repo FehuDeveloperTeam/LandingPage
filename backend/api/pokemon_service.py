@@ -124,6 +124,37 @@ class PokemonTCGService:
         
         image_base = card.get('image')
         set_data = card.get('set', {}) if isinstance(card.get('set'), dict) else {}
+        pricing_data = card.get('pricing', {})
+        
+        # Extraer precios de Cardmarket (EUR)
+        cardmarket = pricing_data.get('cardmarket', {})
+        cardmarket_prices = {
+            'low': cardmarket.get('low'),
+            'avg': cardmarket.get('avg'),
+            'trend': cardmarket.get('trend'),
+            'avg1': cardmarket.get('avg1'),
+            'avg7': cardmarket.get('avg7'),
+            'avg30': cardmarket.get('avg30'),
+            'currency': cardmarket.get('unit', 'EUR'),
+            'updated': cardmarket.get('updated'),
+        }
+        
+        # Extraer precios de TCGPlayer (USD)
+        tcgplayer = pricing_data.get('tcgplayer', {})
+        tcgplayer_holofoil = tcgplayer.get('holofoil', {})
+        tcgplayer_normal = tcgplayer.get('normal', {})
+        
+        # Usar holofoil si existe, sino normal
+        tcg_prices = tcgplayer_holofoil if tcgplayer_holofoil else tcgplayer_normal
+        
+        tcgplayer_prices = {
+            'low': tcg_prices.get('lowPrice'),
+            'mid': tcg_prices.get('midPrice'),
+            'high': tcg_prices.get('highPrice'),
+            'market': tcg_prices.get('marketPrice'),
+            'currency': tcgplayer.get('unit', 'USD'),
+            'updated': tcgplayer.get('updated'),
+        }
         
         return {
             'id': card.get('id'),
@@ -134,6 +165,7 @@ class PokemonTCGService:
                 'id': set_data.get('id'),
                 'name': set_data.get('name'),
                 'series': set_data.get('serie', {}).get('name', '') if isinstance(set_data.get('serie'), dict) else '',
+                'logo': set_data.get('logo'),
             },
             'rarity': card.get('rarity'),
             'number': card.get('localId'),
@@ -147,4 +179,9 @@ class PokemonTCGService:
             'resistances': card.get('resistances', []),
             'retreat': card.get('retreat'),
             'description': card.get('description'),
+            'abilities': card.get('abilities', []),
+            'prices': {
+                'tcgplayer': tcgplayer_prices,
+                'cardmarket': cardmarket_prices,
+            }
         }
