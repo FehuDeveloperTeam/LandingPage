@@ -147,3 +147,38 @@ class PokemonSet(models.Model):
     
     def __str__(self):
         return f"{self.name} ({self.series})"
+
+class Post(models.Model):
+    ESTADO_CHOICES = [
+        ('idea', 'Idea'),
+        ('desarrollo', 'En Desarrollo'),
+        ('completado', 'Completado'),
+        ('publicado', 'Publicado'),
+    ]
+    
+    CATEGORIA_CHOICES = [
+        ('desarrollo', 'Desarrollo'),
+        ('tecnologia', 'Tecnología'),
+        ('proyecto', 'Proyecto'),
+        ('tutorial', 'Tutorial'),
+        ('noticia', 'Noticia'),
+    ]
+    
+    titulo = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    resumen = models.TextField(max_length=300)
+    contenido = models.TextField()
+    imagen = models.URLField(blank=True)
+    categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='desarrollo')
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='publicado')
+    tags = models.JSONField(default=list, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    publicado = models.BooleanField(default=True)
+    destacado = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-fecha_creacion']
+    
+    def __str__(self):
+        return self.titulo

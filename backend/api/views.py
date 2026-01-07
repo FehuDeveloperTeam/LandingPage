@@ -8,9 +8,12 @@ from .serializers import ProyectoSerializer, TecnologiaSerializer, ProductoSeria
 import threading
 import resend
 import os
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from .pokemon_service import PokemonTCGService
+from .models import Post
+from .serializers import PostSerializer, PostListSerializer
+
 
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -188,3 +191,40 @@ def pokemon_types(request):
     """Obtener todos los tipos"""
     types = PokemonTCGService.get_types()
     return Response(types)
+
+class PostViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Post.objects.filter(publicado=True)
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PostListSerializer
+        return PostSerializer
+    
+    def get_queryset(self):
+        queryset = Post.objects.filter(publicado=True)
+        
+        # Filtrar por categoría
+        categoria = self.request.query_params.get('categoria')
+        if categoria:
+            queryset = queryset.filter(categoria=categoria)
+        
+        # Filtrar por estado
+        estado = self.request.query_params.get('estado')
+        if estado:
+            queryset = queryset.filter(estado=estado)
+        
+        # Solo destacados
+        destacado = self.request.query_params.get('destacado')
+        if destacado == 'true':
+            queryset = queryset.filter(destacado=True)
+        
+        return queryset
+    
+    # Obtener por slug
+    @action(detail=False, methods=['get'], url_path='slug/(?P<slug>[^/.]+)')
+    def by_slug(self, request, slug=None):
+        post = self.get_queryset().filter(slug=slug).first()
+        if post:
+            serializer = PostSerializer(post)
+            return Response(serializer.data)
+        return Response({'error': 'Post no encontrado'}, status=404)

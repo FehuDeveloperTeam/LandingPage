@@ -13,6 +13,8 @@ import Servicios from './pages/demos/Servicios'
 import Presentacion from './pages/demos/Presentacion'
 import Intangibles from './pages/demos/ventas/Intangibles'
 import Pokemon from './pages/demos/Pokemon'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -24,6 +26,8 @@ function AnimatedRoutes() {
         <Route path="/demos/ventas/intangibles" element={<PageTransition><Intangibles /></PageTransition>} />
         <Route path="/curriculum" element={<PageTransition><Curriculum /></PageTransition>} />
         <Route path="/demos" element={<PageTransition><Demos /></PageTransition>} />
+        <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+        <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
         <Route path="/demos/ventas" element={<PageTransition><Ventas /></PageTransition>} />
         <Route path="/demos/ventas/tangibles" element={<PageTransition><Tangibles /></PageTransition>} />
         <Route path="/demos/servicios" element={<PageTransition><Servicios /></PageTransition>} />

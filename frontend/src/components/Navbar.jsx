@@ -15,6 +15,7 @@ function Navbar() {
           <Link to="/" className="hover:underline">Inicio</Link>
           <Link to="/curriculum" className="hover:underline">Currículum</Link>
           <Link to="/demos" className="hover:underline">Demos</Link>
+          <Link to="/blog" className="hover:underline">Blog</Link>
           <ThemeToggle />
         </div>
 
@@ -33,6 +34,7 @@ function Navbar() {
           <Link to="/" onClick={() => setMenuOpen(false)} className="hover:underline">Inicio</Link>
           <Link to="/curriculum" onClick={() => setMenuOpen(false)} className="hover:underline">Currículum</Link>
           <Link to="/demos" onClick={() => setMenuOpen(false)} className="hover:underline">Demos</Link>
+          <Link to="/blog" onClick={() => setMenuOpen(false)} className="hover:underline">Blog</Link>
           <ThemeToggle />
         </div>
       )}

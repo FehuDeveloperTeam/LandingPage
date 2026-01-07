@@ -26,3 +26,15 @@ class ContactoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contacto
         fields = '__all__'
+
+from .models import Post
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+class PostListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'titulo', 'slug', 'resumen', 'imagen', 'categoria', 'estado', 'tags', 'fecha_creacion', 'destacado']

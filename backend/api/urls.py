@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    ProyectoViewSet, TecnologiaViewSet, ProductoViewSet, ContactoViewSet,
+    ProyectoViewSet, TecnologiaViewSet, ProductoViewSet, ContactoViewSet, PostViewSet,
     pokemon_search, pokemon_card_detail, pokemon_sets, pokemon_rarities, pokemon_types
 )
 
@@ -10,6 +10,7 @@ router.register(r'proyectos', ProyectoViewSet)
 router.register(r'tecnologias', TecnologiaViewSet)
 router.register(r'productos', ProductoViewSet)
 router.register(r'contacto', ContactoViewSet)
+router.register(r'posts', PostViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
