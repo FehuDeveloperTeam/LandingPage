@@ -4,6 +4,7 @@ import { getProyectos, getTecnologias } from '../services/api'
 import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import { IconUser, IconFolder, IconBolt, IconCheck } from '../components/Icons'
+import SEO from '../components/SEO'
 
 function ProjectCard({ proyecto }) {
   const [flipped, setFlipped] = useState(false)
@@ -58,11 +59,11 @@ function ProjectCard({ proyecto }) {
           </Card>
         </div>
 
-        {/* Atrás */}
+        {/* Atras */}
         <div className="absolute w-full h-full backface-hidden rotate-y-180">
           <Card hover={false} className="h-full p-6 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
             <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed text-sm">
-              {proyecto.descripcion || 'Proyecto en desarrollo. Más información próximamente.'}
+              {proyecto.descripcion || 'Proyecto en desarrollo. Mas informacion proximamente.'}
             </p>
           </Card>
         </div>
@@ -106,6 +107,11 @@ function Home() {
 
   return (
     <PageLayout>
+      <SEO 
+        title="Inicio"
+        description="Desarrollo web profesional en Chile. Creamos aplicaciones web, moviles y soluciones tecnologicas a medida."
+        url="/"
+      />
       <div className="space-y-20">
         {/* Hero */}
         <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
@@ -119,17 +125,17 @@ function Home() {
           </div>
           <div className="text-center md:text-left">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
-              Andrés Zurita
+              Andres Zurita
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 max-w-lg">
-              Analista Programador especializado en desarrollo móvil, IoT y realidad aumentada.
+              Analista Programador especializado en desarrollo movil, IoT y realidad aumentada.
             </p>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
               <Link 
                 to="/curriculum" 
                 className="px-6 py-3 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 text-white dark:text-gray-900 rounded-xl font-medium shadow-lg shadow-gray-900/20 dark:shadow-white/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
               >
-                Ver Currículum
+                Ver Curriculum
               </Link>
               <Link 
                 to="/demos" 
@@ -156,13 +162,13 @@ function Home() {
           </div>
         </section>
 
-        {/* Tecnologías */}
+        {/* Tecnologias */}
         <section>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
               <IconBolt className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl font-bold">Tecnologías</h2>
+            <h2 className="text-2xl font-bold">Tecnologias</h2>
           </div>
           <Card className="p-6">
             <div className="flex flex-wrap gap-3">

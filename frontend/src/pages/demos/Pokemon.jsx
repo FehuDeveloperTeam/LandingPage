@@ -4,6 +4,7 @@ import PageLayout from '../../components/PageLayout'
 import PokemonCard from '../../components/pokemon/PokemonCard'
 import PokemonFilters from '../../components/pokemon/PokemonFilters'
 import PokemonModal from '../../components/pokemon/PokemonModal'
+import SEO from '../../components/SEO'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
@@ -85,6 +86,11 @@ function Pokemon() {
       subtitulo="Busca cartas de todas las ediciones y consulta informacion detallada"
       icono="🎴"
     >
+      <SEO 
+      title="Pokemon TCG - Buscador de Cartas"
+      description="Busca cartas Pokemon TCG con precios de mercado en USD, EUR y CLP."
+      url="/demos/pokemon"
+    />
       <div className="mb-8">
         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-grow">

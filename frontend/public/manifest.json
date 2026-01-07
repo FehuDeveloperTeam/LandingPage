@@ -1,0 +1,16 @@
+{
+  "name": "Fehu Developers",
+  "short_name": "Fehu Dev",
+  "description": "Desarrollo web profesional en Chile",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f2937",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

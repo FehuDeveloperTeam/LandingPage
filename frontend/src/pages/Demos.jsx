@@ -4,6 +4,7 @@ import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import ContactModal from '../components/ContactModal'
 import { IconRocket, IconCart, IconBriefcase, IconBuilding, IconArrowRight } from '../components/Icons'
+import SEO from '../components/SEO'
 
 function Demos() {
   const [contactoAbierto, setContactoAbierto] = useState(false)
@@ -57,6 +58,11 @@ function Demos() {
       titulo="Demos"
       subtitulo="Explora diferentes tipos de sitios web y aplicaciones que puedo desarrollar para tu negocio"
     >
+      <SEO 
+  title="Demos"
+  description="Explora demos de aplicaciones web: e-commerce, servicios profesionales, landing corporativa y buscador Pokemon TCG."
+  url="/demos"
+/>
       {/* Header icon */}
       <div className="flex justify-center -mt-10 mb-12">
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 flex items-center justify-center shadow-xl">
@@ -136,5 +142,11 @@ function IconPokeball({ className }) {
     </svg>
   )
 }
+
+<SEO 
+  title="Demos"
+  description="Explora demos de aplicaciones web: e-commerce, servicios profesionales, landing corporativa y buscador Pokemon TCG."
+  url="/demos"
+/>
 
 export default Demos

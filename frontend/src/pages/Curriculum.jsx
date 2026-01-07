@@ -3,6 +3,7 @@ import { generatePDF } from '../components/CurriculumPDF'
 import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import { IconAcademic, IconBriefcase, IconCode, IconBolt, IconPhone, IconMail, IconLocation, IconDocument } from '../components/Icons'
+import SEO from '../components/SEO'
 
 function Curriculum() {
   const [generando, setGenerando] = useState(false)
@@ -61,6 +62,11 @@ function Curriculum() {
       titulo="Andrés Zurita Sanhueza"
       subtitulo={data.resumen}
     >
+      <SEO 
+  title="Curriculum"
+  description="Curriculum de Andres Zurita. Analista Programador con experiencia en React, Django, Flutter, IoT y realidad aumentada."
+  url="/curriculum"
+/>
       <div className="space-y-12">
         {/* Contacto */}
         <div className="flex flex-wrap justify-center gap-4 text-sm">
@@ -197,7 +203,9 @@ function Curriculum() {
         </section>
       </div>
     </PageLayout>
+    
   )
+  
 }
 
 export default Curriculum
