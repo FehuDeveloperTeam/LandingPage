@@ -123,11 +123,19 @@ class PokemonTCGService:
             return None
         
         image_base = card.get('image')
-        set_data = card.get('set', {}) if isinstance(card.get('set'), dict) else {}
-        pricing_data = card.get('pricing', {})
+        set_data = card.get('set') or {}
+        if not isinstance(set_data, dict):
+            set_data = {}
+        
+        pricing_data = card.get('pricing') or {}
+        if not isinstance(pricing_data, dict):
+            pricing_data = {}
         
         # Extraer precios de Cardmarket (EUR)
-        cardmarket = pricing_data.get('cardmarket', {})
+        cardmarket = pricing_data.get('cardmarket') or {}
+        if not isinstance(cardmarket, dict):
+            cardmarket = {}
+        
         cardmarket_prices = {
             'low': cardmarket.get('low'),
             'avg': cardmarket.get('avg'),
@@ -140,12 +148,17 @@ class PokemonTCGService:
         }
         
         # Extraer precios de TCGPlayer (USD)
-        tcgplayer = pricing_data.get('tcgplayer', {})
-        tcgplayer_holofoil = tcgplayer.get('holofoil', {})
-        tcgplayer_normal = tcgplayer.get('normal', {})
+        tcgplayer = pricing_data.get('tcgplayer') or {}
+        if not isinstance(tcgplayer, dict):
+            tcgplayer = {}
+        
+        tcgplayer_holofoil = tcgplayer.get('holofoil') or {}
+        tcgplayer_normal = tcgplayer.get('normal') or {}
         
         # Usar holofoil si existe, sino normal
         tcg_prices = tcgplayer_holofoil if tcgplayer_holofoil else tcgplayer_normal
+        if not isinstance(tcg_prices, dict):
+            tcg_prices = {}
         
         tcgplayer_prices = {
             'low': tcg_prices.get('lowPrice'),
@@ -159,7 +172,7 @@ class PokemonTCGService:
         return {
             'id': card.get('id'),
             'name': card.get('name'),
-            'types': card.get('types', []),
+            'types': card.get('types') or [],
             'hp': card.get('hp'),
             'set': {
                 'id': set_data.get('id'),
@@ -174,12 +187,12 @@ class PokemonTCGService:
                 'small': f"{image_base}/low.webp" if image_base else None,
                 'large': f"{image_base}/high.webp" if image_base else None,
             },
-            'attacks': card.get('attacks', []),
-            'weaknesses': card.get('weaknesses', []),
-            'resistances': card.get('resistances', []),
+            'attacks': card.get('attacks') or [],
+            'weaknesses': card.get('weaknesses') or [],
+            'resistances': card.get('resistances') or [],
             'retreat': card.get('retreat'),
             'description': card.get('description'),
-            'abilities': card.get('abilities', []),
+            'abilities': card.get('abilities') or [],
             'prices': {
                 'tcgplayer': tcgplayer_prices,
                 'cardmarket': cardmarket_prices,
