@@ -170,10 +170,11 @@ class Post(models.Model):
     ]
     
     titulo = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
     resumen = models.TextField(max_length=300)
     contenido = models.TextField()
-    imagen = models.URLField(blank=True)
+    imagen = models.ImageField(upload_to='blog/', null=True, blank=True)
+    activo = models.BooleanField(default=False)
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='desarrollo')
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='publicado')
     tags = models.JSONField(default=list, blank=True)
@@ -181,6 +182,11 @@ class Post(models.Model):
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     publicado = models.BooleanField(default=True)
     destacado = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.titulo)
+        super().save(*args, **kwargs)
     
     class Meta:
         ordering = ['-fecha_creacion']

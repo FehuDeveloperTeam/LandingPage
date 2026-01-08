@@ -197,8 +197,11 @@ def pokemon_types(request):
     types = PokemonTCGService.get_types()
     return Response(types)
 
-class PostViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Post.objects.filter(publicado=True)
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    lookup_field = 'slug'
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get_serializer_class(self):
         if self.action == 'list':
@@ -206,7 +209,9 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
         return PostSerializer
     
     def get_queryset(self):
-        queryset = Post.objects.filter(publicado=True)
+        if self.request.user.is_staff:
+            return Post.objects.all().order_by('-fecha_creacion')
+        return Post.objects.filter(activo=True).order_by('-fecha_creacion')
         
         # Filtrar por categoría
         categoria = self.request.query_params.get('categoria')
@@ -228,8 +233,8 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
     # Obtener por slug
     @action(detail=False, methods=['get'], url_path='slug/(?P<slug>[^/.]+)')
     def by_slug(self, request, slug=None):
-        post = self.get_queryset().filter(slug=slug).first()
-        if post:
-            serializer = PostSerializer(post)
-            return Response(serializer.data)
+        queryset = self.get_queryset()
+        post = get_object_or_404(queryset, slug=slug)
+        serializer = self.get_serializer(post)
+        return Response(serializer.data)
         return Response({'error': 'Post no encontrado'}, status=404)

@@ -35,6 +35,10 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PostListSerializer(serializers.ModelSerializer):
+
+    imagen = serializers.ImageField(required=False, allow_null=True)
+
     class Meta:
         model = Post
-        fields = ['id', 'titulo', 'slug', 'resumen', 'imagen', 'categoria', 'estado', 'tags', 'fecha_creacion', 'destacado']
+        fields = ['id', 'titulo', 'slug', 'resumen', 'imagen', 'contenido', 'categoria', 'estado', 'activo', 'tags', 'fecha_creacion', 'destacado']
+        read_only_fields = ['slug', 'fecha_creacion']
