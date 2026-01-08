@@ -1,5 +1,6 @@
 from django.db import models
 from decimal import Decimal, ROUND_UP
+from django.core.exceptions import ValidationError
 
 
 class Proyecto(models.Model):
@@ -44,6 +45,10 @@ class Producto(models.Model):
     imagen1 = models.URLField(blank=True)
     precio_costo = models.DecimalField(max_digits=10, decimal_places=0)
     cantidad = models.IntegerField(default=0)
+
+    def clean(self):
+        if self.anio_desde > self.anio_hasta:
+            raise ValidationError("El año de inicio no puede ser mayor al año de fin.")
 
     @property
     def iva(self):

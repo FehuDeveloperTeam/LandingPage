@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from .pokemon_service import PokemonTCGService
 from .models import Post
 from .serializers import PostSerializer, PostListSerializer
+from django.core.cache import cache
 
 
 
@@ -163,8 +164,12 @@ def pokemon_search(request):
         types=types if types else None,
         rarity=rarity if rarity else None
     )
-    
-    return Response(result)
+
+    cached_data = cache.get(result)
+    if cached_data is None:
+        cache.set('pokemon_search_result', result, 60 * 60)  # Cache for 60 minutes
+        return Response(result)
+    return Response(cached_data)
 
 @api_view(['GET'])
 def pokemon_card_detail(request, card_id):
