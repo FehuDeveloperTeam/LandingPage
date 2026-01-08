@@ -26,7 +26,7 @@ function BlogPost() {
   const fetchPost = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${API_URL}/api/posts/slug/${slug}/`)
+      const response = await fetch(API_URL + '/api/posts/slug/' + slug + '/')
       if (response.ok) {
         const data = await response.json()
         setPost(data)
@@ -62,7 +62,7 @@ function BlogPost() {
     return (
       <PageLayout>
         <div className="flex justify-center items-center py-20">
-          <div className="w-10 h-10 border-2 border-gray-300 border-t-gray-900 dark:border-gray-600 dark:border-t-white rounded-full animate-spin" />
+          <div className="w-10 h-10 border-2 border-gray-300 border-t-gray-900 dark:border-gray-600 dark:border-t-white rounded-full animate-spin"></div>
         </div>
       </PageLayout>
     )
@@ -107,7 +107,6 @@ function BlogPost() {
         image={post.imagen}
         type="article"
       />
-
       <article className="max-w-3xl mx-auto">
         <Link 
           to="/blog"
@@ -127,23 +126,13 @@ function BlogPost() {
             <span className="text-sm text-gray-500 capitalize">{post.categoria}</span>
             <span className="text-sm text-gray-500">{fechaCreacion}</span>
           </div>
-
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            {post.titulo}
-          </h1>
-
-          <p className="text-xl text-gray-600 dark:text-gray-400">
-            {post.resumen}
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.titulo}</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400">{post.resumen}</p>
         </header>
 
         {post.imagen && (
           <div className="mb-8 rounded-2xl overflow-hidden">
-            <img 
-              src={post.imagen} 
-              alt={post.titulo}
-              className="w-full h-auto"
-            />
+            <img src={post.imagen} alt={post.titulo} className="w-full h-auto" />
           </div>
         )}
 
@@ -152,9 +141,7 @@ function BlogPost() {
             {post.contenido.split('\n').map((parrafo, i) => {
               if (parrafo.trim()) {
                 return (
-                  <p key={i} className="mb-4 text-gray-700 dark:text-gray-300">
-                    {parrafo}
-                  </p>
+                  <p key={i} className="mb-4 text-gray-700 dark:text-gray-300">{parrafo}</p>
                 )
               }
               return null
@@ -165,10 +152,7 @@ function BlogPost() {
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-8">
             {post.tags.map((tag, i) => (
-              <span 
-                key={i} 
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300"
-              >
+              <span key={i} className="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300">
                 #{tag}
               </span>
             ))}
@@ -176,9 +160,7 @@ function BlogPost() {
         )}
 
         <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-          <p className="text-sm text-gray-500">
-            Ultima actualizacion: {fechaActualizacion}
-          </p>
+          <p className="text-sm text-gray-500">Ultima actualizacion: {fechaActualizacion}</p>
         </div>
 
         <Card className="p-6 mt-8 text-center">
