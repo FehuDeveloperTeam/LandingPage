@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { CartProvider } from './context/CartContext'
 import Navbar from './components/Navbar'
@@ -14,7 +14,10 @@ import Presentacion from './pages/demos/Presentacion'
 import Intangibles from './pages/demos/ventas/Intangibles'
 import Pokemon from './pages/demos/Pokemon'
 import Blog from './pages/Blog'
+import Login from './pages/Login';
 import BlogPost from './pages/BlogPost'
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -33,6 +36,17 @@ function AnimatedRoutes() {
         <Route path="/demos/servicios" element={<PageTransition><Servicios /></PageTransition>} />
         <Route path="/demos/presentacion" element={<PageTransition><Presentacion /></PageTransition>} />
         <Route path="/demos/pokemon" element={<PageTransition><Pokemon /></PageTransition>} />
+        <Route path="/admin/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <ProtectedRoute>
+              <PageTransition>
+                <AdminDashboard />
+              </PageTransition>
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </AnimatePresence>
   )

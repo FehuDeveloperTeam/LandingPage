@@ -4,6 +4,7 @@ import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import SEO from '../components/SEO'
 import { IconArrowRight } from '../components/Icons'
+import DOMPurify from 'dompurify';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
@@ -89,6 +90,7 @@ function BlogPost() {
             {post.contenido.split('\n').map((p, i) => (
               p.trim() ? <p key={i} className="mb-4 text-gray-700">{p}</p> : null
             ))}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.contenido) }}
           </div>
         </Card>
 
