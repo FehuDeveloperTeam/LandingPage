@@ -173,7 +173,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     resumen = models.TextField(max_length=300)
     contenido = models.TextField()
-    imagen = models.ImageField(upload_to='blog/', null=True, blank=True)
+    imagen = models.URLField(max_length=500, blank=True, null=True)
     activo = models.BooleanField(default=False)
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='desarrollo')
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='publicado')

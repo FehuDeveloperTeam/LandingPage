@@ -12,6 +12,7 @@ const AdminDashboard = () => {
   // Estados del formulario
   const [titulo, setTitulo] = useState('');
   const [contenido, setContenido] = useState('');
+  const [imagenUrl, setImagenUrl] = useState(''); // NUEVO: Estado para la URL de la imagen
   const [categoria, setCategoria] = useState('desarrollo');
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +20,6 @@ const AdminDashboard = () => {
     try {
       const res = await fetch(`${API_URL}/api/posts/`);
       const data = await res.json();
-      // Si el backend devuelve una lista paginada, usa data.results
       setPosts(Array.isArray(data) ? data : data.results || []);
     } catch (error) {
       console.error("Error cargando posts:", error);
@@ -37,12 +37,12 @@ const AdminDashboard = () => {
     
     const postData = {
       titulo,
-      contenido, // HTML del editor
+      contenido, 
+      imagen: imagenUrl, // ENVIAMOS LA URL: Asegúrate que en Django el campo se llame 'imagen'
       categoria,
       resumen: contenido.substring(0, 150).replace(/<[^>]*>?/gm, ''), 
       slug: titulo.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
-      publicado: true,
-      estado: 'publicado'
+      publicado: true
     };
 
     try {
@@ -57,8 +57,10 @@ const AdminDashboard = () => {
 
       if (response.ok) {
         alert("¡Post publicado con éxito!");
+        // Limpiamos todo
         setTitulo('');
         setContenido('');
+        setImagenUrl('');
         setShowEditor(false);
         fetchPosts();
       } else {
@@ -91,6 +93,16 @@ const AdminDashboard = () => {
             placeholder="Título del post..."
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
+            required
+          />
+
+          {/* NUEVO: Campo para la URL de la imagen */}
+          <input 
+            type="url"
+            className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
+            placeholder="URL de la imagen (ej: https://imgur.com/foto.jpg)"
+            value={imagenUrl}
+            onChange={(e) => setImagenUrl(e.target.value)}
           />
           
           <select 
@@ -123,6 +135,7 @@ const AdminDashboard = () => {
         </form>
       )}
 
+      {/* Lista de posts existentes */}
       <div className="grid gap-4">
         <h2 className="text-xl font-semibold mb-2">Posts publicados</h2>
         {posts.length === 0 && <p className="text-gray-500">No hay posts todavía.</p>}
