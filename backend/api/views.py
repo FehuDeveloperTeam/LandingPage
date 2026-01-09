@@ -14,6 +14,7 @@ from .pokemon_service import PokemonTCGService
 from .models import Post
 from .serializers import PostSerializer, PostListSerializer
 from django.core.cache import cache
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 
