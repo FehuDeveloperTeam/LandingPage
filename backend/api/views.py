@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from django.db.models import Q
 from django.core.mail import send_mail
@@ -203,6 +203,12 @@ class PostViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
 
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_permissions(self):
+        # El público solo lee, tú (Admin) puedes hacer de todo
+        if self.action in ['list', 'retrieve', 'by_slug']:
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]
     
     def get_serializer_class(self):
         if self.action == 'list':
