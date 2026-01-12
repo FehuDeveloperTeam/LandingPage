@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import DOMPurify from 'dompurify';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
@@ -10,7 +9,7 @@ const AdminDashboard = () => {
   // Estados del formulario
   const [titulo, setTitulo] = useState('');
   const [contenido, setContenido] = useState('');
-  const [imagenUrl, setImagenUrl] = useState(''); // NUEVO: Estado para la URL de la imagen
+  const [imagenUrl, setImagenUrl] = useState(''); 
   const [categoria, setCategoria] = useState('desarrollo');
   const [loading, setLoading] = useState(false);
 
@@ -36,11 +35,13 @@ const AdminDashboard = () => {
     const postData = {
       titulo,
       contenido, 
-      imagen: imagenUrl, // ENVIAMOS LA URL: Asegúrate que en Django el campo se llame 'imagen'
+      imagen: imagenUrl, 
       categoria,
-      resumen: contenido.substring(0, 150).replace(/<[^>]*>?/gm, ''), 
+      // Generamos el resumen eliminando etiquetas si las hubiera y limitando a 150 caracteres
+      resumen: contenido.substring(0, 150), 
       slug: titulo.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
-      publicado: true
+      publicado: true,
+      activo: true // Aseguramos que el post esté activo según tu modelo de Django
     };
 
     try {
@@ -55,7 +56,6 @@ const AdminDashboard = () => {
 
       if (response.ok) {
         alert("¡Post publicado con éxito!");
-        // Limpiamos todo
         setTitulo('');
         setContenido('');
         setImagenUrl('');
@@ -86,25 +86,27 @@ const AdminDashboard = () => {
 
       {showEditor && (
         <form onSubmit={handleSave} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mb-12 space-y-4 text-black dark:text-white">
+          <label className="block font-medium">Título del Post</label>
           <input 
             className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
-            placeholder="Título del post..."
+            placeholder="Escribe el título aquí..."
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             required
           />
 
-          {/* NUEVO: Campo para la URL de la imagen */}
+          <label className="block font-medium">URL de la Imagen</label>
           <input 
             type="url"
             className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
-            placeholder="URL de la imagen (ej: https://imgur.com/foto.jpg)"
+            placeholder="https://ejemplo.com/imagen.jpg"
             value={imagenUrl}
             onChange={(e) => setImagenUrl(e.target.value)}
           />
           
+          <label className="block font-medium">Categoría</label>
           <select 
-            className="w-full p-3 border rounded-lg dark:bg-gray-700"
+            className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-white"
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
           >
@@ -114,19 +116,19 @@ const AdminDashboard = () => {
             <option value="proyecto">Proyecto</option>
           </select>
 
-          <div className="h-80 mb-16">
-            <ReactQuill 
-              theme="snow" 
-              value={contenido} 
-              onChange={setContenido} 
-              className="h-full bg-white text-black rounded-b-lg"
-            />
-          </div>
+          <label className="block font-medium">Contenido del Post</label>
+          <textarea 
+            className="w-full h-80 p-4 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none text-black dark:text-white"
+            placeholder="Escribe el cuerpo del post aquí..."
+            value={contenido}
+            onChange={(e) => setContenido(e.target.value)}
+            required
+          />
 
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 disabled:opacity-50 transition-all"
+            className="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 disabled:opacity-50 transition-all shadow-md"
           >
             {loading ? 'Publicando...' : 'Publicar Post en el Blog'}
           </button>
@@ -136,16 +138,16 @@ const AdminDashboard = () => {
       {/* Lista de posts existentes */}
       <div className="grid gap-4">
         <h2 className="text-xl font-semibold mb-2">Posts publicados</h2>
-        {posts.length === 0 && <p className="text-gray-500">No hay posts todavía.</p>}
+        {posts.length === 0 && <p className="text-gray-500 italic">No hay posts todavía.</p>}
         {posts.map(post => (
-          <div key={post.id} className="border p-4 rounded-xl flex justify-between items-center bg-white dark:bg-gray-800 shadow-sm">
+          <div key={post.id} className="border p-4 rounded-xl flex justify-between items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow">
             <div>
-              <span className="font-bold">{post.titulo}</span>
-              <p className="text-xs text-gray-500 uppercase">{post.categoria}</p>
+              <span className="font-bold text-lg">{post.titulo}</span>
+              <p className="text-xs text-blue-500 font-semibold uppercase tracking-wider">{post.categoria}</p>
             </div>
             <div className="flex gap-3">
-              <button className="text-blue-500 hover:text-blue-700 font-medium">Editar</button>
-              <button className="text-red-500 hover:text-red-700 font-medium">Eliminar</button>
+              <button className="text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-colors">Editar</button>
+              <button className="text-red-500 hover:bg-red-50 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-colors">Eliminar</button>
             </div>
           </div>
         ))}
