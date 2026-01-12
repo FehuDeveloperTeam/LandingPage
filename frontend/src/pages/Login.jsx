@@ -20,7 +20,7 @@ const Login = () => {
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
         alert('Sesión iniciada');
-        navigate('/admin/blog'); // Redirige a tu editor
+        navigate('/admin/dashboard'); // Redirige a tu editor
       } else {
         alert('Credenciales incorrectas');
       }
