@@ -85,6 +85,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
     
 
+
+
 if os.environ.get('DATABASE_URL'):
     DATABASES = {
         'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
@@ -136,6 +138,17 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # Elimina o comenta 'rest_framework.authentication.SessionAuthentication' 
+        # para evitar que Django busque cookies/CSRF en tu API.
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 CSRF_TRUSTED_ORIGINS = [
     "https://landingpage-production-4175.up.railway.app",
