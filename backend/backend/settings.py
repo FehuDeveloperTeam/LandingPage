@@ -142,8 +142,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://landing-page-p9rdn2j8s-andreszuritas-projects.vercel.app",
 ]
 
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(','), "https://landingpage-production-4175.up.railway.app",
-    "https://landing-page-p9rdn2j8s-andreszuritas-projects.vercel.app",
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
 
 CORS_ALLOW_ALL_ORIGINS = os.environ.get('DEBUG', 'False') == 'True'
 # Email configuration
