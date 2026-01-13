@@ -198,6 +198,18 @@ def pokemon_types(request):
     types = PokemonTCGService.get_types()
     return Response(types)
 
+class IsOwnerOnly(permissions.BasePermission):
+    """
+    Permiso que solo permite a un usuario específico (azwb) realizar cambios.
+    """
+    def has_permission(self, request, view):
+        # Si es una consulta (GET), permitimos a todos
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        
+        # Si es escritura (POST, PUT, DELETE), verificamos el nombre de usuario
+        return request.user.is_authenticated and request.user.username == 'azwb'
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     lookup_field = 'slug'
@@ -206,9 +218,9 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         # El público solo lee, tú (Admin) puedes hacer de todo
-        if self.action in ['list', 'retrieve', 'by_slug']:
-            return [permissions.AllowAny()]
-        return [permissions.IsAdminUser()]
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsOwnerOnly()]
+        return [permissions.AllowAny()]
     
     def get_serializer_class(self):
         if self.action == 'list':
