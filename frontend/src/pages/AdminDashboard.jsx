@@ -45,6 +45,7 @@ const AdminDashboard = () => {
     };
 
     try {
+      console.log('Token:', token);
       const response = await fetch(`${API_URL}/api/posts/`, {
         method: 'POST',
         headers: {
