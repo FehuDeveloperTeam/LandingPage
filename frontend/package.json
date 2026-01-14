@@ -11,8 +11,12 @@
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.3.2",
+    "@tiptap/pm": "^3.15.3",
+    "@tiptap/react": "^3.15.3",
+    "@tiptap/starter-kit": "^3.15.3",
     "dompurify": "^3.3.1",
     "framer-motion": "^12.23.26",
+    "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.11.0"
