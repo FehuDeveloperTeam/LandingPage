@@ -22,14 +22,17 @@ from django.shortcuts import get_object_or_404
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Proyecto.objects.all()
     serializer_class = ProyectoSerializer
+    permission_classes = [permissions.AllowAny]
 
 class TecnologiaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tecnologia.objects.all()
     serializer_class = TecnologiaSerializer
+    permission_classes = [permissions.AllowAny]
 
 class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
+    permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
         queryset = Producto.objects.all()
