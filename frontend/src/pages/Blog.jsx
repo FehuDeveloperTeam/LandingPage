@@ -3,100 +3,34 @@ import { Link } from 'react-router-dom'
 import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import SEO from '../components/SEO'
+import { 
+  LayoutGrid, 
+  Cpu, 
+  Code2, 
+  BookOpen, 
+  Newspaper, 
+  Star, 
+  ArrowRight,
+  Search,
+  Clock
+} from 'lucide-react'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
+// Configuración profesional de categorías con iconos
 const CATEGORIAS = [
-  { id: '', nombre: 'Todos', color: 'gray' },
-  { id: 'desarrollo', nombre: 'Desarrollo', color: 'blue' },
-  { id: 'tecnologia', nombre: 'Tecnología', color: 'purple' },
-  { id: 'proyecto', nombre: 'Proyecto', color: 'green' },
-  { id: 'tutorial', nombre: 'Tutorial', color: 'orange' },
-  { id: 'noticia', nombre: 'Noticia', color: 'red' },
+  { id: '', nombre: 'Todos', icono: LayoutGrid },
+  { id: 'desarrollo', nombre: 'Desarrollo', icono: Code2 },
+  { id: 'tecnologia', nombre: 'Tecnología', icono: Cpu },
+  { id: 'ia', nombre: 'IA', icono: Star },
+  { id: 'tutorial', nombre: 'Tutorial', icono: BookOpen },
+  { id: 'noticia', nombre: 'Noticia', icono: Newspaper },
 ]
-
-const ESTADOS = {
-  idea: { label: 'Idea', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300', icon: '💡' },
-  desarrollo: { label: 'En Desarrollo', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300', icon: '🔨' },
-  completado: { label: 'Completado', color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300', icon: '✅' },
-  publicado: { label: 'Publicado', color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300', icon: '📝' },
-}
-
-function BlogCard({ post }) {
-  const estado = ESTADOS[post.estado] || ESTADOS.publicado
-  const fecha = new Date(post.fecha_creacion).toLocaleDateString('es-CL', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  })
-
-  return (
-    <Link to={`/blog/${post.slug}`}>
-      <Card className="h-full overflow-hidden group cursor-pointer">
-        {/* Imagen */}
-        {post.imagen ? (
-          <div className="h-48 overflow-hidden">
-            <img 
-              src={post.imagen} 
-              alt={post.titulo}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        ) : (
-          <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center">
-            <span className="text-6xl">{estado.icon}</span>
-          </div>
-        )}
-
-        {/* Contenido */}
-        <div className="p-5">
-          {/* Categoria y estado */}
-          <div className="flex items-center gap-2 mb-3">
-            <span className={`text-xs px-2 py-1 rounded-full ${estado.color}`}>
-              {estado.icon} {estado.label}
-            </span>
-            <span className="text-xs text-gray-500">{post.categoria}</span>
-          </div>
-
-          {/* Titulo */}
-          <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-            {post.titulo}
-          </h3>
-
-          {/* Resumen */}
-          <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
-            {post.resumen}
-          </p>
-
-          {/* Tags y fecha */}
-          <div className="flex items-center justify-between">
-            <div className="flex flex-wrap gap-1">
-              {post.tags?.slice(0, 3).map((tag, i) => (
-                <span key={i} className="text-xs text-gray-500 dark:text-gray-400">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-            <span className="text-xs text-gray-500">{fecha}</span>
-          </div>
-        </div>
-
-        {/* Badge destacado */}
-        {post.destacado && (
-          <div className="absolute top-3 right-3 bg-yellow-400 text-yellow-900 text-xs px-2 py-1 rounded-full font-medium">
-            ⭐ Destacado
-          </div>
-        )}
-      </Card>
-    </Link>
-  )
-}
 
 function Blog() {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [categoriaActiva, setCategoriaActiva] = useState('')
-  const [destacado, setDestacado] = useState(null)
 
   useEffect(() => {
     fetchPosts()
@@ -105,18 +39,15 @@ function Blog() {
   const fetchPosts = async () => {
     setLoading(true)
     try {
-      const params = new URLSearchParams()
-      if (categoriaActiva) params.append('categoria', categoriaActiva)
+      let url = `${API_URL}/api/posts/`
+      if (categoriaActiva) url += `?categoria=${categoriaActiva}`
       
-      const response = await fetch(`${API_URL}/api/posts/?${params}`)
-      const data = await response.json()
-      
-      // Separar destacado del resto
-      const destacados = data.filter(p => p.destacado)
-      const resto = data.filter(p => !p.destacado)
-      
-      setDestacado(destacados[0] || null)
-      setPosts(resto)
+      const response = await fetch(url)
+      if (response.ok) {
+        const data = await response.json()
+        // Manejo de paginación si Django la devuelve
+        setPosts(Array.isArray(data) ? data : (data.results || []))
+      }
     } catch (error) {
       console.error('Error cargando posts:', error)
     } finally {
@@ -124,102 +55,134 @@ function Blog() {
     }
   }
 
+  // Filtrar el post destacado (el más reciente que sea 'destacado')
+  const destacado = posts.find(p => p.destacado) || posts[0]
+  const otrosPosts = destacado ? posts.filter(p => p.id !== destacado.id) : posts
+
   return (
-    <PageLayout
-      titulo="Blog"
-      subtitulo="Ideas, proyectos y aprendizajes en el mundo del desarrollo"
-    >
+    <PageLayout>
       <SEO 
-        title="Blog"
-        description="Blog de desarrollo: ideas, proyectos, tutoriales y noticias sobre tecnologia, programacion y desarrollo web."
-        url="/blog"
+        title="Blog de Tecnología y Desarrollo" 
+        description="Explora artículos sobre inteligencia artificial, desarrollo de software y las últimas tendencias tecnológicas." 
       />
 
-      {/* Filtros por categoria */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {CATEGORIAS.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setCategoriaActiva(cat.id)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              categoriaActiva === cat.id
-                ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            {cat.nombre}
-          </button>
-        ))}
-      </div>
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Encabezado */}
+        <header className="mb-12 text-center md:text-left">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+            BLOG<span className="text-blue-600">.</span>
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 max-w-2xl text-lg">
+            Perspectivas técnicas sobre ingeniería de software y el futuro de la tecnología.
+          </p>
+        </header>
 
-      {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="w-10 h-10 border-2 border-gray-300 border-t-gray-900 dark:border-gray-600 dark:border-t-white rounded-full animate-spin" />
+        {/* Filtros de Categoría */}
+        <div className="flex flex-wrap gap-2 mb-12 justify-center md:justify-start">
+          {CATEGORIAS.map((cat) => {
+            const Icono = cat.icono
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setCategoriaActiva(cat.id)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all
+                  ${categoriaActiva === cat.id 
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
+                    : 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-blue-400'}`}
+              >
+                <Icono size={16} />
+                {cat.nombre}
+              </button>
+            )
+          })}
         </div>
-      ) : (
-        <>
-          {/* Post destacado */}
-          {destacado && !categoriaActiva && (
-            <Link to={`/blog/${destacado.slug}`} className="block mb-8">
-              <Card className="overflow-hidden group">
-                <div className="grid md:grid-cols-2 gap-0">
-                  {/* Imagen */}
-                  <div className="h-64 md:h-80 overflow-hidden">
-                    {destacado.imagen ? (
+
+        {loading ? (
+          <div className="grid gap-8 animate-pulse">
+            <div className="h-96 bg-gray-200 dark:bg-gray-800 rounded-3xl" />
+            <div className="grid md:grid-cols-3 gap-6">
+              {[1, 2, 3].map(i => <div key={i} className="h-64 bg-gray-200 dark:bg-gray-800 rounded-2xl" />)}
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Post Destacado */}
+            {destacado && !categoriaActiva && (
+              <Link to={`/blog/${destacado.slug}`} className="block mb-16 group">
+                <Card className="overflow-hidden border-none bg-gray-50 dark:bg-gray-900 shadow-2xl transition-all group-hover:shadow-blue-500/10">
+                  <div className="grid md:grid-cols-2">
+                    <div className="relative h-64 md:h-full overflow-hidden">
                       <img 
-                        src={destacado.imagen} 
-                        alt={destacado.titulo}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        src={destacado.imagen || '/placeholder-blog.jpg'} 
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        alt={destacado.titulo} 
                       />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                        <span className="text-8xl">📝</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Contenido */}
-                  <div className="p-6 md:p-8 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 rounded-full font-medium">
-                        ⭐ Destacado
-                      </span>
-                      <span className="text-sm text-gray-500">{destacado.categoria}</span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {destacado.titulo}
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      {destacado.resumen}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {destacado.tags?.map((tag, i) => (
-                        <span key={i} className="text-sm text-blue-600 dark:text-blue-400">
-                          #{tag}
+                    <div className="p-8 md:p-12 flex flex-col justify-center">
+                      <div className="flex items-center gap-3 mb-6">
+                        <span className="bg-blue-600 text-white text-[10px] font-black uppercase px-2 py-1 rounded">Destacado</span>
+                        <span className="text-gray-400 text-sm flex items-center gap-1 uppercase tracking-widest font-bold">
+                          {destacado.categoria}
                         </span>
-                      ))}
+                      </div>
+                      <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight group-hover:text-blue-600 transition-colors">
+                        {destacado.titulo}
+                      </h2>
+                      <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg line-clamp-3 leading-relaxed">
+                        {destacado.resumen}
+                      </p>
+                      <div className="flex items-center gap-2 text-blue-600 font-bold group-hover:gap-4 transition-all">
+                        LEER ARTÍCULO COMPLETO <ArrowRight size={20} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
-            </Link>
-          )}
+                </Card>
+              </Link>
+            )}
 
-          {/* Grid de posts */}
-          {posts.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <BlogCard key={post.id} post={post} />
+            {/* Listado de Posts */}
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {otrosPosts.map((post) => (
+                <Link key={post.id} to={`/blog/${post.slug}`} className="group">
+                  <article className="flex flex-col h-full bg-white dark:bg-gray-950 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-900 transition-all hover:border-blue-500/50 hover:shadow-xl">
+                    <div className="relative h-52 overflow-hidden">
+                      <img src={post.imagen} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={post.titulo} />
+                      <div className="absolute top-4 left-4">
+                        <span className="bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">
+                          {post.categoria}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-6 flex flex-col flex-grow">
+                      <div className="flex items-center gap-2 text-gray-400 text-xs mb-3 font-bold uppercase tracking-widest">
+                        <Clock size={12} />
+                        {new Date(post.fecha_creacion).toLocaleDateString('es-CL')}
+                      </div>
+                      <h3 className="text-xl font-bold mb-3 leading-snug group-hover:text-blue-600 transition-colors">
+                        {post.titulo}
+                      </h3>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-3 mb-6 flex-grow">
+                        {post.resumen}
+                      </p>
+                      <div className="flex items-center gap-2 text-sm font-bold text-blue-600">
+                        VER MÁS <ArrowRight size={14} />
+                      </div>
+                    </div>
+                  </article>
+                </Link>
               ))}
             </div>
-          ) : (
-            <div className="text-center py-20 text-gray-500">
-              <p className="text-6xl mb-4">📝</p>
-              <p>No hay publicaciones en esta categoria</p>
-            </div>
-          )}
-        </>
-      )}
+
+            {posts.length === 0 && (
+              <div className="text-center py-20 bg-gray-50 dark:bg-gray-900 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">
+                <Search className="mx-auto mb-4 text-gray-400" size={48} />
+                <h3 className="text-xl font-bold">No encontramos artículos</h3>
+                <p className="text-gray-500">Prueba con otra categoría o vuelve más tarde.</p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </PageLayout>
   )
 }

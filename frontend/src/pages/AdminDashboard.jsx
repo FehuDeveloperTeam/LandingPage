@@ -1,157 +1,125 @@
 import { useState, useEffect } from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { 
+  Bold, Italic, List, ListOrdered, Heading1, Heading2, 
+  Quote, Undo, Redo, Save, Plus, X, Trash2, Search, Link as LinkIcon 
+} from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const API_URL = import.meta.env.VITE_API_URL;
+
+// Componente para la Barra de Herramientas del Editor
+const MenuBar = ({ editor }) => {
+  if (!editor) return null;
+  const btn = "p-2 rounded hover:bg-gray-700 transition-colors ";
+  const active = "bg-blue-600 text-white";
+
+  return (
+    <div className="flex flex-wrap gap-1 p-2 border-b border-gray-700 bg-gray-800 rounded-t-xl">
+      <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={`${btn} ${editor.isActive('bold') ? active : ''}`}><Bold size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={`${btn} ${editor.isActive('italic') ? active : ''}`}><Italic size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={`${btn} ${editor.isActive('heading', { level: 1 }) ? active : ''}`}><Heading1 size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={`${btn} ${editor.isActive('heading', { level: 2 }) ? active : ''}`}><Heading2 size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={`${btn} ${editor.isActive('bulletList') ? active : ''}`}><List size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`${btn} ${editor.isActive('orderedList') ? active : ''}`}><ListOrdered size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`${btn} ${editor.isActive('blockquote') ? active : ''}`}><Quote size={18}/></button>
+      <div className="w-px h-6 bg-gray-600 mx-1 self-center" />
+      <button type="button" onClick={() => editor.chain().focus().undo().run()} className={btn}><Undo size={18}/></button>
+      <button type="button" onClick={() => editor.chain().focus().redo().run()} className={btn}><Redo size={18}/></button>
+    </div>
+  );
+};
 
 const AdminDashboard = () => {
   const [posts, setPosts] = useState([]);
   const [showEditor, setShowEditor] = useState(false);
-
-  // Estados del formulario
-  const [titulo, setTitulo] = useState('');
-  const [contenido, setContenido] = useState('');
-  const [imagenUrl, setImagenUrl] = useState(''); 
-  const [categoria, setCategoria] = useState('desarrollo');
   const [loading, setLoading] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    titulo: '', imagen: '', categoria: 'tecnologia',
+    meta_titulo: '', meta_descripcion: '', fuentes: ''
+  });
 
-  const fetchPosts = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/posts/`);
-      const data = await res.json();
-      setPosts(Array.isArray(data) ? data : data.results || []);
-    } catch (error) {
-      console.error("Error cargando posts:", error);
-    }
-  };
-
-  useEffect(() => { fetchPosts(); }, []);
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: '<p>Empieza a escribir tu historia profesional...</p>',
+    editorProps: {
+      attributes: {
+        class: 'prose prose-invert max-w-none p-4 min-h-[300px] focus:outline-none text-gray-200',
+      },
+    },
+  });
 
   const handleSave = async (e) => {
     e.preventDefault();
-    if (!titulo || !contenido) return alert("Rellena el título y el contenido");
-    
     setLoading(true);
     const token = localStorage.getItem('access_token');
     
     const postData = {
-      titulo,
-      contenido, 
-      imagen: imagenUrl, 
-      categoria,
-      // Generamos el resumen eliminando etiquetas si las hubiera y limitando a 150 caracteres
-      resumen: contenido.substring(0, 150), 
-      slug: titulo.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
-      publicado: true,
-      activo: true // Aseguramos que el post esté activo según tu modelo de Django
+      ...formData,
+      contenido: editor.getHTML(), // Tiptap genera HTML limpio
+      slug: formData.titulo.toLowerCase().trim().replace(/[\s.]+/g, '-').replace(/[^\w-]+/g, ''),
+      activo: true,
+      publicado: true
     };
 
     try {
-      console.log('Token:', token);
       const response = await fetch(`${API_URL}/api/posts/`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(postData)
       });
 
       if (response.ok) {
-        alert("¡Post publicado con éxito!");
-        setTitulo('');
-        setContenido('');
-        setImagenUrl('');
+        alert("Artículo publicado");
         setShowEditor(false);
-        fetchPosts();
-      } else {
-        const errorData = await response.json();
-        alert("Error: " + JSON.stringify(errorData));
+        // fetchPosts()...
       }
-    } catch (error) {
-      alert("Error de conexión con el servidor");
-    } finally {
-      setLoading(false);
-    }
+    } catch (err) { alert("Error de red"); }
+    finally { setLoading(false); }
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto dark:text-white">
-      <div className="flex justify-between items-center mb-8 border-b pb-4">
-        <h1 className="text-3xl font-bold">Gestión de Blog</h1>
-        <button 
-          onClick={() => setShowEditor(!showEditor)}
-          className={`${showEditor ? 'bg-gray-500' : 'bg-blue-600'} text-white px-6 py-2 rounded-lg font-bold transition-colors`}
-        >
-          {showEditor ? 'Cancelar' : '+ Nuevo Post'}
-        </button>
-      </div>
-
-      {showEditor && (
-        <form onSubmit={handleSave} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mb-12 space-y-4 text-black dark:text-white">
-          <label className="block font-medium">Título del Post</label>
-          <input 
-            className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
-            placeholder="Escribe el título aquí..."
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-            required
-          />
-
-          <label className="block font-medium">URL de la Imagen</label>
-          <input 
-            type="url"
-            className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600"
-            placeholder="https://ejemplo.com/imagen.jpg"
-            value={imagenUrl}
-            onChange={(e) => setImagenUrl(e.target.value)}
-          />
-          
-          <label className="block font-medium">Categoría</label>
-          <select 
-            className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-white"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-          >
-            <option value="desarrollo">Desarrollo</option>
-            <option value="tecnologia">Tecnología</option>
-            <option value="tutorial">Tutorial</option>
-            <option value="proyecto">Proyecto</option>
-          </select>
-
-          <label className="block font-medium">Contenido del Post</label>
-          <textarea 
-            className="w-full h-80 p-4 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none text-black dark:text-white"
-            placeholder="Escribe el cuerpo del post aquí..."
-            value={contenido}
-            onChange={(e) => setContenido(e.target.value)}
-            required
-          />
-
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 disabled:opacity-50 transition-all shadow-md"
-          >
-            {loading ? 'Publicando...' : 'Publicar Post en el Blog'}
+    <div className="min-h-screen bg-black text-white p-8 font-sans">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex justify-between items-center mb-12">
+          <h1 className="text-4xl font-black tracking-tighter italic">ADMIN_BLOG_PRO</h1>
+          <button onClick={() => setShowEditor(!showEditor)} className="bg-white text-black px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-blue-500 hover:text-white transition-all">
+            {showEditor ? <><X size={20}/> CERRAR</> : <><Plus size={20}/> NUEVO POST</>}
           </button>
-        </form>
-      )}
+        </div>
 
-      {/* Lista de posts existentes */}
-      <div className="grid gap-4">
-        <h2 className="text-xl font-semibold mb-2">Posts publicados</h2>
-        {posts.length === 0 && <p className="text-gray-500 italic">No hay posts todavía.</p>}
-        {posts.map(post => (
-          <div key={post.id} className="border p-4 rounded-xl flex justify-between items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow">
-            <div>
-              <span className="font-bold text-lg">{post.titulo}</span>
-              <p className="text-xs text-blue-500 font-semibold uppercase tracking-wider">{post.categoria}</p>
+        {showEditor && (
+          <form onSubmit={handleSave} className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input placeholder="Título impactante" className="bg-transparent border-b border-gray-800 text-2xl p-2 outline-none focus:border-blue-500 transition-colors" onChange={e => setFormData({...formData, titulo: e.target.value})} />
+              <input placeholder="URL Imagen Destacada" className="bg-transparent border-b border-gray-700 p-2 outline-none focus:border-blue-500" onChange={e => setFormData({...formData, imagen: e.target.value})} />
             </div>
-            <div className="flex gap-3">
-              <button className="text-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-colors">Editar</button>
-              <button className="text-red-500 hover:bg-red-50 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-colors">Eliminar</button>
+
+            {/* EDITOR TIPTAP */}
+            <div className="border border-gray-700 rounded-xl overflow-hidden bg-gray-900/50">
+              <MenuBar editor={editor} />
+              <EditorContent editor={editor} />
             </div>
-          </div>
-        ))}
+
+            {/* SEO & METADATOS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-900/30 p-6 rounded-2xl border border-gray-800">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase"><Search size={14}/> SEO Engine</div>
+                <input placeholder="Meta Título" className="w-full bg-gray-800 p-2 rounded-lg text-sm border border-transparent focus:border-blue-500 outline-none" onChange={e => setFormData({...formData, meta_titulo: e.target.value})} />
+                <textarea placeholder="Meta Descripción para buscadores" className="w-full bg-gray-800 p-2 rounded-lg text-sm h-20 outline-none" onChange={e => setFormData({...formData, meta_descripcion: e.target.value})} />
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-purple-400 font-bold text-xs uppercase"><LinkIcon size={14}/> Bibliografía</div>
+                <textarea placeholder="Enlaces de referencia (uno por línea)..." className="w-full bg-gray-800 p-2 rounded-lg text-sm h-32 outline-none" onChange={e => setFormData({...formData, fuentes: e.target.value})} />
+              </div>
+            </div>
+
+            <button type="submit" disabled={loading} className="w-full bg-blue-600 py-4 rounded-xl font-black text-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-3">
+              <Save size={24}/> {loading ? 'PROCESANDO...' : 'PUBLICAR AHORA'}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
