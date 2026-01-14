@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal, ROUND_UP
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
 
 class Proyecto(models.Model):
@@ -155,10 +156,10 @@ class PokemonSet(models.Model):
 
 class Post(models.Model):
     ESTADO_CHOICES = [
-        ('idea', 'Idea'),
-        ('desarrollo', 'En Desarrollo'),
-        ('completado', 'Completado'),
+        ('borrador', 'Borrador'),
+        ('revision', 'En Revisión'),
         ('publicado', 'Publicado'),
+        ('archivado', 'Archivado'),
     ]
     
     CATEGORIA_CHOICES = [
@@ -167,17 +168,26 @@ class Post(models.Model):
         ('proyecto', 'Proyecto'),
         ('tutorial', 'Tutorial'),
         ('noticia', 'Noticia'),
+        ('ia', 'Inteligencia Artificial'),
     ]
-    
-    titulo = models.CharField(max_length=200)
+    # --- Contenido Principal ---
+    titulo = models.CharField(max_length=200, verbose_name="Título del Artículo")
     slug = models.SlugField(max_length=200, unique=True, blank=True)
-    resumen = models.TextField(max_length=300)
-    contenido = models.TextField()
-    imagen = models.URLField(max_length=500, blank=True, null=True)
-    activo = models.BooleanField(default=False)
+    resumen = models.TextField(max_length=300, help_text="Breve introducción para las tarjetas del blog.")
+    contenido = models.TextField(help_text="Contenido en formato HTML (procedente del editor enriquecido).")
+    imagen = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de Imagen Destacada")
+    # --- Clasificación y Estado ---
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='desarrollo')
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='publicado')
     tags = models.JSONField(default=list, blank=True)
+    # --- SEO y Metadatos ---
+    meta_titulo = models.CharField(max_length=70, blank=True, help_text="Título optimizado para Google (máx 70 caracteres).")
+    meta_descripcion = models.CharField(max_length=160, blank=True, help_text="Descripción para buscadores (máx 160 caracteres).")
+    keywords = models.CharField(max_length=255, blank=True, help_text="Palabras clave separadas por comas.")
+    # --- Fuentes y Bibliografía ---
+    fuentes = models.TextField(blank=True, help_text="Enlaces o bibliografía consultada para el artículo.")
+    # --- Control de Publicación ---
+    activo = models.BooleanField(default=False)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     publicado = models.BooleanField(default=True)
@@ -190,6 +200,8 @@ class Post(models.Model):
     
     class Meta:
         ordering = ['-fecha_creacion']
+        verbose_name = "Artículo"
+        verbose_name_plural = "Artículos"
     
     def __str__(self):
         return self.titulo
