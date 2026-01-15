@@ -4,7 +4,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { 
   Bold, Italic, List, ListOrdered, Heading2, 
   Quote, Undo, Redo, Save, Image as ImageIcon,
-  Search, Link as LinkIcon, FileUp, Globe
+  Search, Link as LinkIcon, FileUp, Globe, Loader2
 } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
