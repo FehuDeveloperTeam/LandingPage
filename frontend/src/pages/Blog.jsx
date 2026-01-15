@@ -106,6 +106,8 @@ function Blog() {
                           className="absolute inset-0 w-full h-full object-cover" 
                           alt={destacado.titulo}
                           referrerPolicy="no-referrer"
+                          crossOrigin="anonymous"
+                          loading="lazy"
                           onError={(e) => { e.target.src = 'https://via.placeholder.com/800x600?text=Error+Imagen'; }}
                         />
                       </div>
@@ -131,6 +133,8 @@ function Blog() {
                           className="w-full h-full object-cover" 
                           alt={post.titulo}
                           referrerPolicy="no-referrer"
+                          crossOrigin="anonymous"
+                          loading="lazy"
                           onError={(e) => { e.target.src = 'https://via.placeholder.com/400x250?text=Error+Imagen'; }}
                         />
                       </div>
