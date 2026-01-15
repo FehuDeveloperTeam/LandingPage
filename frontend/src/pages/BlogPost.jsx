@@ -106,6 +106,7 @@ function BlogPost() {
                        prose-headings:font-bold prose-headings:tracking-tight
                        prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
                        prose-img:rounded-2xl prose-blockquote:border-blue-500
+                       prose-p:leading-relaxed prose-p:mb-6
                        prose-pre:bg-gray-900 prose-pre:text-gray-100"
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.contenido) }} 
           />

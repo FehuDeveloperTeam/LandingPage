@@ -34,3 +34,14 @@ h1, h2, h3, h4, h5, h6 {
 .dark {
   color-scheme: dark;
 }
+.prose p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  white-space: pre-wrap; /* Esto conserva los saltos de línea manuales */
+}
+
+.prose h2, .prose h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
