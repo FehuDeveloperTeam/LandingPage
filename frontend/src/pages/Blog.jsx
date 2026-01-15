@@ -102,13 +102,17 @@ function Blog() {
                     <div className="grid md:grid-cols-2">
                       <div className="relative min-h-[350px] bg-gray-200 dark:bg-gray-800">
                         <img 
-                          src={getDirectUrl(destacado.imagen)} 
+                          src={getDirectUrl(destacado.imagen)} // O destacado.imagen según el caso
                           className="absolute inset-0 w-full h-full object-cover" 
                           alt={destacado.titulo}
+                          loading="eager" // Forzar carga inmediata
                           referrerPolicy="no-referrer"
-                          crossOrigin="anonymous"
-                          loading="lazy"
-                          onError={(e) => { e.target.src = 'https://via.placeholder.com/800x600?text=Error+Imagen'; }}
+                          key={destacado.id} // Forzar re-renderizado al cambiar filtros
+                          onError={(e) => { 
+                              console.error("Fallo crítico imagen:", destacado.imagen);
+                              e.target.src = 'https://via.placeholder.com/600x400?text=Error+de+Origen'; 
+                              }
+                          }
                         />
                       </div>
                       <div className="p-8 md:p-12">
@@ -129,13 +133,17 @@ function Blog() {
                     <article className="flex flex-col h-full bg-white dark:bg-gray-900 rounded-3xl overflow-hidden border dark:border-gray-800 hover:shadow-xl transition-all">
                       <div className="relative h-56 bg-gray-200 dark:bg-gray-800">
                         <img 
-                          src={getDirectUrl(post.imagen)} 
-                          className="w-full h-full object-cover" 
+                          src={getDirectUrl(post.imagen)} // O destacado.imagen según el caso
+                          className="absolute inset-0 w-full h-full object-cover" 
                           alt={post.titulo}
+                          loading="eager" // Forzar carga inmediata
                           referrerPolicy="no-referrer"
-                          crossOrigin="anonymous"
-                          loading="lazy"
-                          onError={(e) => { e.target.src = 'https://via.placeholder.com/400x250?text=Error+Imagen'; }}
+                          key={post.id} // Forzar re-renderizado al cambiar filtros
+                          onError={(e) => { 
+                            console.error("Fallo crítico imagen:", post.imagen);
+                            e.target.src = 'https://via.placeholder.com/600x400?text=Error+de+Origen'; 
+                            }
+                          }
                         />
                       </div>
                       <div className="p-6 flex flex-col flex-grow">
