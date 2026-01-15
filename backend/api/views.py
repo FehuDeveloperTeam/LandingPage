@@ -232,26 +232,29 @@ class PostViewSet(viewsets.ModelViewSet):
         return PostSerializer
     
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Post.objects.all().order_by('-fecha_creacion')
-        return Post.objects.filter(activo=True).order_by('-fecha_creacion')
-        
-        # Filtrar por categoría
-        categoria = self.request.query_params.get('categoria')
-        if categoria:
-            queryset = queryset.filter(categoria=categoria)
-        
-        # Filtrar por estado
-        estado = self.request.query_params.get('estado')
-        if estado:
-            queryset = queryset.filter(estado=estado)
-        
-        # Solo destacados
-        destacado = self.request.query_params.get('destacado')
-        if destacado == 'true':
-            queryset = queryset.filter(destacado=True)
-        
-        return queryset
+    # 1. Definimos la base inicial según el usuario
+    if self.request.user.is_staff:
+        queryset = Post.objects.all()
+    else:
+        queryset = Post.objects.filter(activo=True)
+    
+    # 2. Capturamos los parámetros de la URL
+    categoria = self.request.query_params.get('categoria')
+    estado = self.request.query_params.get('estado')
+    destacado = self.request.query_params.get('destacado')
+    
+    # 3. Aplicamos los filtros de forma acumulativa
+    if categoria:
+        queryset = queryset.filter(categoria=categoria)
+    
+    if estado:
+        queryset = queryset.filter(estado=estado)
+    
+    if destacado == 'true':
+        queryset = queryset.filter(destacado=True)
+    
+    # 4. Finalmente, ordenamos y retornamos (SOLO UN RETURN AL FINAL)
+    return queryset.order_by('-fecha_creacion')
     
     # Obtener por slug
     @action(detail=False, methods=['get'], url_path='slug/(?P<slug>[^/.]+)')
