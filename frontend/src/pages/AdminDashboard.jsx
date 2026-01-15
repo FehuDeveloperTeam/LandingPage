@@ -34,6 +34,27 @@ const AdminDashboard = () => {
   const [posts, setPosts] = useState([]);
   const [showEditor, setShowEditor] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+  fetchPosts();
+}, []);
+
+const fetchPosts = async () => {
+  const token = localStorage.getItem('access_token');
+  try {
+    const response = await fetch(`${API_URL}/api/posts/`, {
+      headers: {
+        'Authorization': `Bearer ${token}` // Crucial para evitar el error 401
+      }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setPosts(data);
+    }
+  } catch (error) {
+    console.error("Error cargando posts para administración:", error);
+  }
+};
   
   const [formData, setFormData] = useState({
     titulo: '', imagen: '', categoria: 'tecnologia',
@@ -88,6 +109,31 @@ const AdminDashboard = () => {
             {showEditor ? <><X size={20}/> CERRAR</> : <><Plus size={20}/> NUEVO POST</>}
           </button>
         </div>
+
+        <div className="grid gap-4 mt-8">
+  {posts.map((post) => (
+    <div key={post.id} className="flex justify-between items-center bg-gray-900 p-4 rounded-xl border border-gray-800">
+      <div>
+        <h3 className="font-bold text-white">{post.titulo}</h3>
+        <p className="text-xs text-gray-500 uppercase tracking-widest">{post.categoria}</p>
+      </div>
+      <div className="flex gap-2">
+        <button 
+          onClick={() => handleEdit(post)} 
+          className="p-2 hover:bg-gray-800 rounded text-blue-400"
+        >
+          <Edit2 size={18} />
+        </button>
+        <button 
+          onClick={() => handleDelete(post.slug)} 
+          className="p-2 hover:bg-gray-800 rounded text-red-400"
+        >
+          <Trash2 size={18} />
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
 
         {showEditor && (
           <form onSubmit={handleSave} className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
