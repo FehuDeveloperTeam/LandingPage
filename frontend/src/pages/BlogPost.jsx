@@ -1,164 +1,199 @@
-import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import PageLayout from '../components/PageLayout'
-import Card from '../components/Card'
-import SEO from '../components/SEO'
-import DOMPurify from 'dompurify'
-import { Calendar, Tag, Share2, ArrowLeft, Link as LinkIcon, ExternalLink } from 'lucide-react'
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { 
+  ArrowLeft, 
+  Share2, 
+  Linkedin, 
+  Twitter, 
+  Share, 
+  Link as LinkIcon, 
+  ChevronDown, 
+  ChevronUp,
+  Loader2,
+  Calendar,
+  Clock
+} from 'lucide-react';
+import DOMPurify from 'dompurify';
+import PageLayout from '../components/PageLayout';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
-function BlogPost() {
-  const { slug } = useParams()
-  const [post, setPost] = useState(null)
-  const [loading, setLoading] = useState(true)
+const BlogPost = () => {
+  const { slug } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Utilidad para limpiar URLs de Drive/ImgBB
+  const getDirectUrl = (url) => {
+    if (!url) return '';
+    if (url.includes('drive.google.com')) {
+      const match = url.match(/\/d\/(.+?)\/(view|edit)/) || url.match(/id=(.+?)(&|$)/);
+      return match ? `https://drive.google.com/uc?export=view&id=${match[1]}` : url;
+    }
+    return url;
+  };
 
   useEffect(() => {
-    fetchPost()
-    window.scrollTo(0, 0)
-  }, [slug])
-
-  const fetchPost = async () => {
-    setLoading(true)
-    try {
-      const url = `${API_URL}/api/posts/slug/${slug}/`
-      const response = await fetch(url)
-      if (response.ok) {
-        const data = await response.json()
-        setPost(data)
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/posts/${slug}/`);
+        if (response.ok) {
+          const data = await response.json();
+          setPost(data);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error cargando post:', error)
-    } finally {
-      setLoading(false)
+    };
+    fetchPost();
+  }, [slug]);
+
+  const handleShareGeneral = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: post.titulo,
+          text: post.resumen,
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log('Error compartiendo:', err);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Enlace copiado al portapapeles");
     }
-  }
+  };
 
-  if (loading) {
-    return (
-      <PageLayout>
-        <div className="flex justify-center items-center py-40">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-        </div>
-      </PageLayout>
-    )
-  }
+  if (loading) return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <Loader2 className="animate-spin text-blue-600" size={48} />
+    </div>
+  );
 
-  if (!post) {
-    return (
-      <PageLayout>
-        <div className="text-center py-20">
-          <h2 className="text-2xl font-bold">Artículo no encontrado</h2>
-          <Link to="/blog" className="text-blue-600 mt-4 inline-block hover:underline">Volver al blog</Link>
-        </div>
-      </PageLayout>
-    )
-  }
+  if (!post) return <div className="text-white text-center py-20">Post no encontrado.</div>;
 
-  const shareUrl = window.location.href
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.titulo)}&url=${encodeURIComponent(shareUrl)}`
-  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`
+  const shareUrl = encodeURIComponent(window.location.href);
+  const shareTitle = encodeURIComponent(post.titulo);
 
   return (
     <PageLayout>
-      {/* SEO Dinámico con los nuevos campos del Backend */}
-      <SEO 
-        title={post.meta_titulo || post.titulo} 
-        description={post.meta_descripcion || post.resumen}
-        image={post.imagen}
-        article={true}
-      />
-
       <article className="max-w-4xl mx-auto px-4 py-12">
-        <Link to="/blog" className="flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors mb-8 group">
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span>Volver a la galería</span>
+        {/* Navegación */}
+        <Link to="/blog" className="flex items-center gap-2 text-gray-500 hover:text-blue-500 mb-10 font-bold text-xs tracking-widest transition-colors">
+          <ArrowLeft size={14} /> VOLVER AL BLOG
         </Link>
 
-        <header className="mb-10 text-center md:text-left">
-          <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 text-sm text-gray-500 mb-4">
-            <span className="flex items-center gap-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider text-xs">
+        {/* Header del Post */}
+        <header className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <span className="bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-tighter">
               {post.categoria}
             </span>
-            <span className="flex items-center gap-1">
-              <Calendar size={14} />
-              {new Date(post.fecha_creacion).toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' })}
-            </span>
+            <div className="flex items-center gap-2 text-gray-500 text-xs font-bold">
+              <Calendar size={12} /> {new Date(post.fecha_creacion).toLocaleDateString()}
+            </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-6 leading-tight">
+          
+          <h1 className="text-4xl md:text-6xl font-black mb-8 leading-[1.1] text-white tracking-tighter">
             {post.titulo}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed italic border-l-4 border-blue-500 pl-6">
+          
+          <p className="text-xl md:text-2xl text-gray-400 italic border-l-4 border-blue-600 pl-6 mb-12 leading-relaxed">
             {post.resumen}
           </p>
-        </header>
 
-        {post.imagen && (
-          <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/10">
-            <img src={post.imagen} alt={post.titulo} className="w-full h-auto object-cover max-h-[500px]" />
-          </div>
-        )}
-
-        <Card className="p-6 md:p-10 mb-10 border-none bg-white dark:bg-gray-900 shadow-xl">
-          {/* RENDERIZADO PROFESIONAL DE TIPTAP HTML */}
-          <div 
-            className="prose prose-lg dark:prose-invert max-w-none 
-                       prose-headings:font-bold prose-headings:tracking-tight
-                       prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-                       prose-img:rounded-2xl prose-blockquote:border-blue-500
-                       prose-p:leading-relaxed prose-p:mb-6
-                       prose-pre:bg-gray-900 prose-pre:text-gray-100"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.contenido) }} 
-          />
-
-          {/* Sección de Bibliografía / Fuentes */}
-          {post.fuentes && (
-            <div className="mt-12 pt-8 border-t border-gray-100 dark:border-gray-800">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-2">
-                <LinkIcon size={16} /> Fuentes y Bibliografía
-              </h3>
-              <div className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-wrap leading-relaxed">
-                {post.fuentes}
-              </div>
+          {post.imagen && (
+            <div className="rounded-[40px] overflow-hidden shadow-2xl border border-gray-800">
+              <img 
+                src={getDirectUrl(post.imagen)} 
+                className="w-full h-auto object-cover" 
+                alt={post.titulo}
+                onError={(e) => e.target.src = 'https://via.placeholder.com/1200x600?text=Error+Cargando+Imagen'}
+              />
             </div>
           )}
-        </Card>
+        </header>
 
-        {/* Tags y Compartir */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 py-8 border-t border-gray-100 dark:border-gray-800">
-          <div className="flex flex-wrap gap-2">
-            {post.tags && post.tags.map((tag, i) => (
-              <span key={i} className="flex items-center gap-1 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-medium text-gray-600 dark:text-gray-400">
-                <Tag size={12} /> {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-bold uppercase tracking-widest text-gray-400">Compartir</span>
-            <div className="flex gap-2">
-              <a 
-                href={twitterUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-100 dark:bg-gray-800 hover:bg-blue-500 hover:text-white rounded-full transition-all"
+        {/* Cuerpo de la Noticia con Efecto Expandir */}
+        <div className="relative">
+          <div 
+            className={`prose prose-invert prose-blue max-w-none transition-all duration-1000 ease-in-out overflow-hidden ${
+              !isExpanded ? 'max-h-[500px]' : 'max-h-[none]'
+            }`}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.contenido) }} 
+          />
+          
+          {!isExpanded && (
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black via-black/80 to-transparent flex items-end justify-center">
+              <button 
+                onClick={() => setIsExpanded(true)}
+                className="mb-4 flex items-center gap-2 px-8 py-3 bg-white text-black rounded-full font-black text-sm hover:scale-105 transition-transform shadow-xl shadow-white/10"
               >
-                <Share2 size={18} />
-              </a>
-              <a 
-                href={linkedinUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-100 dark:bg-gray-800 hover:bg-blue-700 hover:text-white rounded-full transition-all"
-              >
-                <ExternalLink size={18} />
-              </a>
+                <ChevronDown size={18} /> LEER ARTÍCULO COMPLETO
+              </button>
             </div>
+          )}
+        </div>
+
+        {isExpanded && (
+          <button 
+            onClick={() => { setIsExpanded(false); window.scrollTo({top: 400, behavior: 'smooth'}); }}
+            className="flex items-center gap-2 mx-auto mt-12 px-6 py-2 bg-gray-900 border border-gray-800 rounded-full text-gray-400 font-bold hover:text-white transition-all"
+          >
+            <ChevronUp size={18} /> MOSTRAR MENOS
+          </button>
+        )}
+
+        {/* BOTONES DE COMPARTIR */}
+        <div className="mt-20 py-12 border-t border-gray-900 flex flex-col items-center gap-8">
+          <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em]">Compartir en redes</span>
+          
+          <div className="flex gap-6">
+            <a 
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center w-16 h-16 bg-gray-950 border border-gray-800 rounded-2xl hover:border-blue-500 hover:bg-blue-500/5 transition-all duration-500"
+            >
+              <Linkedin size={24} className="text-gray-500 group-hover:text-blue-500 transition-colors" />
+            </a>
+
+            <a 
+              href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center w-16 h-16 bg-gray-950 border border-gray-800 rounded-2xl hover:border-white hover:bg-white/5 transition-all duration-500"
+            >
+              <Twitter size={24} className="text-gray-500 group-hover:text-white transition-colors" />
+            </a>
+
+            <button 
+              onClick={handleShareGeneral}
+              className="group flex items-center justify-center w-16 h-16 bg-gray-950 border border-gray-800 rounded-2xl hover:border-green-500 hover:bg-green-500/5 transition-all duration-500"
+            >
+              <Share size={24} className="text-gray-500 group-hover:text-green-500 transition-colors" />
+            </button>
           </div>
         </div>
+
+        {/* SECCIÓN DE FUENTES */}
+        {post.fuentes && (
+          <div className="mt-8 p-10 bg-gray-900/20 border border-gray-800 rounded-[32px]">
+            <h3 className="text-xs font-black uppercase tracking-widest text-blue-500 mb-6 flex items-center gap-2">
+              <LinkIcon size={14} /> Fuentes
+            </h3>
+            <div className="text-sm text-gray-400 whitespace-pre-wrap leading-relaxed font-medium">
+              {post.fuentes}
+            </div>
+          </div>
+        )}
       </article>
     </PageLayout>
-  )
-}
+  );
+};
 
-export default BlogPost
+export default BlogPost;

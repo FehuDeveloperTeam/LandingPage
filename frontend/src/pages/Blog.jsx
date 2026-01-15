@@ -36,6 +36,15 @@ function Blog() {
     fetchPosts()
   }, [categoriaActiva])
 
+  const getDirectUrl = (url) => {
+  if (!url) return '';
+  if (url.includes('drive.google.com')) {
+    const match = url.match(/\/d\/(.+?)\/(view|edit)/) || url.match(/id=(.+?)(&|$)/);
+    return match ? `http://googleusercontent.com/profile/picture/3${match[1]}` : url;
+  }
+  return url;
+};
+
   const fetchPosts = async () => {
     setLoading(true)
     try {
@@ -113,9 +122,10 @@ function Blog() {
                   <div className="grid md:grid-cols-2">
                     <div className="relative h-64 md:h-full overflow-hidden">
                       <img 
-                        src={destacado.imagen || '/placeholder-blog.jpg'} 
+                        src={getDirectUrl(destacado.imagen)} 
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                         alt={destacado.titulo} 
+                        onError={(e) => { e.target.src = 'https://via.placeholder.com/400x250?text=Post+Image'; }}
                       />
                     </div>
                     <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -145,14 +155,19 @@ function Blog() {
               {otrosPosts.map((post) => (
                 <Link key={post.id} to={`/blog/${post.slug}`} className="group">
                   <article className="flex flex-col h-full bg-white dark:bg-gray-950 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-900 transition-all hover:border-blue-500/50 hover:shadow-xl">
-                    <div className="relative h-52 overflow-hidden">
-                      <img src={post.imagen} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={post.titulo} />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">
-                          {post.categoria}
-                        </span>
-                      </div>
-                    </div>
+                    <div className="relative h-52 overflow-hidden bg-gray-900">
+  <img 
+    src={getDirectUrl(post.imagen)} 
+    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+    alt={post.titulo}
+    onError={(e) => { e.target.src = 'https://via.placeholder.com/400x250?text=Post+Image'; }}
+  />
+  <div className="absolute top-4 left-4">
+    <span className="bg-blue-600/80 backdrop-blur-md text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">
+      {post.categoria}
+    </span>
+  </div>
+</div>
                     <div className="p-6 flex flex-col flex-grow">
                       <div className="flex items-center gap-2 text-gray-400 text-xs mb-3 font-bold uppercase tracking-widest">
                         <Clock size={12} />
