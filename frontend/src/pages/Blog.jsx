@@ -14,10 +14,9 @@ function Blog() {
   const [loading, setLoading] = useState(true)
   const [categoriaActiva, setCategoriaActiva] = useState('')
 
-  // Limpiador de URLs específico para ImgBB
   const getImgBBUrl = (url) => {
-    if (!url) return '';
-    // Nos aseguramos de que use HTTPS y eliminamos espacios
+    // Si la URL es nula o no es string, usamos un placeholder para que el 'src' no desaparezca
+    if (!url || typeof url !== 'string') return 'https://via.placeholder.com/800x600?text=Sin+Imagen';
     return url.trim().replace('http://', 'https://');
   };
 
@@ -32,7 +31,12 @@ function Blog() {
         const response = await fetch(url)
         if (response.ok) {
           const data = await response.json()
-          setPosts(Array.isArray(data) ? data : (data.results || []))
+          const results = Array.isArray(data) ? data : (data.results || [])
+          
+          // Debug para ver qué campos trae el objeto
+          console.log("Datos del primer post:", results[0]); 
+          
+          setPosts(results)
         }
       } catch (error) {
         console.error('Error:', error)
@@ -51,25 +55,23 @@ function Blog() {
       <div className="min-h-screen bg-white dark:bg-black transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 py-12">
           
-          {/* ... (Header y Filtros se mantienen igual) ... */}
-
           {loading ? (
             <div className="flex justify-center py-20"><Loader2 className="animate-spin text-blue-600" size={48} /></div>
           ) : (
             <>
-              {/* POST DESTACADO */}
               {destacado && !categoriaActiva && (
                 <Link to={`/blog/${destacado.slug}`} className="block mb-16 group">
                   <div className="overflow-hidden rounded-[32px] bg-gray-50 dark:bg-gray-900 border dark:border-gray-800 shadow-2xl">
                     <div className="grid md:grid-cols-2">
                       <div className="relative h-[300px] md:h-[450px] bg-gray-200 dark:bg-gray-800">
+                        {/* Se usa post.imagen o post.imagen_url según lo que devuelva tu Serializer */}
                         <img 
-                          src={getImgBBUrl(destacado.imagen)} 
+                          src={getImgBBUrl(destacado.imagen || destacado.imagen_url)} 
                           className="absolute inset-0 w-full h-full object-cover" 
                           alt={destacado.titulo}
-                          // IMPORTANTE: Evita que ImgBB bloquee la carga desde Railway
                           referrerPolicy="no-referrer"
                           crossOrigin="anonymous"
+                          onError={(e) => { e.target.src = 'https://via.placeholder.com/800x600?text=Error+de+Carga'; }}
                         />
                       </div>
                       <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -81,17 +83,15 @@ function Blog() {
                 </Link>
               )}
 
-              {/* LISTADO DE POSTS */}
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {(categoriaActiva ? posts : otrosPosts).map((post) => (
                   <Link key={post.id} to={`/blog/${post.slug}`} className="group">
                     <article className="flex flex-col h-full bg-white dark:bg-gray-900 rounded-3xl overflow-hidden border dark:border-gray-800 hover:shadow-xl transition-all">
                       <div className="relative h-56 bg-gray-200 dark:bg-gray-800">
                         <img 
-                          src={getImgBBUrl(post.imagen)} 
+                          src={getImgBBUrl(post.imagen || post.imagen_url)} 
                           className="w-full h-full object-cover" 
                           alt={post.titulo}
-                          // IMPORTANTE: Evita que ImgBB bloquee la carga desde Railway
                           referrerPolicy="no-referrer"
                           crossOrigin="anonymous"
                         />
