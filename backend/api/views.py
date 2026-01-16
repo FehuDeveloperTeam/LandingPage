@@ -157,13 +157,14 @@ class ContactoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
+permission_classes = [permissions.AllowAny]
 
 def pokemon_search(request):
     name = request.query_params.get('name', '')
     set_id = request.query_params.get('set', '')
     types = request.query_params.get('types', '')
     rarity = request.query_params.get('rarity', '')
-    permission_classes = [permissions.AllowAny]
+    
     
     result = PokemonTCGService.search_cards(
         name=name if name else None,
@@ -182,7 +183,7 @@ def pokemon_search(request):
 
 def pokemon_card_detail(request, card_id):
     """Obtener detalle de una carta"""
-    permission_classes = [permissions.AllowAny]
+    
     card = PokemonTCGService.get_card(card_id)
     if card:
         return Response(card)
@@ -191,7 +192,7 @@ def pokemon_card_detail(request, card_id):
 @api_view(['GET'])
 
 def pokemon_sets(request):
-    permission_classes = [permissions.AllowAny]
+    
     """Obtener todos los sets/ediciones"""
     sets = PokemonTCGService.get_sets()
     return Response(sets)
@@ -199,7 +200,7 @@ def pokemon_sets(request):
 @api_view(['GET'])
 
 def pokemon_rarities(request):
-    permission_classes = [permissions.AllowAny]
+    
     """Obtener todas las rarezas"""
     rarities = PokemonTCGService.get_rarities()
     return Response(rarities)
@@ -207,7 +208,7 @@ def pokemon_rarities(request):
 @api_view(['GET'])
 
 def pokemon_types(request):
-    permission_classes = [permissions.AllowAny]
+    
     """Obtener todos los tipos"""
     types = PokemonTCGService.get_types()
     return Response(types)
