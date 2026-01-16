@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation();
 
   return (
     <nav className="border-b border-gray-200 dark:border-gray-700 py-4 px-8">
@@ -16,6 +17,7 @@ function Navbar() {
           <Link to="/curriculum" className="hover:underline">Currículum</Link>
           <Link to="/demos" className="hover:underline">Demos</Link>
           <Link to="/blog" className="hover:underline">Blog</Link>
+          <Link to="/herramientas" className="hover:text-blue-600 font-bold transition-colors">Herramientas</Link>
           <ThemeToggle />
         </div>
 

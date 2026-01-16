@@ -5,6 +5,8 @@ import PokemonCard from '../../components/pokemon/PokemonCard'
 import PokemonFilters from '../../components/pokemon/PokemonFilters'
 import PokemonModal from '../../components/pokemon/PokemonModal'
 import SEO from '../../components/SEO'
+import { ArrowLeft } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 
@@ -91,6 +93,12 @@ function Pokemon() {
       description="Busca cartas Pokemon TCG con precios de mercado en USD, EUR y CLP."
       url="/demos/pokemon"
     />
+      <Link 
+        to="/herramientas" 
+        className="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 mb-6 font-bold transition-all"
+      >
+        <ArrowLeft size={20} /> Volver a Herramientas
+      </Link>
       <div className="mb-8">
         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-grow">

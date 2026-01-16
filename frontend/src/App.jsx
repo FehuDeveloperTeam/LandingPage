@@ -18,6 +18,8 @@ import Login from './pages/Login';
 import BlogPost from './pages/BlogPost'
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import ToolsGallery from './pages/ToolsGallery';
+import BarcodeGenerator from './pages/tools/BarcodeGenerator';
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -35,8 +37,10 @@ function AnimatedRoutes() {
         <Route path="/demos/ventas/tangibles" element={<PageTransition><Tangibles /></PageTransition>} />
         <Route path="/demos/servicios" element={<PageTransition><Servicios /></PageTransition>} />
         <Route path="/demos/presentacion" element={<PageTransition><Presentacion /></PageTransition>} />
-        <Route path="/demos/pokemon" element={<PageTransition><Pokemon /></PageTransition>} />
         <Route path="/admin/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="/herramientas" element={<ToolsGallery />} />
+        <Route path="/herramientas/generador-barras" element={<BarcodeGenerator />} />
+        <Route path="/herramientas/pokemon" element={<PageTransition><Pokemon /></PageTransition>} />
         <Route 
           path="/admin/dashboard" 
           element={
