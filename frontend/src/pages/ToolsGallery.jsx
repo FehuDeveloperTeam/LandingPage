@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
-import { Barcode, QrCode, Calculator, Settings } from 'lucide-react';
+import { Barcode, QrCode, Calculator, Settings, Search } from 'lucide-react';
 
 const TOOLS = [
   {
