@@ -149,11 +149,11 @@ const BarcodeGenerator = () => {
       <div className="max-w-6xl mx-auto px-4 pb-20">
         <div className="flex justify-between items-center mb-12">
           <Link 
-            to="/herramientas" 
-            className="group flex items-center gap-3 px-6 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 text-sm font-black uppercase tracking-widest hover:text-blue-500 transition-all shadow-sm"
+            to="/herramientas" // Ajusta esta ruta a tu menú principal de herramientas
+            className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors"
           >
-            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
-            Volver
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+            Volver a Herramientas
           </Link>
           <div className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
             <ClipboardCheck size={14} className="text-emerald-500" /> Engine Status: Ready

@@ -55,16 +55,7 @@ function ToolsGallery() {
         description="Utilidades de productividad, generadores de códigos y buscadores técnicos." 
       />
 
-      {/* BOTÓN VOLVER (Navegación entre herramientas) */}
-        <div className="flex justify-start">
-          <Link 
-            to="/herramientas" // Ajusta esta ruta a tu menú principal de herramientas
-            className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors"
-          >
-            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
-            Volver a Herramientas
-          </Link>
-        </div>
+      
       
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         {TOOLS.map((tool) => {
