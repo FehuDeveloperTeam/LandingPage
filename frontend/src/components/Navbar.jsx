@@ -73,40 +73,41 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {menuOpen && (
-        <div className="fixed inset-0 top-20 z-50 md:hidden bg-white dark:bg-gray-900 px-6 py-8 animate-in fade-in slide-in-from-top-4 duration-300">
-          <div className="flex flex-col gap-2">
-            {navLinks.map((link) => {
-              const Icon = link.icon
-              const isActive = location.pathname === link.path
-              return (
-                <Link 
-                  key={link.path}
-                  to={link.path} 
-                  onClick={() => setMenuOpen(false)}
-                  className={`flex items-center justify-between p-5 rounded-[2rem] border transition-all ${
-                    isActive 
-                      ? 'bg-blue-600 border-blue-600 text-white shadow-xl shadow-blue-500/20' 
-                      : 'bg-gray-50 dark:bg-white/5 border-transparent text-gray-600 dark:text-gray-400'
-                  }`}
-                >
-                  <div className="flex items-center gap-4">
-                    <Icon size={20} className={isActive ? 'text-white' : 'text-gray-400'} />
-                    <span className="font-black uppercase tracking-widest text-xs">{link.name}</span>
-                  </div>
-                  <X size={14} className={`opacity-20 ${isActive ? 'block' : 'hidden'}`} />
-                </Link>
-              )
-            })}
-          </div>
-          
-          <div className="mt-12 text-center">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-              © 2026 Andrés Zurita • Ñuble, CL
-            </p>
-          </div>
-        </div>
-      )}
+{menuOpen && (
+  <div className="fixed inset-0 top-20 z-50 md:hidden bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl px-6 py-8 animate-in fade-in slide-in-from-top-4 duration-300">
+    <div className="flex flex-col gap-3"> {/* Aumenté un poco el gap para mejor respiro */}
+      {navLinks.map((link) => {
+        const Icon = link.icon
+        const isActive = location.pathname === link.path
+        return (
+          <Link 
+            key={link.path}
+            to={link.path} 
+            onClick={() => setMenuOpen(false)}
+            className={`flex items-center justify-between p-5 rounded-[2rem] border transition-all ${
+              isActive 
+                ? 'bg-blue-600 border-blue-600 text-white shadow-xl shadow-blue-500/20' 
+                : 'bg-white/50 dark:bg-white/5 border-gray-100 dark:border-white/5 text-gray-700 dark:text-gray-300 backdrop-blur-sm'
+            }`}
+          >
+            <div className="flex items-center gap-4">
+              <Icon size={20} className={isActive ? 'text-white' : 'text-blue-500 dark:text-blue-400'} />
+              <span className="font-black uppercase tracking-widest text-xs">{link.name}</span>
+            </div>
+            {isActive && <div className="w-2 h-2 rounded-full bg-white animate-pulse" />}
+          </Link>
+        )
+      })}
+    </div>
+    
+    <div className="mt-12 text-center">
+      <div className="h-px w-12 bg-gray-200 dark:bg-white/10 mx-auto mb-6" />
+      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+        © 2026 Andrés Zurita • Ñuble, CL
+      </p>
+    </div>
+  </div>
+)}
     </nav>
   )
 }

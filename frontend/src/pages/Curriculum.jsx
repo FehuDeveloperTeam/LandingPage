@@ -23,15 +23,15 @@ function Curriculum() {
     experienciaLaboral: [
       { periodo: '2025 - Presente', cargo: 'Asistente Logístico', empresa: 'COPEVAL San Carlos', descripcion: 'Gestión de entrega de producto a cliente final y manejo de sistema WMS para control de inventario y despachos.' },
       { periodo: '2024 - 2025', cargo: 'Control Logístico SAP', empresa: 'Comfrut SA (Planta San Carlos)', descripcion: 'Encargado del control y correcto funcionamiento en líneas de producción, generando informes de producto final y consumos de materias primas.' },
-      { periodo: '2020 - 2024', cargo: 'Encargado de Local', empresa: 'Importadora SOCAR', descripcion: 'Mantención total de local, contacto con proveedores, manejo de costos, proyección de ventas.' },
-      { periodo: '2019 - 2020', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Blobel SPA', descripcion: 'Depuración de cartera de clientes por áreas geográficas. Atención a clientes B2B.' },
-      { periodo: '2012 - 2019', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Bicimoto Ltda.', descripcion: 'Contacto con cliente intermedio (B2B), manejo de productos automotrices.' },
+      { periodo: '2020 - 2024', cargo: 'Encargado de Local', empresa: 'Importadora SOCAR', descripcion: 'Mantención total de local, contacto con proveedores, manejo de costos, proyección de ventas. Gestor de importaciones desde China y Tailandia.' },
+      { periodo: '2019 - 2020', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Blobel SPA', descripcion: 'Atención a clientes intermedios (B2B) con desarrollo de marcas importadas.' },
+      { periodo: '2012 - 2019', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Bicimoto Ltda.', descripcion: 'Contacto con cliente intermedio (B2B), manejo de productos automotrices y control de cobranza.' },
     ],
     experienciaTI: [
-      { periodo: '2024 - Presente', cargo: 'Desarrollador Freelance', empresa: 'Independiente', descripcion: 'Desarrollo de aplicaciones móviles multiplataforma, proyectos IoT con ESP32 y realidad aumentada.' },
-      { periodo: '2024', cargo: 'Consultor Bases de Datos', empresa: 'Independiente', descripcion: 'Asesoría en diseño e implementación de bases de datos relacionales.' },
-      { periodo: '2021 - 2023', cargo: 'Desarrollador de Software', empresa: 'SOCAR', descripcion: 'Creación y mantención de aplicaciones de escritorio utilizando Python.' },
-      { periodo: '2019 - 2020', cargo: 'Desarrollador de Videojuegos', empresa: 'Independiente', descripcion: 'Publicación de videojuegos 2D para plataformas móviles utilizando Unity y C#.' },
+      { periodo: '2024 - Presente', cargo: 'Desarrollador Freelance', empresa: 'Independiente', descripcion: 'Desarrollo de aplicaciones móviles multiplataforma, proyectos IoT con ESP32 y soluciones con realidad aumentada.' },
+      { periodo: '2024', cargo: 'Consultor Bases de Datos', empresa: 'Independiente', descripcion: 'Asesoría en diseño e implementación de bases de datos relacionales para Pymes.' },
+      { periodo: '2021 - 2023', cargo: 'Desarrollador de Software', empresa: 'SOCAR', descripcion: 'Creación, desarrollo y mantención de aplicaciones de escritorio para gestión interna utilizando Python.' },
+      { periodo: '2019 - 2020', cargo: 'Desarrollador de Videojuegos', empresa: 'Independiente', descripcion: 'Desarrollo y publicación de videojuegos 2D para plataformas móviles utilizando Unity y C#.' },
     ],
     habilidades: [
       { categoria: 'Idiomas', items: ['Español nativo', 'Inglés avanzado'] },
@@ -67,11 +67,11 @@ function Curriculum() {
             className={`pointer-events-auto flex items-center gap-2 px-6 py-3 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest text-xs shadow-2xl transition-all hover:scale-105 active:scale-95 ${generando ? 'opacity-50' : ''}`}
           >
             {generando ? <RefreshCcw className="animate-spin" size={14} /> : <Download size={14} />}
-            {generando ? 'Procesando...' : 'Descargar PDF'}
+            {generando ? 'Compilando...' : 'Descargar PDF'}
           </button>
         </div>
 
-        {/* Contacto Grid - ICONOS ACHICADOS POR CONTENEDOR */}
+        {/* Contacto Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card className="p-3 flex items-center gap-3 border-none bg-blue-50/50 dark:bg-blue-500/5">
                 <div className="w-4 h-4 flex items-center justify-center shrink-0">
@@ -93,34 +93,56 @@ function Curriculum() {
             </Card>
         </div>
 
-        {/* Tech Experience */}
+        {/* 1. SECCIÓN TECH EXPERIENCE */}
         <section>
           <div className="flex items-center gap-3 mb-8">
             <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg rotate-3">
               <Terminal size={16} />
             </div>
-            <h2 className="text-2xl font-black italic uppercase tracking-tighter dark:text-white">Tech Experience</h2>
+            <h2 className="text-2xl font-black italic uppercase tracking-tighter dark:text-white text-gray-900">Tech Experience</h2>
           </div>
           <div className="space-y-6">
             {data.experienciaTI.map((exp, i) => (
-              <Card key={i} className="p-6">
+              <Card key={i} className="p-6 group hover:border-blue-500/30 transition-colors">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
                   <h3 className="text-lg font-black text-blue-600 dark:text-blue-400 uppercase tracking-tight">{exp.cargo}</h3>
                   <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-white/5 text-[9px] font-black uppercase text-gray-500">
                     {exp.periodo}
                   </span>
                 </div>
-                <p className="text-sm font-bold mb-2 dark:text-white">{exp.empresa}</p>
+                <p className="text-sm font-bold mb-2 dark:text-white text-gray-800">{exp.empresa}</p>
                 <p className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">{exp.descripcion}</p>
               </Card>
             ))}
           </div>
         </section>
 
-        {/* Educación y Skillset - ICONOS CORREGIDOS */}
+        {/* 2. SECCIÓN LOGÍSTICA & GESTIÓN (Restaurada) */}
+        <section>
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center text-white shadow-lg -rotate-3">
+              <Briefcase size={16} />
+            </div>
+            <h2 className="text-2xl font-black italic uppercase tracking-tighter dark:text-white text-gray-900">Logística & Gestión</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {data.experienciaLaboral.map((exp, i) => (
+              <Card key={i} className="p-5 border-l-4 border-l-amber-500 bg-white dark:bg-gray-900/50">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-black uppercase text-xs tracking-widest dark:text-white text-gray-800">{exp.cargo}</h3>
+                  <span className="text-[9px] font-bold text-gray-400">{exp.periodo}</span>
+                </div>
+                <p className="text-[11px] font-bold text-amber-600 mb-2">{exp.empresa}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-[11px] leading-snug">{exp.descripcion}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* 3. EDUCACIÓN Y SKILLSET */}
         <div className="grid md:grid-cols-2 gap-12">
             <section>
-                <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2 dark:text-white">
+                <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2 dark:text-white text-gray-900">
                     <div className="w-5 h-5 flex items-center justify-center bg-blue-500/10 rounded-lg shrink-0">
                       <IconAcademic size={12} className="text-blue-500" />
                     </div>
@@ -131,7 +153,7 @@ function Curriculum() {
                         <div key={i} className="relative pl-6 border-l border-gray-200 dark:border-white/10">
                             <div className="absolute -left-1 w-2 h-2 rounded-full bg-blue-500 top-1.5" />
                             <p className="text-[9px] font-black text-gray-400 uppercase">{edu.periodo}</p>
-                            <h3 className="text-sm font-bold dark:text-white">{edu.titulo}</h3>
+                            <h3 className="text-sm font-bold dark:text-white text-gray-800">{edu.titulo}</h3>
                             <p className="text-xs text-gray-500">{edu.institucion}</p>
                         </div>
                     ))}
@@ -139,7 +161,7 @@ function Curriculum() {
             </section>
 
             <section>
-                <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2 dark:text-white">
+                <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2 dark:text-white text-gray-900">
                     <div className="w-5 h-5 flex items-center justify-center bg-amber-500/10 rounded-lg shrink-0">
                       <IconBolt size={12} className="text-amber-500" />
                     </div>
@@ -147,7 +169,7 @@ function Curriculum() {
                 </h2>
                 <div className="flex flex-wrap gap-2">
                     {data.habilidades.flatMap(h => h.items).map((skill, i) => (
-                        <span key={i} className="px-2 py-1 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-lg text-[9px] font-black uppercase tracking-tighter dark:text-gray-300">
+                        <span key={i} className="px-2 py-1 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-lg text-[9px] font-black uppercase tracking-tighter dark:text-gray-300 text-gray-600">
                             {skill}
                         </span>
                     ))}

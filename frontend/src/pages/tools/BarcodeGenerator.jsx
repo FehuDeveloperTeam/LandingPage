@@ -16,13 +16,45 @@ const BarcodeGenerator = () => {
   const [locDownloadUrl, setLocDownloadUrl] = useState('');
   const locSvgRef = useRef(null);
 
-  // Limpieza de memoria para URLs de descarga
   useEffect(() => {
     return () => {
       if (taskDownloadUrl) URL.revokeObjectURL(taskDownloadUrl);
       if (locDownloadUrl) URL.revokeObjectURL(locDownloadUrl);
     };
   }, [taskDownloadUrl, locDownloadUrl]);
+
+  // FUNCIÓN MÁSCARA AUTOMÁTICA PARA UBICACIÓN (XXX-XX-XX-XX-XX)
+  const handleLocChange = (e) => {
+    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Solo Alfanumérico
+    let formatted = '';
+
+    for (let i = 0; i < value.length; i++) {
+      if (i === 3 || i === 5 || i === 7 || i === 9) {
+        // Lógica de inserción de guiones según el formato XXX-XX-XX-XX-XX
+        if (i === 3) formatted += '-';
+        if (i === 5) formatted += '-';
+        if (i === 7) formatted += '-';
+        if (i === 9) formatted += '-';
+      }
+      // Limitar a la longitud máxima del formato
+      if (formatted.replace(/-/g, '').length < 11) {
+        formatted += value[i];
+      }
+    }
+    
+    // Formateo final preciso: XXX-XX-XX-XX-XX
+    const v = value;
+    if (v.length > 3) {
+      formatted = v.slice(0, 3) + '-' + v.slice(3, 5);
+      if (v.length > 5) formatted += '-' + v.slice(5, 7);
+      if (v.length > 7) formatted += '-' + v.slice(7, 9);
+      if (v.length > 9) formatted += '-' + v.slice(9, 11);
+    } else {
+      formatted = v;
+    }
+
+    setLocInput(formatted);
+  };
 
   const prepareDownload = (svgElement, setDownloadUrl) => {
     if (!svgElement) return;
@@ -37,7 +69,6 @@ const BarcodeGenerator = () => {
     const cleanInput = taskInput.trim().replace(/[^\x00-\x7F]/g, "");
     if (!cleanInput) return;
 
-    // Timeout de 0ms para asegurar que el SVG está montado en el DOM antes de JsBarcode
     setTimeout(() => {
       try {
         if (taskSvgRef.current) {
@@ -66,8 +97,9 @@ const BarcodeGenerator = () => {
 
     try {
       const parts = input.split('-');
-      if (parts.length < 2) throw new Error("Formato insuficiente. Use guiones.");
+      if (parts.length < 2) throw new Error("Formato incompleto.");
       
+      // Mantenemos la lógica de refactorización para el motor de etiquetas
       const refactored = `${parts[0]}_${parts[1]}${parts[2] || ''}${parts[3] || ''}_${parts[4] || ''}`;
       
       setTimeout(() => {
@@ -90,7 +122,7 @@ const BarcodeGenerator = () => {
         }
       }, 0);
     } catch (e) {
-      setLocError(e.message || "Formato requerido: ***-**-**-**-**");
+      setLocError(e.message || "Formato requerido: XXX-XX-XX-XX-XX");
     }
   };
 
@@ -115,7 +147,6 @@ const BarcodeGenerator = () => {
       <SEO title="Generador de Barras Industrial | Fehu Developers" description="Herramienta logística avanzada para códigos CODE128." />
       
       <div className="max-w-6xl mx-auto px-4 pb-20">
-        {/* Barra de Navegación Superior */}
         <div className="flex justify-between items-center mb-12">
           <Link 
             to="/herramientas" 
@@ -130,7 +161,6 @@ const BarcodeGenerator = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10">
-          
           {/* MÓDULO TAREA */}
           <div className="group bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-10 border border-gray-100 dark:border-white/10 shadow-2xl transition-all">
             <div className="flex justify-between items-start mb-8">
@@ -179,7 +209,7 @@ const BarcodeGenerator = () => {
             )}
           </div>
 
-          {/* MÓDULO UBICACIÓN */}
+          {/* MÓDULO UBICACIÓN CON AUTO-GUIÓN */}
           <div className="group bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-10 border border-gray-100 dark:border-white/10 shadow-2xl transition-all">
             <div className="flex justify-between items-start mb-8">
               <h2 className="text-2xl font-black italic uppercase tracking-tighter flex items-center gap-3">
@@ -195,10 +225,10 @@ const BarcodeGenerator = () => {
               <input 
                 type="text"
                 value={locInput}
-                onChange={(e) => setLocInput(e.target.value.toUpperCase())}
+                onChange={handleLocChange}
                 onKeyPress={(e) => e.key === 'Enter' && generateLocation()}
-                placeholder="AC6-OR-09-01-01"
-                className="w-full px-6 py-5 bg-gray-50 dark:bg-white/5 border-2 border-transparent focus:border-emerald-500 rounded-[1.5rem] outline-none font-bold dark:text-white transition-all placeholder:opacity-30"
+                placeholder="XXX-XX-XX-XX-XX"
+                className="w-full px-6 py-5 bg-gray-50 dark:bg-white/5 border-2 border-transparent focus:border-emerald-500 rounded-[1.5rem] outline-none font-bold dark:text-white transition-all placeholder:opacity-30 tracking-widest"
               />
               <button 
                 onClick={generateLocation}
@@ -225,22 +255,6 @@ const BarcodeGenerator = () => {
                 <Download size={18} /> Descargar Vector SVG
               </a>
             )}
-          </div>
-        </div>
-
-        {/* Footer Informativo */}
-        <div className="mt-16 p-8 rounded-[2rem] bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
-          <div className="flex flex-col md:flex-row gap-8 items-center">
-            <div className="p-4 bg-white dark:bg-gray-900 rounded-2xl shadow-sm">
-              <AlertCircle className="text-blue-500" size={32} />
-            </div>
-            <div>
-              <h4 className="font-black uppercase tracking-widest text-xs mb-2">Especificación Técnica CODE128</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                Generación de alta densidad optimizada para terminales de radiofrecuencia. 
-                El formato vectorial SVG garantiza nitidez absoluta en impresoras térmicas industriales.
-              </p>
-            </div>
           </div>
         </div>
       </div>
