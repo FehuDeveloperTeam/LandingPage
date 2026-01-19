@@ -2,22 +2,21 @@ import { useState } from 'react'
 import { generatePDF } from '../components/CurriculumPDF'
 import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
+import { IconAcademic, IconBriefcase, IconCode, IconBolt, IconPhone, IconMail, IconLocation, IconDocument } from '../components/Icons'
 import SEO from '../components/SEO'
-import { 
-  GraduationCap, Briefcase, Code2, Zap, Phone, 
-  Mail, MapPin, FileText, Download, ExternalLink,
-  Languages, Cpu, Globe
-} from 'lucide-react'
+import { Download, Terminal, Briefcase } from 'lucide-react'
 
 function Curriculum() {
   const [generando, setGenerando] = useState(false)
 
+  // DATA ORIGINAL RESTAURADA (Sin alteraciones para el PDF)
   const data = {
-    resumen: 'Analista Programador y Administrador de Empresas con enfoque en optimización de procesos. Experto en proyectar oportunidades de negocio mediante la integración de soluciones informáticas avanzadas en mercados competitivos.',
+    resumen: 'Gran conocimiento del área, con enfoque administrativo y conocimiento informático para proyectar y potenciar las oportunidades de negocio en un mercado competitivo y en continuo avance.',
     
     contacto: {
       telefono: '+56 9 49 23 17 86',
       email: 'Fehu.developers@gmail.com',
+      instagram: '@andreszs4',
       ubicacion: 'San Carlos, Chile'
     },
 
@@ -28,20 +27,24 @@ function Curriculum() {
 
     experienciaLaboral: [
       { periodo: '2025 - Presente', cargo: 'Asistente Logístico', empresa: 'COPEVAL San Carlos', descripcion: 'Gestión de entrega de producto a cliente final y manejo de sistema WMS para control de inventario y despachos.' },
-      { periodo: '2024 - 2025', cargo: 'Control Logístico SAP', empresa: 'Comfrut SA', descripcion: 'Control operativo en líneas de producción, generación de informes de producto final y optimización de consumos.' },
-      { periodo: '2020 - 2024', cargo: 'Encargado de Local', empresa: 'Importadora SOCAR', descripcion: 'Gestión integral de local, comercio exterior (China/Tailandia) y proyección de ventas B2B/B2C.' },
+      { periodo: '2024 - 2025', cargo: 'Control Logístico SAP', empresa: 'Comfrut SA (Planta San Carlos)', descripcion: 'Encargado del control y correcto funcionamiento en líneas de producción, generando informes de producto final y consumos de materias primas.' },
+      { periodo: '2020 - 2024', cargo: 'Encargado de Local', empresa: 'Importadora SOCAR', descripcion: 'Mantención total de local, contacto con proveedores, manejo de costos, proyección de ventas. Gestor de importaciones desde China y Tailandia. Atención B2B y B2C.' },
+      { periodo: '2019 - 2020', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Blobel SPA', descripcion: 'Depuración de cartera de clientes por áreas geográficas. Atención a clientes intermedios (B2B) con desarrollo de marcas importadas.' },
+      { periodo: '2012 - 2019', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Bicimoto Ltda.', descripcion: 'Contacto con cliente intermedio (B2B), manejo de productos automotrices. Control de cobranza, generación de notas de venta, control de stock y manejo de cartera de clientes.' },
     ],
 
     experienciaTI: [
-      { periodo: '2024 - Presente', cargo: 'Desarrollador Freelance', empresa: 'Independiente', descripcion: 'Desarrollo de Apps móviles, soluciones IoT con ESP32 y realidad aumentada aplicada a procesos industriales.' },
-      { periodo: '2021 - 2023', cargo: 'Desarrollador de Software', empresa: 'SOCAR', descripcion: 'Automatización de gestión interna mediante aplicaciones de escritorio desarrolladas en Python.' },
+      { periodo: '2024 - Presente', cargo: 'Desarrollador Freelance', empresa: 'Independiente', descripcion: 'Desarrollo de aplicaciones móviles multiplataforma, proyectos IoT con ESP32 y soluciones con realidad aumentada para diversos clientes.' },
+      { periodo: '2024', cargo: 'Consultor Bases de Datos', empresa: 'Independiente', descripcion: 'Asesoría en diseño e implementación de bases de datos relacionales para pequeñas y medianas empresas.' },
+      { periodo: '2021 - 2023', cargo: 'Desarrollador de Software', empresa: 'SOCAR', descripcion: 'Creación, desarrollo y mantención de aplicaciones de escritorio para gestión interna utilizando Python.' },
+      { periodo: '2019 - 2020', cargo: 'Desarrollador de Videojuegos', empresa: 'Independiente', descripcion: 'Desarrollo y publicación de videojuegos 2D para plataformas móviles utilizando Unity y C#.' },
     ],
 
     habilidades: [
-      { categoria: 'Idiomas', items: ['Español nativo', 'Inglés avanzado'], icon: <Languages size={18}/> },
-      { categoria: 'Software ERP', items: ['SAP', 'Softland', 'WMS', 'Git'], icon: <Cpu size={18}/> },
-      { categoria: 'Stack Tech', items: ['React', 'Django', 'TypeScript', 'Python', 'Kotlin'], icon: <Code2 size={18}/> },
-      { categoria: 'Innovación', items: ['IoT', 'SQL', 'Unity', 'AR Vuforia'], icon: <Zap size={18}/> },
+      { categoria: 'Idiomas', items: ['Español nativo', 'Inglés avanzado'] },
+      { categoria: 'Software', items: ['SAP', 'Softland', 'WMS', 'Git'] },
+      { categoria: 'Desarrollo', items: ['Python', 'JavaScript', 'TypeScript', 'C#', 'Kotlin', 'React', 'Django'] },
+      { categoria: 'Otros', items: ['IoT (ESP32)', 'Firebase', 'SQL', 'Unity', 'Vuforia AR'] },
     ],
   }
 
@@ -58,117 +61,121 @@ function Curriculum() {
 
   return (
     <PageLayout
-      titulo="Andrés Zurita S."
+      titulo="Andrés Zurita Sanhueza"
       subtitulo={data.resumen}
-      icono={<FileText className="w-8 h-8" />}
     >
-      <SEO 
-        title="Curriculum Profesional | Andrés Zurita"
-        description="Trayectoria profesional de Andrés Zurita. Experto en Administración y Desarrollo de Software (React, Django, IoT)."
+      <SEO
+        title="Curriculum"
+        description="Curriculum de Andres Zurita. Analista Programador con experiencia en React, Django, Flutter, IoT y realidad aumentada."
+        url="/curriculum"
       />
 
-      <div className="max-w-5xl mx-auto space-y-16">
+      <div className="max-w-4xl mx-auto space-y-16">
         
-        {/* Contacto Flotante */}
-        <div className="flex flex-wrap justify-center gap-4">
-          {[
-            { icon: <Phone size={16}/>, label: data.contacto.telefono, href: `tel:${data.contacto.telefono}` },
-            { icon: <Mail size={16}/>, label: data.contacto.email, href: `mailto:${data.contacto.email}` },
-            { icon: <MapPin size={16}/>, label: data.contacto.ubicacion }
-          ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3 px-6 py-3 bg-white/50 dark:bg-white/5 backdrop-blur-md rounded-2xl border border-gray-100 dark:border-white/10 text-sm font-bold text-gray-600 dark:text-gray-300">
-              <span className="text-blue-600">{item.icon}</span>
-              {item.href ? <a href={item.href} className="hover:text-blue-500 transition-colors">{item.label}</a> : item.label}
-            </div>
-          ))}
+        {/* Botón Flotante de Descarga (Mejorado) */}
+        <div className="flex justify-end sticky top-24 z-10 pointer-events-none">
+          <button 
+            onClick={handleDownload}
+            disabled={generando}
+            className={`pointer-events-auto flex items-center gap-2 px-6 py-3 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest text-xs shadow-2xl transition-all hover:scale-105 active:scale-95 ${generando ? 'opacity-50' : ''}`}
+          >
+            {generando ? <RefreshCcw className="animate-spin" size={16} /> : <Download size={16} />}
+            {generando ? 'Compilando...' : 'Descargar PDF'}
+          </button>
         </div>
 
-        {/* Educación y Habilidades (Grid combinada) */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          <section className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-8">
-              <GraduationCap className="text-blue-600" size={28} />
-              <h2 className="text-2xl font-black tracking-tighter uppercase">Formación Académica</h2>
-            </div>
-            <div className="space-y-4">
-              {data.educacion.map((edu, i) => (
-                <Card key={i} className="p-6 border-l-4 border-l-blue-600">
-                  <span className="text-xs font-black text-blue-600 uppercase tracking-widest">{edu.periodo}</span>
-                  <h3 className="font-bold text-xl mt-1">{edu.titulo}</h3>
-                  <p className="text-gray-500 dark:text-gray-400 font-medium">{edu.institucion}</p>
-                  <div className="mt-4 inline-flex items-center px-3 py-1 rounded-lg bg-gray-100 dark:bg-white/5 text-[10px] font-black uppercase tracking-tighter text-gray-600 dark:text-gray-400">
-                    {edu.estado}
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-          <aside className="space-y-8">
-            <div className="flex items-center gap-3 mb-8">
-              <Zap className="text-amber-500" size={28} />
-              <h2 className="text-2xl font-black tracking-tighter uppercase">Skills</h2>
-            </div>
-            <div className="grid gap-4">
-              {data.habilidades.map((hab, i) => (
-                <div key={i} className="p-5 rounded-[2rem] bg-gray-900/5 dark:bg-white/5 border border-gray-100 dark:border-white/10">
-                  <h3 className="flex items-center gap-2 font-black text-xs uppercase tracking-widest text-gray-400 mb-4">
-                    {hab.icon} {hab.categoria}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {hab.items.map((item, j) => (
-                      <span key={j} className="text-[11px] font-bold px-3 py-1 bg-white dark:bg-white/10 rounded-full shadow-sm">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </aside>
+        {/* Contacto Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Card className="p-4 flex items-center gap-4 border-none bg-blue-50/50 dark:bg-blue-500/5">
+                <IconPhone className="text-blue-500" />
+                <a href={`tel:${data.contacto.telefono}`} className="text-xs font-bold dark:text-gray-300">{data.contacto.telefono}</a>
+            </Card>
+            <Card className="p-4 flex items-center gap-4 border-none bg-purple-50/50 dark:bg-purple-500/5">
+                <IconMail className="text-purple-500" />
+                <a href={`mailto:${data.contacto.email}`} className="text-xs font-bold dark:text-gray-300 truncate">{data.contacto.email}</a>
+            </Card>
+            <Card className="p-4 flex items-center gap-4 border-none bg-amber-50/50 dark:bg-amber-500/5">
+                <IconLocation className="text-amber-500" />
+                <span className="text-xs font-bold dark:text-gray-300">{data.contacto.ubicacion}</span>
+            </Card>
         </div>
 
-        {/* Experiencia (Timeline) */}
+        {/* Experiencia TI (Sección Especializada) */}
         <section>
-          <div className="flex items-center gap-3 mb-10">
-            <Briefcase className="text-blue-600" size={28} />
-            <h2 className="text-2xl font-black tracking-tighter uppercase">Experiencia Profesional</h2>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-xl rotate-3">
+              <Terminal size={24} />
+            </div>
+            <h2 className="text-3xl font-black italic uppercase tracking-tighter">Tech Experience</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[...data.experienciaLaboral, ...data.experienciaTI].map((exp, i) => (
-              <Card key={i} className="p-8 group hover:border-blue-500/50 transition-colors">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-[10px] font-black px-3 py-1 bg-blue-600 text-white rounded-md tracking-widest uppercase">
+          <div className="space-y-6">
+            {data.experienciaTI.map((exp, i) => (
+              <Card key={i} className="p-8 group">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                  <h3 className="text-xl font-black text-blue-600 dark:text-blue-400 uppercase tracking-tight">{exp.cargo}</h3>
+                  <span className="px-3 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-[10px] font-black uppercase tracking-widest text-gray-500">
                     {exp.periodo}
                   </span>
-                  {exp.empresa === 'Independiente' && <ExternalLink size={14} className="text-gray-400"/>}
                 </div>
-                <h3 className="font-bold text-xl group-hover:text-blue-600 transition-colors">{exp.cargo}</h3>
-                <p className="text-blue-600 dark:text-blue-400 font-black text-xs uppercase tracking-widest mb-4">{exp.empresa}</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                  {exp.descripcion}
-                </p>
+                <p className="font-bold mb-4 dark:text-white">{exp.empresa}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{exp.descripcion}</p>
               </Card>
             ))}
           </div>
         </section>
 
-        {/* Acción Final */}
-        <div className="flex flex-col items-center py-16 border-t border-gray-100 dark:border-white/5">
-          <button 
-            onClick={handleDownload}
-            disabled={generando}
-            className="group relative inline-flex items-center gap-4 px-12 py-5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl font-black text-sm tracking-widest uppercase hover:scale-105 transition-all disabled:opacity-50"
-          >
-            {generando ? (
-              <Loader2 className="animate-spin" size={20} />
-            ) : (
-              <Download size={20} className="group-hover:bounce" />
-            )}
-            {generando ? 'Generando Documento...' : 'Descargar CV Profesional'}
-            <div className="absolute -inset-2 bg-blue-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
-          <p className="mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">Disponible para proyectos freelance y tiempo completo</p>
+        {/* Experiencia Laboral / Logística */}
+        <section>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center text-white shadow-xl -rotate-3">
+              <Briefcase size={24} />
+            </div>
+            <h2 className="text-3xl font-black italic uppercase tracking-tighter">Logística & Gestión</h2>
+          </div>
+          <div className="space-y-4">
+            {data.experienciaLaboral.map((exp, i) => (
+              <Card key={i} className="p-6 border-l-4 border-l-amber-500">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-black uppercase text-sm tracking-widest dark:text-white">{exp.cargo}</h3>
+                  <span className="text-[10px] font-bold text-gray-400">{exp.periodo}</span>
+                </div>
+                <p className="text-xs font-bold text-amber-600 mb-2">{exp.empresa}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs">{exp.descripcion}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Educación y Habilidades */}
+        <div className="grid md:grid-cols-2 gap-12">
+            <section>
+                <h2 className="text-xl font-black uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <IconAcademic className="text-blue-500" /> Educación
+                </h2>
+                <div className="space-y-4">
+                    {data.educacion.map((edu, i) => (
+                        <div key={i} className="relative pl-6 border-l border-gray-200 dark:border-white/10">
+                            <div className="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                            <p className="text-[10px] font-black text-gray-400 uppercase">{edu.periodo}</p>
+                            <h3 className="font-bold dark:text-white">{edu.titulo}</h3>
+                            <p className="text-sm text-gray-500">{edu.institucion}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <section>
+                <h2 className="text-xl font-black uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <IconBolt className="text-amber-500" /> Skillset
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                    {data.habilidades.flatMap(h => h.items).map((skill, i) => (
+                        <span key={i} className="px-3 py-1 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-lg text-[10px] font-black uppercase tracking-tighter dark:text-gray-300">
+                            {skill}
+                        </span>
+                    ))}
+                </div>
+            </section>
         </div>
       </div>
     </PageLayout>
