@@ -8,7 +8,7 @@ from .serializers import ProyectoSerializer, TecnologiaSerializer, ProductoSeria
 import threading
 import resend
 import os
-from rest_framework.decorators import api_view, action
+from rest_framework.decorators import api_view, action, permission_classes, authentication_classes
 from rest_framework.response import Response
 from .pokemon_service import PokemonTCGService
 from .models import Post
