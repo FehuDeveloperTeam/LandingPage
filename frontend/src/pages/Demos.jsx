@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom'
 import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import ContactModal from '../components/ContactModal'
-import { IconRocket, IconCart, IconBriefcase, IconBuilding, IconArrowRight } from '../components/Icons'
 import SEO from '../components/SEO'
+import { 
+  Rocket, ShoppingBag, Briefcase, Building2, 
+  ArrowRight, Sparkles, MessageSquare, ExternalLink,
+  Layers
+} from 'lucide-react'
 
 function Demos() {
   const [contactoAbierto, setContactoAbierto] = useState(false)
@@ -12,119 +16,130 @@ function Demos() {
   const demos = [
     {
       titulo: 'E-Commerce',
-      descripcion: 'Tienda de repuestos automotrices con carrito de compras, búsqueda y gestión de inventario.',
-      icon: IconCart,
+      descripcion: 'Solución integral de ventas con carrito de compras, gestión de inventario y pasarela de pagos simulada.',
+      icon: <ShoppingBag size={32} />,
       color: 'from-orange-500 to-amber-500',
-      shadow: 'shadow-orange-500/20',
+      badge: 'Más popular',
       links: [
-        { nombre: 'Productos Tangibles', url: '/demos/ventas/tangibles' },
-        { nombre: 'Servicios Intangibles', url: '/demos/ventas/intangibles' },
+        { nombre: 'Productos Físicos', url: '/demos/ventas/tangibles' },
+        { nombre: 'Servicios Digitales', url: '/demos/ventas/intangibles' },
       ]
     },
     {
-      titulo: 'Servicios Profesionales',
-      descripcion: 'Portafolio de servicios tecnológicos con formulario de contacto integrado.',
-      icon: IconBriefcase,
-      color: 'from-violet-500 to-purple-500',
-      shadow: 'shadow-violet-500/20',
+      titulo: 'Servicios Pro',
+      descripcion: 'Plataforma para profesionales independientes con reserva de citas y exhibición de portafolio dinámico.',
+      icon: <Briefcase size={32} />,
+      color: 'from-blue-600 to-indigo-600',
       links: [
-        { nombre: 'Ver Demo', url: '/demos/servicios' },
+        { nombre: 'Explorar Demo', url: '/demos/servicios' },
       ]
     },
     {
       titulo: 'Landing Corporativa',
-      descripcion: 'Página de presentación empresarial con secciones de equipo, testimonios y contacto.',
-      icon: IconBuilding,
-      color: 'from-emerald-500 to-teal-500',
-      shadow: 'shadow-emerald-500/20',
+      descripcion: 'Presencia digital de alto impacto con secciones de equipo, testimonios y optimización para conversión.',
+      icon: <Building2 size={32} />,
+      color: 'from-emerald-600 to-teal-600',
       links: [
-        { nombre: 'Ver Demo', url: '/demos/presentacion' },
-      ]
-    },
-    {
-      titulo: 'Pokemon TCG',
-      descripcion: 'Buscador de cartas Pokemon con información detallada, filtros por edición, tipo y rareza.',
-      icon: IconPokeball,
-      color: 'from-yellow-500 to-red-500',
-      shadow: 'shadow-yellow-500/20',
-      links: [
-        { nombre: 'Ver Demo', url: '/demos/pokemon' },
+        { nombre: 'Visualizar Landing', url: '/demos/presentacion' },
       ]
     },
   ]
 
   return (
     <PageLayout
-      titulo="Demos"
-      subtitulo="Explora diferentes tipos de sitios web y aplicaciones que puedo desarrollar para tu negocio"
+      titulo="Showcase de Demos"
+      subtitulo="Arquitecturas digitales diseñadas para escalar tu visión de negocio al siguiente nivel."
     >
       <SEO 
-  title="Demos"
-  description="Explora demos de aplicaciones web: e-commerce, servicios profesionales, landing corporativa y buscador Pokemon TCG."
-  url="/demos"
-/>
-      {/* Header icon */}
-      <div className="flex justify-center -mt-10 mb-12">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 flex items-center justify-center shadow-xl">
-          <IconRocket className="w-8 h-8 text-white dark:text-gray-900" />
+        title="Demos de Software | Fehu Developers"
+        description="Explora demos interactivas de E-commerce, Landings y Aplicaciones Web profesionales."
+        url="/demos"
+      />
+
+      {/* Hero Icon */}
+      <div className="flex justify-center -mt-10 mb-16">
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+          <div className="relative w-20 h-20 rounded-2xl bg-white dark:bg-gray-900 flex items-center justify-center shadow-2xl border border-gray-100 dark:border-white/10">
+            <Rocket className="w-10 h-10 text-blue-600" />
+          </div>
         </div>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {demos.map((demo, i) => {
-          const Icon = demo.icon
-          return (
-            <Card key={i} className="overflow-hidden group">
-              {/* Header con gradiente */}
-              <div className={`h-32 bg-gradient-to-br ${demo.color} flex items-center justify-center relative overflow-hidden`}>
-                <Icon className="w-14 h-14 text-white group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+        {demos.map((demo, i) => (
+          <div key={i} className="group relative">
+            {/* Tarjeta con diseño de "Producto" */}
+            <Card className="h-full flex flex-col overflow-hidden border-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-xl">
+              {/* Header Visual */}
+              <div className={`h-3 bg-gradient-to-r ${demo.color}`} />
               
-              {/* Contenido */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{demo.titulo}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
+              <div className="p-8 flex flex-col h-full">
+                <div className="flex justify-between items-start mb-6">
+                  <div className={`p-4 rounded-2xl bg-gradient-to-br ${demo.color} text-white shadow-lg`}>
+                    {demo.icon}
+                  </div>
+                  {demo.badge && (
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 px-3 py-1 rounded-full">
+                      {demo.badge}
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-2xl font-black tracking-tighter mb-3 group-hover:text-blue-600 transition-colors">
+                  {demo.titulo}
+                </h3>
+                
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-8 flex-grow">
                   {demo.descripcion}
                 </p>
                 
-                {/* Links */}
-                <div className="space-y-2">
+                {/* Botones de Acción */}
+                <div className="space-y-3">
                   {demo.links.map((link, j) => (
                     <Link
                       key={j}
                       to={link.url}
-                      className={`flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-medium transition-all ${
+                      className={`flex items-center justify-between w-full py-4 px-6 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all ${
                         j === 0
-                          ? `bg-gradient-to-r ${demo.color} text-white shadow-lg ${demo.shadow} hover:shadow-xl hover:-translate-y-0.5`
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                          ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:scale-[1.02] shadow-xl'
+                          : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10'
                       }`}
                     >
                       {link.nombre}
-                      <IconArrowRight className="w-4 h-4" />
+                      {j === 0 ? <Sparkles size={16} /> : <ExternalLink size={16} />}
                     </Link>
                   ))}
                 </div>
               </div>
             </Card>
-          )
-        })}
+          </div>
+        ))}
       </div>
 
-      {/* Info adicional */}
-      <Card className="mt-12 p-8 text-center">
-        <h3 className="text-xl font-bold mb-3">¿Necesitas algo personalizado?</h3>
-        <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-xl mx-auto">
-          Estos son solo ejemplos de lo que puedo hacer. Cada proyecto se adapta a las necesidades específicas de cada cliente.
-        </p>
-        <button
-          onClick={() => setContactoAbierto(true)}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 text-white dark:text-gray-900 rounded-xl font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
-        >
-          Contáctame
-          <IconArrowRight className="w-4 h-4" />
-        </button>
-      </Card>
+      {/* CTA Final Refinado */}
+      <div className="mt-20 relative">
+        <div className="absolute inset-0 bg-blue-600/5 dark:bg-blue-600/10 blur-3xl rounded-full" />
+        <Card className="relative p-12 text-center border-dashed border-2 border-gray-200 dark:border-white/10 bg-transparent overflow-hidden">
+          <div className="relative z-10">
+            <div className="inline-flex p-3 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 mb-6">
+              <Layers size={24} />
+            </div>
+            <h3 className="text-3xl font-black tracking-tighter mb-4 italic">¿Tienes una idea disruptiva?</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto text-lg">
+              Estos modelos son solo el punto de partida. Diseño y desarrollo soluciones personalizadas que se alinean exactamente con tus KPIs y objetivos de marca.
+            </p>
+            <button
+              onClick={() => setContactoAbierto(true)}
+              className="group inline-flex items-center gap-4 px-10 py-5 bg-blue-600 text-white rounded-full font-black text-sm tracking-widest uppercase hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20"
+            >
+              <MessageSquare size={18} className="group-hover:rotate-12 transition-transform" />
+              Iniciar Consultoría Gratuita
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </Card>
+      </div>
 
       <ContactModal 
         isOpen={contactoAbierto} 
@@ -133,20 +148,5 @@ function Demos() {
     </PageLayout>
   )
 }
-
-// Icono de Pokeball
-function IconPokeball({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2c3.07 0 5.64 2.18 6.22 5.08h-3.36c-.44-1.18-1.55-2.08-2.86-2.08s-2.42.9-2.86 2.08H5.78C6.36 6.18 8.93 4 12 4zm0 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-6.22 2.92h3.36c.44 1.18 1.55 2.08 2.86 2.08s2.42-.9 2.86-2.08h3.36C17.64 17.82 15.07 20 12 20s-5.64-2.18-6.22-5.08z"/>
-    </svg>
-  )
-}
-
-<SEO 
-  title="Demos"
-  description="Explora demos de aplicaciones web: e-commerce, servicios profesionales, landing corporativa y buscador Pokemon TCG."
-  url="/demos"
-/>
 
 export default Demos

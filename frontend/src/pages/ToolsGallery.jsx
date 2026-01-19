@@ -2,34 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
-import { Barcode, Settings, Search, LayoutGrid, ArrowRight } from 'lucide-react';
+import { Barcode, Settings, Search, LayoutGrid, ArrowRight, Zap } from 'lucide-react';
 
 const TOOLS = [
   {
     id: 'generador-barras',
-    name: 'Generador de Código de Barras',
-    description: 'Genera códigos CODE128 para tareas y ubicaciones logísticas.',
+    name: 'Logistics Barcode',
+    description: 'Motor de generación CODE128 para gestión de inventarios y etiquetado industrial.',
     icon: Barcode,
     path: '/herramientas/generador-barras',
-    color: 'from-blue-500 to-cyan-500',
-    glow: 'group-hover:shadow-blue-500/20'
+    color: 'from-blue-600 to-indigo-500',
+    glow: 'group-hover:shadow-blue-500/30'
   },
   {
     id: 'pokemon-tcg',
     name: 'Poké-Buscador TCG',
-    description: 'Buscador avanzado de cartas con filtros por edición, tipo y rareza.',
+    description: 'Protocolo de búsqueda avanzada para coleccionistas. Filtros por rareza y set.',
     icon: Search, 
     path: '/herramientas/pokemon',
-    color: 'from-red-600 to-orange-600',
-    glow: 'group-hover:shadow-red-500/20'
+    color: 'from-rose-600 to-orange-500',
+    glow: 'group-hover:shadow-rose-500/30'
   },
   {
     id: 'proximamente',
-    name: 'Más herramientas',
-    description: 'Estamos desarrollando nuevas utilidades para optimizar tu flujo de trabajo.',
+    name: 'System Core',
+    description: 'Módulos encriptados en desarrollo. Próximamente utilidades de automatización.',
     icon: Settings,
     path: '#',
-    color: 'from-gray-400 to-gray-500',
+    color: 'from-gray-600 to-gray-800',
     disabled: true
   }
 ];
@@ -38,59 +38,91 @@ function ToolsGallery() {
   return (
     <PageLayout 
       titulo="Toolbox" 
-      subtitulo="Soluciones rápidas y utilidades de productividad para optimizar tus tareas cotidianas."
-      icono={<LayoutGrid className="w-8 h-8" />}
+      subtitulo="Micro-utilidades de ingeniería diseñadas para optimizar flujos de trabajo técnicos y logística."
+      icono={<LayoutGrid className="w-8 h-8 text-blue-500" />}
     >
       <SEO 
         title="Herramientas | Fehu Developers" 
         description="Utilidades de productividad, generadores de códigos y buscadores técnicos." 
       />
       
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         {TOOLS.map((tool) => {
           const Icon = tool.icon;
           return (
             <Link 
               key={tool.id} 
               to={tool.disabled ? '#' : tool.path}
-              className={`group relative p-8 rounded-[2.5rem] border backdrop-blur-md transition-all duration-500 ${
+              className={`group relative p-10 rounded-[3rem] border transition-all duration-500 overflow-hidden flex flex-col ${
                 tool.disabled 
-                ? 'opacity-60 cursor-not-allowed bg-gray-100/50 dark:bg-white/5 border-gray-200 dark:border-white/5' 
-                : `bg-white/50 dark:bg-white/5 border-white/20 dark:border-white/10 hover:-translate-y-2 hover:shadow-2xl ${tool.glow}`
+                ? 'opacity-50 cursor-not-allowed bg-gray-50/50 dark:bg-white/5 border-gray-200 dark:border-white/5' 
+                : `bg-white dark:bg-gray-900 border-gray-100 dark:border-white/10 hover:-translate-y-3 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] ${tool.glow}`
               }`}
             >
-              {/* Icono con gradiente */}
-              <div className={`w-16 h-16 bg-gradient-to-br ${tool.color} rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                <Icon size={32} />
+              {/* Badge de Estado (Top Right) */}
+              <div className="absolute top-8 right-8">
+                {tool.disabled ? (
+                  <div className="flex items-center gap-1.5 px-3 py-1 bg-gray-100 dark:bg-white/10 rounded-full">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Standby</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 rounded-full">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Online</span>
+                  </div>
+                )}
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                {tool.name}
-              </h3>
-              
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                {tool.description}
-              </p>
+              {/* Icono Principal */}
+              <div className={`w-20 h-20 bg-gradient-to-br ${tool.color} rounded-[2rem] flex items-center justify-center text-white mb-10 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative`}>
+                <Icon size={36} strokeWidth={1.5} />
+                {!tool.disabled && (
+                    <div className="absolute inset-0 bg-white opacity-20 blur-xl scale-50 group-hover:scale-100 transition-transform duration-500" />
+                )}
+              </div>
 
+              {/* Título y Descripción */}
+              <div className="space-y-4 flex-grow">
+                <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {tool.name}
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed text-sm">
+                  {tool.description}
+                </p>
+              </div>
+
+              {/* Footer de Tarjeta */}
+              <div className="mt-10 pt-8 border-t border-gray-50 dark:border-white/5">
+                {!tool.disabled ? (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-900 dark:text-white">
+                      Ejecutar <ArrowRight size={14} className="text-blue-500 group-hover:translate-x-2 transition-transform" />
+                    </div>
+                    <Zap size={14} className="text-amber-500 fill-amber-500 animate-pulse" />
+                  </div>
+                ) : (
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                    Módulo de Expansión
+                  </p>
+                )}
+              </div>
+
+              {/* Efecto de Luz de Fondo (Hover) */}
               {!tool.disabled && (
-                <div className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white group-hover:gap-4 transition-all">
-                  Abrir herramienta <ArrowRight size={18} className="text-blue-600" />
-                </div>
-              )}
-
-              {tool.disabled && (
-                <span className="text-xs font-medium px-3 py-1 bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-gray-400 rounded-full">
-                  Próximamente
-                </span>
-              )}
-
-              {/* Efecto de brillo sutil de fondo en hover */}
-              {!tool.disabled && (
-                <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${tool.color} opacity-0 group-hover:opacity-5 blur-2xl transition-opacity rounded-[2.5rem]`} />
+                <div className={`absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-br ${tool.color} opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-700`} />
               )}
             </Link>
           );
         })}
+      </div>
+
+      {/* Footer de Soporte */}
+      <div className="mt-20 p-8 rounded-[2rem] bg-gray-50 dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 text-center">
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            ¿Necesitas una herramienta personalizada para tu empresa? 
+            <Link to="/presentacion" className="ml-2 text-blue-500 hover:underline">Solicitar desarrollo</Link>
+        </p>
       </div>
     </PageLayout>
   );

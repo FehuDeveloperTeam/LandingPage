@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import DemoLayout from '../../components/DemoLayout'
 import ContactModal from '../../components/ContactModal'
+import { 
+  Smartphone, Code2, Box, Cpu, Database, 
+  Bot, ArrowUpRight, CheckCircle2, X, Terminal 
+} from 'lucide-react'
 
 function Servicios() {
   const [servicioActivo, setServicioActivo] = useState(null)
@@ -9,40 +13,40 @@ function Servicios() {
 
   const servicios = [
     {
-      id: 1, titulo: 'Desarrollo Móvil', icono: '📱',
-      descripcion: 'Aplicaciones nativas y multiplataforma para Android e iOS.',
-      tecnologias: ['React Native', 'Expo', 'TypeScript', 'Kotlin', 'Android Studio'],
-      caracteristicas: ['Apps nativas para Android con Kotlin', 'Apps multiplataforma con React Native', 'Integración con Firebase', 'Publicación en stores', 'Diseño UI/UX moderno', 'Push notifications']
+      id: 1, titulo: 'Desarrollo Móvil', icono: Smartphone, color: 'from-blue-500 to-cyan-400',
+      descripcion: 'Ingeniería de software de alto rendimiento para ecosistemas iOS y Android.',
+      tecnologias: ['React Native', 'Expo', 'TypeScript', 'Kotlin'],
+      caracteristicas: ['Arquitectura limpia', 'Offline-first ready', 'Push Notification Engines', 'Biometric Auth']
     },
     {
-      id: 2, titulo: 'Desarrollo Web', icono: '🌐',
-      descripcion: 'Sitios web modernos, landing pages y aplicaciones web.',
-      tecnologias: ['React', 'TypeScript', 'Django', 'Python', 'Node.js', 'SQL'],
-      caracteristicas: ['Landing pages responsivas', 'Apps SPA con React', 'Backend con Django', 'APIs REST seguras', 'Bases de datos', 'Deploy en cloud']
+      id: 2, titulo: 'Ecosistemas Web', icono: Code2, color: 'from-violet-500 to-purple-400',
+      descripcion: 'Plataformas escalables con enfoque en Core Web Vitals y UX intuitiva.',
+      tecnologias: ['React', 'Next.js', 'Django', 'Node.js'],
+      caracteristicas: ['Server Side Rendering', 'SEO Dinámico', 'Pasarelas de Pago', 'CMS Headless']
     },
     {
-      id: 3, titulo: 'Realidad Aumentada', icono: '🥽',
-      descripcion: 'Experiencias AR para marketing, educación y entretenimiento.',
-      tecnologias: ['Unity3D', 'Vuforia', 'C#'],
-      caracteristicas: ['Reconocimiento de imágenes', 'Juegos interactivos AR', 'Catálogos 3D', 'Experiencias educativas', 'Modelos 3D interactivos']
+      id: 3, titulo: 'Realidad Aumentada', icono: Box, color: 'from-pink-500 to-rose-400',
+      descripcion: 'Capas digitales interactivas para industria 4.0 y retail moderno.',
+      tecnologias: ['Unity3D', 'C#', 'Vuforia', 'ARKit'],
+      caracteristicas: ['Spatial Tracking', 'Modelado Low-Poly', 'Interactive Catalogs', 'AR Education']
     },
     {
-      id: 4, titulo: 'IoT y Hardware', icono: '🔌',
-      descripcion: 'Integración de dispositivos, sensores y sistemas embebidos.',
-      tecnologias: ['Python', 'Firebase', 'ESP32', 'Kotlin'],
-      caracteristicas: ['Microcontroladores ESP32', 'Comunicación Bluetooth/WiFi', 'Apps de control', 'Dashboards en tiempo real', 'Automatización']
+      id: 4, titulo: 'IoT & Firmware', icono: Cpu, color: 'from-amber-500 to-orange-400',
+      descripcion: 'Conectividad hardware-to-cloud para monitoreo y control remoto.',
+      tecnologias: ['Python', 'ESP32', 'MQTT', 'C++'],
+      caracteristicas: ['Protocolos Industriales', 'Low Latency Dashboards', 'Sensor Analytics', 'OTA Updates']
     },
     {
-      id: 5, titulo: 'Bases de Datos', icono: '🗄️',
-      descripcion: 'Diseño, implementación y optimización de bases de datos.',
-      tecnologias: ['SQL', 'NoSQL', 'Firebase', 'Django'],
-      caracteristicas: ['Diseño de esquemas', 'Optimización', 'Respaldos', 'Migraciones', 'Reportes']
+      id: 5, titulo: 'Data Infrastructure', icono: Database, color: 'from-emerald-500 to-teal-400',
+      descripcion: 'Diseño de arquitecturas de datos robustas para alto volumen de tráfico.',
+      tecnologias: ['PostgreSQL', 'Redis', 'MongoDB', 'Firebase'],
+      caracteristicas: ['Database Sharding', 'Query Optimization', 'Data Encryption', 'Automatic Backups']
     },
     {
-      id: 6, titulo: 'IA y Prompts', icono: '🤖',
-      descripcion: 'Integración de inteligencia artificial y automatización.',
-      tecnologias: ['IA Prompts', 'Python', 'JavaScript'],
-      caracteristicas: ['Diseño de prompts', 'Chatbots', 'Automatización', 'Generación de contenido', 'Asistentes virtuales']
+      id: 6, titulo: 'AI Integration', icono: Bot, color: 'from-indigo-500 to-blue-600',
+      descripcion: 'Automatización inteligente mediante LLMs y procesamiento de lenguaje natural.',
+      tecnologias: ['OpenAI SDK', 'LangChain', 'Python', 'Vectors'],
+      caracteristicas: ['Prompt Engineering', 'Custom RAG Bots', 'Sentiment Analysis', 'Auto-content Pipeline']
     },
   ]
 
@@ -55,112 +59,130 @@ function Servicios() {
   return (
     <DemoLayout tema="servicios">
       {(tema) => (
-        <div className="space-y-16">
-          {/* Header */}
-          <header className="text-center space-y-4">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 text-4xl shadow-lg shadow-violet-500/30 mb-2">
-              💻
+        <div className="max-w-7xl mx-auto space-y-24 py-12 px-4">
+          
+          {/* Header de Ingeniería */}
+          <header className="text-center space-y-6 relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-violet-500/10 blur-[100px] -z-10" />
+            <div className="inline-flex p-4 rounded-3xl bg-gray-900 text-white shadow-2xl mb-4 rotate-3">
+              <Terminal size={40} className="text-violet-400" />
             </div>
-            <h1 className={`text-4xl md:text-6xl font-bold bg-gradient-to-r ${tema.gradient} bg-clip-text text-transparent`}>
-              Fehu Developers
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none">
+              Fehu<span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-purple-500">Devs</span>
             </h1>
-            <p className={`${tema.textMuted} text-lg max-w-xl mx-auto`}>
-              Soluciones tecnológicas a tu medida
+            <p className="text-gray-500 dark:text-gray-400 text-xl max-w-2xl mx-auto font-medium">
+              Transformamos especificaciones técnicas en experiencias digitales de alto impacto.
             </p>
           </header>
 
-          {/* Grid de servicios */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {servicios.map((servicio) => (
-              <div 
-                key={servicio.id} 
-                className={`${tema.card} rounded-2xl p-6 ${tema.cardHover} transition-all duration-500 group cursor-pointer`}
-                onClick={() => setServicioActivo(servicio)}
-              >
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {servicio.icono}
-                </div>
-                <h2 className="text-xl font-bold mb-2">{servicio.titulo}</h2>
-                <p className={`${tema.textMuted} mb-4 text-sm`}>{servicio.descripcion}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {servicio.tecnologias.slice(0, 3).map((tech, i) => (
-                    <span key={i} className={`text-xs px-3 py-1 ${tema.badge} rounded-full`}>
-                      {tech}
-                    </span>
-                  ))}
-                  {servicio.tecnologias.length > 3 && (
-                    <span className={`text-xs px-3 py-1 ${tema.badge} rounded-full`}>
-                      +{servicio.tecnologias.length - 3}
-                    </span>
-                  )}
-                </div>
-
-                <span className={`${tema.textAccent} font-medium text-sm group-hover:underline`}>
-                  Ver más →
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <section className={`${tema.card} rounded-3xl p-12 text-center`}>
-            <h2 className="text-3xl font-bold mb-4">¿Tienes un proyecto en mente?</h2>
-            <p className={`${tema.textMuted} mb-8 max-w-xl mx-auto`}>
-              Conversemos sobre cómo puedo ayudarte a convertir tu idea en realidad
-            </p>
-            <button 
-              onClick={() => abrirContacto(null)}
-              className={`px-10 py-4 ${tema.btnPrimary} rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105`}
-            >
-              Contactar ahora
-            </button>
-          </section>
-
-          {/* Modal de detalles */}
-          {servicioActivo && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setServicioActivo(null)} />
-              <div className={`relative ${tema.card} rounded-3xl p-8 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl`}>
-                <button 
-                  onClick={() => setServicioActivo(null)}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-xl"
+          {/* Grid de Soluciones */}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {servicios.map((s) => {
+              const Icon = s.icono
+              return (
+                <div 
+                  key={s.id} 
+                  className="group relative bg-white dark:bg-gray-900 border border-gray-100 dark:border-white/5 rounded-[2.5rem] p-8 hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden"
+                  onClick={() => setServicioActivo(s)}
                 >
-                  ×
-                </button>
-                
-                <div className="text-6xl mb-4">{servicioActivo.icono}</div>
-                <h3 className="text-2xl font-bold mb-2">{servicioActivo.titulo}</h3>
-                <p className={`${tema.textMuted} mb-6`}>{servicioActivo.descripcion}</p>
+                  {/* Hover Decorator */}
+                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-10 transition-opacity blur-3xl`} />
+                  
+                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${s.color} text-white mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
+                    <Icon size={32} />
+                  </div>
 
-                <div className="mb-6">
-                  <h4 className="font-bold mb-3">Tecnologías</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {servicioActivo.tecnologias.map((tech, i) => (
-                      <span key={i} className={`text-sm px-4 py-2 ${tema.badge} rounded-full`}>
+                  <h2 className="text-2xl font-black uppercase italic tracking-tight mb-4">{s.titulo}</h2>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed mb-8">
+                    {s.descripcion}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {s.tecnologias.slice(0, 3).map((tech, i) => (
+                      <span key={i} className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-100 dark:border-white/10">
                         {tech}
                       </span>
                     ))}
                   </div>
+
+                  <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-violet-500 group-hover:gap-4 transition-all">
+                    Explorar Especificaciones <ArrowUpRight size={14} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* CTA Industrial */}
+          <section className="relative overflow-hidden bg-gray-900 dark:bg-white rounded-[3rem] p-12 md:p-20 text-center text-white dark:text-gray-900 shadow-2xl">
+            <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="h-full w-full bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:20px_20px]" />
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic mb-6 relative z-10">
+              ¿Iniciamos la Fase 01?
+            </h2>
+            <p className="text-gray-400 dark:text-gray-500 mb-10 max-w-xl mx-auto font-medium relative z-10">
+              Estamos listos para auditar tu idea y proponer un roadmap tecnológico sólido.
+            </p>
+            <button 
+              onClick={() => abrirContacto(null)}
+              className="relative z-10 px-12 py-5 bg-violet-600 text-white dark:bg-gray-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-xl"
+            >
+              Contactar Ingeniería
+            </button>
+          </section>
+
+          {/* Modal de Detalles Técnico */}
+          {servicioActivo && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-xl bg-black/60">
+              <div className="absolute inset-0" onClick={() => setServicioActivo(null)} />
+              <div className="relative bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-12 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/10">
+                <button 
+                  onClick={() => setServicioActivo(null)}
+                  className="absolute top-8 right-8 p-3 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+                
+                <div className={`inline-flex p-5 rounded-3xl bg-gradient-to-br ${servicioActivo.color} text-white mb-8 shadow-2xl`}>
+                  <servicioActivo.icono size={48} />
                 </div>
 
-                <div className="mb-8">
-                  <h4 className="font-bold mb-3">Incluye</h4>
-                  <ul className="space-y-2">
-                    {servicioActivo.caracteristicas.map((c, i) => (
-                      <li key={i} className={`flex items-center gap-3 ${tema.textMuted}`}>
-                        <span className="text-green-500">✓</span>
-                        {c}
-                      </li>
-                    ))}
-                  </ul>
+                <h3 className="text-4xl font-black uppercase italic tracking-tighter mb-4">{servicioActivo.titulo}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-lg font-medium mb-10 leading-relaxed">
+                  {servicioActivo.descripcion}
+                </p>
+
+                <div className="space-y-10">
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-violet-500 mb-4">Tech Stack Principal</h4>
+                    <div className="flex flex-wrap gap-3">
+                      {servicioActivo.tecnologias.map((tech, i) => (
+                        <span key={i} className="px-5 py-3 bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/10 text-sm font-bold">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-violet-500 mb-4">Core Features</h4>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {servicioActivo.caracteristicas.map((c, i) => (
+                        <div key={i} className="flex items-center gap-3 p-4 bg-gray-50/50 dark:bg-white/5 rounded-2xl border border-transparent hover:border-violet-500/30 transition-colors">
+                          <CheckCircle2 size={18} className="text-emerald-500" />
+                          <span className="text-sm font-bold text-gray-700 dark:text-gray-300">{c}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <button
                   onClick={() => abrirContacto(servicioActivo.titulo)}
-                  className={`w-full py-4 ${tema.btnPrimary} rounded-xl font-semibold transition-all duration-300 hover:scale-105`}
+                  className="w-full mt-12 py-6 bg-violet-600 text-white rounded-[2rem] font-black uppercase tracking-widest text-xs shadow-xl shadow-violet-500/20 hover:bg-violet-700 transition-all"
                 >
-                  Solicitar cotización
+                  Solicitar Auditoría Técnica
                 </button>
               </div>
             </div>

@@ -1,5 +1,10 @@
 import { useState } from 'react'
 import DemoLayout from '../../../components/DemoLayout'
+import { 
+  Droplets, Sparkles, Calendar, FlaskConical, Sun, 
+  MapPin, CheckCircle2, Navigation2, ArrowRight,
+  ShieldCheck, Receipt, X
+} from 'lucide-react'
 
 function Intangibles() {
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null)
@@ -7,42 +12,32 @@ function Intangibles() {
   const [mostrarResumen, setMostrarResumen] = useState(false)
 
   const servicios = [
-    { id: 1, nombre: 'Limpieza Básica', descripcion: 'Limpieza superficial, retiro de hojas, medición pH y cloro', precio: 25000, icono: '🧹' },
-    { id: 2, nombre: 'Limpieza Completa', descripcion: 'Aspirado de fondo, cepillado paredes, limpieza skimmer y filtros', precio: 45000, icono: '✨' },
-    { id: 3, nombre: 'Mantención Mensual', descripcion: 'Visita semanal con limpieza y químicos incluidos (4 visitas)', precio: 80000, icono: '📅' },
-    { id: 4, nombre: 'Recuperación Agua Verde', descripcion: 'Tratamiento completo para piscinas con algas', precio: 120000, icono: '🧪' },
-    { id: 5, nombre: 'Apertura de Temporada', descripcion: 'Puesta a punto completa, revisión equipos, llenado y tratamiento', precio: 150000, icono: '☀️' },
+    { id: 1, nombre: 'Limpieza Básica', descripcion: 'Limpieza superficial, retiro de hojas, medición pH y cloro', precio: 25000, icono: Droplets, color: 'text-blue-500' },
+    { id: 2, nombre: 'Limpieza Completa', descripcion: 'Aspirado de fondo, cepillado paredes, limpieza filtros', precio: 45000, icono: Sparkles, color: 'text-cyan-500' },
+    { id: 3, nombre: 'Mantención Mensual', descripcion: 'Visita semanal con químicos incluidos (4 visitas)', precio: 80000, icono: Calendar, color: 'text-indigo-500' },
+    { id: 4, nombre: 'Agua Verde', descripcion: 'Tratamiento de choque para piscinas con algas', precio: 120000, icono: FlaskConical, color: 'text-emerald-500' },
+    { id: 5, nombre: 'Apertura Pro', descripcion: 'Puesta a punto completa y revisión de equipos', precio: 150000, icono: Sun, color: 'text-amber-500' },
   ]
 
   const comunas = [
     { id: 1, nombre: 'Chillán', distancia: 0 },
     { id: 2, nombre: 'Chillán Viejo', distancia: 5 },
     { id: 3, nombre: 'Bulnes', distancia: 17 },
-    { id: 4, nombre: 'San Ignacio', distancia: 20 },
     { id: 5, nombre: 'San Carlos', distancia: 25 },
-    { id: 6, nombre: 'Coihueco', distancia: 27 },
     { id: 7, nombre: 'Quillón', distancia: 30 },
-    { id: 8, nombre: 'Yungay', distancia: 35 },
-    { id: 9, nombre: 'El Carmen', distancia: 40 },
     { id: 10, nombre: 'Pinto', distancia: 45 },
     { id: 11, nombre: 'Pemuco', distancia: 50 },
   ]
 
-  const calcularTraslado = (distancia) => {
-    if (distancia <= 5) return 0
-    return distancia * 300 * 2
-  }
-
-  const formatoPrecio = (precio) => {
-    return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(precio)
-  }
+  const calcularTraslado = (distancia) => distancia <= 5 ? 0 : distancia * 600
+  const formatoPrecio = (precio) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(precio)
 
   const costoTraslado = comunaSeleccionada ? calcularTraslado(comunaSeleccionada.distancia) : 0
   const costoServicio = servicioSeleccionado ? servicioSeleccionado.precio : 0
   const costoTotal = costoServicio + costoTraslado
 
   const handleConfirmar = () => {
-    alert('¡Solicitud enviada! Nos contactaremos contigo pronto.')
+    alert('¡Cotización enviada! Un técnico de AquaClean te contactará en breve.')
     setServicioSeleccionado(null)
     setComunaSeleccionada(null)
     setMostrarResumen(false)
@@ -51,154 +46,171 @@ function Intangibles() {
   return (
     <DemoLayout tema="intangibles">
       {(tema) => (
-        <div className="space-y-16">
-          {/* Header */}
-          <header className="text-center space-y-4">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 text-4xl shadow-lg shadow-cyan-500/30 mb-2">
-              🏊
+        <div className="max-w-6xl mx-auto space-y-20 py-10 px-4">
+          
+          {/* Hero Editorial */}
+          <header className="text-center space-y-6">
+            <div className="inline-flex p-4 bg-blue-600/10 rounded-3xl mb-4 animate-bounce">
+              <Droplets size={48} className="text-blue-600" />
             </div>
-            <h1 className={`text-4xl md:text-6xl font-bold bg-gradient-to-r ${tema.gradient} bg-clip-text text-transparent`}>
-              AquaClean Ñuble
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none">
+              AquaClean<br/><span className="text-blue-600">Premium</span>
             </h1>
-            <p className={`${tema.textMuted} text-lg max-w-xl mx-auto`}>
-              Servicios profesionales de limpieza y mantención de piscinas
+            <p className="text-gray-500 dark:text-gray-400 font-medium text-lg max-w-xl mx-auto">
+              Cuidamos tu descanso con estándares industriales. Cotiza tu mantenimiento en segundos.
             </p>
-            <div className={`inline-flex items-center gap-2 px-4 py-2 ${tema.badge} rounded-full text-sm`}>
-              📍 Operamos desde Chillán a toda la región
+            <div className="flex flex-wrap justify-center gap-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+               <span className="flex items-center gap-2 px-4 py-2 bg-gray-50 dark:bg-white/5 rounded-full border border-gray-100 dark:border-white/10">
+                 <ShieldCheck size={14} className="text-blue-500" /> Garantía de Calidad
+               </span>
+               <span className="flex items-center gap-2 px-4 py-2 bg-gray-50 dark:bg-white/5 rounded-full border border-gray-100 dark:border-white/10">
+                 <Navigation2 size={14} className="text-blue-500" /> Cobertura Regional
+               </span>
             </div>
           </header>
 
-          {/* Paso 1: Servicios */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-4">
-              <span className={`w-10 h-10 rounded-full bg-gradient-to-r ${tema.gradient} text-white flex items-center justify-center font-bold shadow-lg`}>1</span>
-              <h2 className="text-2xl font-bold">Selecciona un servicio</h2>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {servicios.map((servicio) => (
-                <div
-                  key={servicio.id}
-                  onClick={() => setServicioSeleccionado(servicio)}
-                  className={`${tema.card} rounded-2xl p-6 cursor-pointer transition-all duration-300 ${tema.cardHover} ${
-                    servicioSeleccionado?.id === servicio.id
-                      ? 'ring-2 ring-cyan-500 shadow-lg shadow-cyan-500/20'
-                      : ''
-                  }`}
-                >
-                  <div className="text-4xl mb-3">{servicio.icono}</div>
-                  <h3 className="font-bold text-lg mb-2">{servicio.nombre}</h3>
-                  <p className={`${tema.textMuted} text-sm mb-4`}>{servicio.descripcion}</p>
-                  <p className={`text-2xl font-bold bg-gradient-to-r ${tema.gradient} bg-clip-text text-transparent`}>
-                    {formatoPrecio(servicio.precio)}
-                  </p>
+          <div className="grid lg:grid-cols-3 gap-16">
+            
+            {/* Columna Izquierda: Pasos 1 y 2 */}
+            <div className="lg:col-span-2 space-y-16">
+              
+              {/* Step 1: Services */}
+              <section className="space-y-8">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black italic shadow-xl shadow-blue-500/20">01</div>
+                  <h2 className="text-3xl font-black tracking-tighter uppercase italic">Selecciona el Plan</h2>
                 </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Paso 2: Comunas */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-4">
-              <span className={`w-10 h-10 rounded-full bg-gradient-to-r ${tema.gradient} text-white flex items-center justify-center font-bold shadow-lg`}>2</span>
-              <h2 className="text-2xl font-bold">Selecciona tu comuna</h2>
-            </div>
-            <div className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {comunas.map((comuna) => {
-                const traslado = calcularTraslado(comuna.distancia)
-                return (
-                  <div
-                    key={comuna.id}
-                    onClick={() => setComunaSeleccionada(comuna)}
-                    className={`${tema.card} rounded-xl p-4 cursor-pointer transition-all duration-300 ${tema.cardHover} ${
-                      comunaSeleccionada?.id === comuna.id
-                        ? 'ring-2 ring-cyan-500 shadow-lg shadow-cyan-500/20'
-                        : ''
-                    }`}
-                  >
-                    <p className="font-semibold">{comuna.nombre}</p>
-                    <p className={`text-sm ${tema.textMuted}`}>{comuna.distancia} km</p>
-                    <p className={`text-sm font-medium ${tema.textAccent}`}>
-                      {traslado === 0 ? '✓ Sin costo traslado' : `+ ${formatoPrecio(traslado)}`}
-                    </p>
-                  </div>
-                )
-              })}
-            </div>
-          </section>
-
-          {/* Paso 3: Resumen */}
-          {servicioSeleccionado && comunaSeleccionada && (
-            <section className="space-y-6">
-              <div className="flex items-center gap-4">
-                <span className={`w-10 h-10 rounded-full bg-gradient-to-r ${tema.gradient} text-white flex items-center justify-center font-bold shadow-lg`}>3</span>
-                <h2 className="text-2xl font-bold">Resumen del presupuesto</h2>
-              </div>
-              <div className={`${tema.card} rounded-2xl p-8 max-w-xl mx-auto`}>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2">
-                      <span className="text-xl">{servicioSeleccionado.icono}</span>
-                      {servicioSeleccionado.nombre}
-                    </span>
-                    <span className="font-semibold">{formatoPrecio(costoServicio)}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2">
-                      <span className="text-xl">📍</span>
-                      Traslado a {comunaSeleccionada.nombre}
-                    </span>
-                    <span className="font-semibold">{costoTraslado === 0 ? 'Gratis' : formatoPrecio(costoTraslado)}</span>
-                  </div>
-                  <div className={`flex justify-between items-center pt-4 border-t border-white/10 text-xl`}>
-                    <span className="font-bold">Total</span>
-                    <span className={`font-bold bg-gradient-to-r ${tema.gradient} bg-clip-text text-transparent`}>
-                      {formatoPrecio(costoTotal)}
-                    </span>
-                  </div>
+                
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {servicios.map((s) => {
+                    const Icon = s.icono
+                    const isSelected = servicioSeleccionado?.id === s.id
+                    return (
+                      <button
+                        key={s.id}
+                        onClick={() => setServicioSeleccionado(s)}
+                        className={`group p-6 rounded-[2rem] text-left transition-all border ${
+                          isSelected 
+                            ? 'bg-blue-600 border-blue-600 shadow-2xl shadow-blue-500/30 -translate-y-1' 
+                            : 'bg-white dark:bg-white/5 border-gray-100 dark:border-white/5 hover:border-blue-500/50'
+                        }`}
+                      >
+                        <div className={`p-3 rounded-2xl w-fit mb-4 ${isSelected ? 'bg-white/20' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
+                          <Icon size={24} className={isSelected ? 'text-white' : s.color} />
+                        </div>
+                        <h3 className={`font-black uppercase italic tracking-tight mb-2 ${isSelected ? 'text-white' : 'text-gray-900 dark:text-white'}`}>{s.nombre}</h3>
+                        <p className={`text-xs font-medium leading-relaxed mb-4 ${isSelected ? 'text-blue-50' : 'text-gray-500'}`}>{s.descripcion}</p>
+                        <p className={`text-xl font-black ${isSelected ? 'text-white' : 'text-blue-600'}`}>{formatoPrecio(s.precio)}</p>
+                      </button>
+                    )
+                  })}
                 </div>
-                <button
-                  onClick={() => setMostrarResumen(true)}
-                  className={`w-full mt-6 py-4 ${tema.btnPrimary} rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105`}
-                >
-                  Solicitar servicio
-                </button>
-              </div>
-            </section>
-          )}
+              </section>
 
-          {/* Modal confirmación */}
+              {/* Step 2: Location */}
+              <section className="space-y-8">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black italic shadow-xl shadow-blue-500/20">02</div>
+                  <h2 className="text-3xl font-black tracking-tighter uppercase italic">Ubicación del Servicio</h2>
+                </div>
+                
+                <div className="grid gap-3 grid-cols-2 sm:grid-cols-3">
+                  {comunas.map((c) => {
+                    const traslado = calcularTraslado(c.distancia)
+                    const isSelected = comunaSeleccionada?.id === c.id
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => setComunaSeleccionada(c)}
+                        className={`p-4 rounded-2xl border text-center transition-all ${
+                          isSelected 
+                            ? 'bg-blue-600 border-blue-600 text-white shadow-xl' 
+                            : 'bg-gray-50 dark:bg-white/5 border-transparent hover:bg-gray-100 dark:hover:bg-white/10'
+                        }`}
+                      >
+                        <p className="text-[10px] font-black uppercase tracking-widest mb-1">{c.nombre}</p>
+                        <p className={`text-[9px] font-bold ${isSelected ? 'text-blue-200' : 'text-gray-400'}`}>{c.distancia} KM</p>
+                        <p className={`mt-2 text-[10px] font-black ${isSelected ? 'text-white' : 'text-blue-600'}`}>
+                          {traslado === 0 ? 'SIN COSTO' : `+ ${formatoPrecio(traslado)}`}
+                        </p>
+                      </button>
+                    )
+                  })}
+                </div>
+              </section>
+            </div>
+
+            {/* Columna Derecha: Resumen (Sticky) */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-10 space-y-6">
+                <div className="bg-gray-900 dark:bg-white rounded-[2.5rem] p-8 text-white dark:text-gray-900 shadow-2xl overflow-hidden relative">
+                   {/* Background Decor */}
+                   <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600 blur-[80px] opacity-20" />
+                   
+                   <div className="relative z-10">
+                     <div className="flex items-center gap-3 mb-8">
+                       <Receipt size={24} className="text-blue-500" />
+                       <h3 className="text-xl font-black uppercase italic tracking-tighter">Tu Presupuesto</h3>
+                     </div>
+
+                     <div className="space-y-6 mb-10">
+                        <div className="flex justify-between items-start group">
+                           <div>
+                             <p className="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-1">Servicio</p>
+                             <p className="font-bold uppercase tracking-tight italic">{servicioSeleccionado?.nombre || 'No seleccionado'}</p>
+                           </div>
+                           <p className="font-bold">{formatoPrecio(costoServicio)}</p>
+                        </div>
+
+                        <div className="flex justify-between items-start">
+                           <div>
+                             <p className="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-1">Traslado</p>
+                             <p className="font-bold uppercase tracking-tight italic">{comunaSeleccionada?.nombre || 'Pendiente'}</p>
+                           </div>
+                           <p className="font-bold">{costoTraslado === 0 ? '—' : formatoPrecio(costoTraslado)}</p>
+                        </div>
+
+                        <div className="pt-6 border-t border-white/10 dark:border-gray-900/10">
+                           <p className="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-1">Total Estimado</p>
+                           <p className="text-5xl font-black italic tracking-tighter">{formatoPrecio(costoTotal)}</p>
+                        </div>
+                     </div>
+
+                     <button
+                       disabled={!servicioSeleccionado || !comunaSeleccionada}
+                       onClick={() => setMostrarResumen(true)}
+                       className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-3 disabled:opacity-20 disabled:grayscale transition-all hover:bg-blue-700 active:scale-95"
+                     >
+                       Confirmar Reserva <ArrowRight size={16} />
+                     </button>
+                   </div>
+                </div>
+
+                <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+                  * Valores finales según estado de piscina.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Modal de éxito minimalista */}
           {mostrarResumen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMostrarResumen(false)} />
-              <div className={`relative ${tema.card} rounded-3xl p-8 max-w-md w-full shadow-2xl`}>
-                <div className="text-center mb-6">
-                  <div className="text-6xl mb-4">✅</div>
-                  <h3 className="text-2xl font-bold">Confirmar solicitud</h3>
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-xl bg-gray-900/60">
+              <div className="bg-white dark:bg-gray-900 rounded-[3rem] p-12 max-w-sm w-full text-center shadow-2xl relative border border-white/10">
+                <button onClick={() => setMostrarResumen(false)} className="absolute top-6 right-6 text-gray-400 hover:text-gray-900">
+                  <X size={20} />
+                </button>
+                <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30">
+                  <CheckCircle2 size={40} className="text-white" />
                 </div>
-                <div className={`space-y-3 mb-6 p-4 rounded-xl bg-white/5`}>
-                  <p><strong>Servicio:</strong> {servicioSeleccionado?.nombre}</p>
-                  <p><strong>Comuna:</strong> {comunaSeleccionada?.nombre}</p>
-                  <p><strong>Distancia:</strong> {comunaSeleccionada?.distancia} km</p>
-                  <div className="pt-3 border-t border-white/10">
-                    <p className={`text-2xl font-bold bg-gradient-to-r ${tema.gradient} bg-clip-text text-transparent`}>
-                      Total: {formatoPrecio(costoTotal)}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setMostrarResumen(false)}
-                    className={`flex-1 py-3 ${tema.btnSecondary} rounded-xl font-medium transition-all hover:scale-105`}
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={handleConfirmar}
-                    className={`flex-1 py-3 ${tema.btnPrimary} rounded-xl font-medium transition-all hover:scale-105`}
-                  >
-                    Confirmar
-                  </button>
-                </div>
+                <h3 className="text-3xl font-black tracking-tighter uppercase italic mb-4">¡Listo!</h3>
+                <p className="text-gray-500 text-sm font-medium mb-8">Hemos recibido tu solicitud para el servicio de <span className="text-blue-600 font-bold">{servicioSeleccionado.nombre}</span>.</p>
+                <button
+                  onClick={handleConfirmar}
+                  className="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl font-black uppercase tracking-widest text-xs"
+                >
+                  Entendido
+                </button>
               </div>
             </div>
           )}

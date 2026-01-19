@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import JsBarcode from 'jsbarcode';
 import PageLayout from '../../components/PageLayout';
 import SEO from '../../components/SEO';
-import { Barcode, Download, AlertCircle, ArrowLeft } from 'lucide-react';
+import { Barcode, Download, AlertCircle, ArrowLeft, RefreshCcw, ClipboardCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const BarcodeGenerator = () => {
@@ -15,6 +15,14 @@ const BarcodeGenerator = () => {
   const [locError, setLocError] = useState('');
   const [locDownloadUrl, setLocDownloadUrl] = useState('');
   const locSvgRef = useRef(null);
+
+  // Limpieza de URLs de descarga para evitar fugas de memoria
+  useEffect(() => {
+    return () => {
+      if (taskDownloadUrl) URL.revokeObjectURL(taskDownloadUrl);
+      if (locDownloadUrl) URL.revokeObjectURL(locDownloadUrl);
+    };
+  }, [taskDownloadUrl, locDownloadUrl]);
 
   const prepareDownload = (svgElement, setDownloadUrl) => {
     const svgData = new XMLSerializer().serializeToString(svgElement);
@@ -30,13 +38,16 @@ const BarcodeGenerator = () => {
       JsBarcode(taskSvgRef.current, taskInput.trim(), {
         format: "CODE128",
         lineColor: "#000",
-        width: 2,
-        height: 80,
-        displayValue: true
+        width: 2.5,
+        height: 100,
+        displayValue: true,
+        fontSize: 16,
+        fontOptions: "bold",
+        margin: 10
       });
       prepareDownload(taskSvgRef.current, setTaskDownloadUrl);
     } catch (e) {
-      setTaskError('Datos inválidos para CODE128');
+      setTaskError('Caracteres no compatibles con CODE128');
     }
   };
 
@@ -46,14 +57,20 @@ const BarcodeGenerator = () => {
     if (!input) return;
     try {
       const parts = input.split('-');
-      if (parts.length !== 5) throw new Error("Formato inválido. Usa: ***-**-**-**-**");
+      if (parts.length !== 5) throw new Error("Formato requerido: ***-**-**-**-**");
+      
+      // Transformación lógica para sistema de bodega
       const refactored = `${parts[0]}_${parts[1]}${parts[2]}${parts[3]}_${parts[4]}`;
+      
       JsBarcode(locSvgRef.current, refactored, {
         format: "CODE128",
         lineColor: "#000",
-        width: 2,
-        height: 80,
-        displayValue: true
+        width: 2.5,
+        height: 100,
+        displayValue: true,
+        fontSize: 16,
+        fontOptions: "bold",
+        margin: 10
       });
       prepareDownload(locSvgRef.current, setLocDownloadUrl);
     } catch (e) {
@@ -61,102 +78,165 @@ const BarcodeGenerator = () => {
     }
   };
 
+  const resetFields = (type) => {
+    if (type === 'task') {
+      setTaskInput('');
+      setTaskDownloadUrl('');
+      setTaskError('');
+    } else {
+      setLocInput('');
+      setLocDownloadUrl('');
+      setLocError('');
+    }
+  };
+
   return (
     <PageLayout 
-      titulo="Generador de Barras" 
-      subtitulo="Herramienta logística para la creación de códigos CODE128 de tarea y ubicación."
-      icono={<Barcode className="w-8 h-8" />}
+      titulo="Generador Industrial" 
+      subtitulo="Protocolo de generación de etiquetas CODE128 para automatización de almacenes."
+      icono={<Barcode className="w-8 h-8 text-blue-500" />}
     >
-      <SEO title="Generador de Códigos de Barras | Fehu Developers" description="Herramienta logística para generar códigos de tarea y ubicación." />
+      <SEO title="Generador de Barras Industrial | Fehu Developers" description="Herramienta logística avanzada para códigos CODE128." />
       
-      <div className="max-w-5xl mx-auto">
-        {/* Botón Volver */}
-        <Link 
-          to="/herramientas" 
-          className="inline-flex items-center gap-2 px-4 py-2 mb-12 rounded-xl bg-white/50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all group"
-        >
-          <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" /> 
-          <span className="font-bold">Volver a Herramientas</span>
-        </Link>
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Navigation Bar */}
+        <div className="flex justify-between items-center mb-12">
+          <Link 
+            to="/herramientas" 
+            className="group flex items-center gap-3 px-6 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 text-sm font-black uppercase tracking-widest hover:text-blue-500 transition-all shadow-sm"
+          >
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
+            Volver
+          </Link>
+          <div className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+            <ClipboardCheck size={14} className="text-emerald-500" /> System Ready
+          </div>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-10">
           
-          {/* SECCIÓN TAREA */}
-          <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-xl border border-white/20 dark:border-white/10">
-            <h2 className="text-xl font-black mb-6 dark:text-white uppercase tracking-tight flex items-center gap-2">
-              <span className="w-2 h-6 bg-blue-600 rounded-full"></span>
-              Código de Tarea
-            </h2>
-            <div className="space-y-4">
-              <input 
-                type="text"
-                value={taskInput}
-                onChange={(e) => setTaskInput(e.target.value.toUpperCase())}
-                placeholder="Ej: TAREA-123-XYZ"
-                className="w-full px-5 py-4 bg-gray-50/50 dark:bg-black/20 border-2 border-transparent focus:border-blue-500 rounded-2xl outline-none dark:text-white transition-all"
-              />
-              <button 
-                onClick={generateTask}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-500/20 active:scale-95"
-              >
-                Generar Tarea
+          {/* MÓDULO TAREA */}
+          <div className="group bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-10 border border-gray-100 dark:border-white/10 shadow-2xl transition-all">
+            <div className="flex justify-between items-start mb-8">
+              <h2 className="text-2xl font-black italic uppercase tracking-tighter flex items-center gap-3">
+                <span className="w-3 h-8 bg-blue-600 rounded-full"></span>
+                Task Engine
+              </h2>
+              <button onClick={() => resetFields('task')} className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                <RefreshCcw size={18} />
               </button>
             </div>
 
-            <div className="mt-8 p-6 bg-white rounded-3xl border-2 border-dashed border-gray-100 flex flex-col items-center justify-center min-h-[200px]">
-              <svg ref={taskSvgRef} className={taskDownloadUrl ? 'block' : 'hidden'}></svg>
-              {!taskDownloadUrl && !taskError && <Barcode size={64} className="text-gray-200" />}
-              {taskError && <p className="text-red-500 text-sm flex items-center gap-2 font-medium"><AlertCircle size={18}/> {taskError}</p>}
+            <div className="space-y-6">
+              <div className="relative">
+                <input 
+                  type="text"
+                  value={taskInput}
+                  onChange={(e) => setTaskInput(e.target.value.toUpperCase())}
+                  onKeyPress={(e) => e.key === 'Enter' && generateTask()}
+                  placeholder="ID DE TAREA (EJ: T-900)"
+                  className="w-full px-6 py-5 bg-gray-50 dark:bg-white/5 border-2 border-transparent focus:border-blue-600 rounded-[1.5rem] outline-none font-bold dark:text-white transition-all placeholder:opacity-30"
+                />
+              </div>
+              <button 
+                onClick={generateTask}
+                className="w-full bg-gray-900 dark:bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-widest text-xs py-5 rounded-[1.5rem] transition-all shadow-xl active:scale-[0.98]"
+              >
+                Compilar Código
+              </button>
+            </div>
+
+            <div className="mt-10 p-8 bg-white rounded-[2rem] border-2 border-dashed border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
+              {taskDownloadUrl ? (
+                <div className="animate-in fade-in zoom-in duration-300">
+                  <svg ref={taskSvgRef}></svg>
+                </div>
+              ) : (
+                !taskError && <Barcode size={80} className="text-gray-100 dark:text-gray-800" />
+              )}
+              {taskError && (
+                <div className="flex items-center gap-2 text-red-500 bg-red-50 px-4 py-2 rounded-lg font-bold text-xs">
+                  <AlertCircle size={16}/> {taskError}
+                </div>
+              )}
             </div>
 
             {taskDownloadUrl && (
-              <a href={taskDownloadUrl} download="tarea.svg" className="flex items-center justify-center gap-2 mt-6 p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl font-bold hover:bg-blue-100 transition-colors">
-                <Download size={18} /> Descargar SVG
+              <a href={taskDownloadUrl} download={`task_${taskInput}.svg`} className="flex items-center justify-center gap-3 mt-8 p-5 bg-blue-600 text-white rounded-[1.5rem] font-black uppercase tracking-widest text-[10px] hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">
+                <Download size={18} /> Descargar Vector SVG
               </a>
             )}
           </div>
 
-          {/* SECCIÓN UBICACIÓN */}
-          <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-xl border border-white/20 dark:border-white/10">
-            <h2 className="text-xl font-black mb-6 dark:text-white uppercase tracking-tight flex items-center gap-2">
-              <span className="w-2 h-6 bg-emerald-500 rounded-full"></span>
-              Código de Ubicación
-            </h2>
-            <div className="space-y-4">
-              <input 
-                type="text"
-                value={locInput}
-                onChange={(e) => setLocInput(e.target.value.toUpperCase())}
-                placeholder="AC6-OR-09-01-01"
-                className="w-full px-5 py-4 bg-gray-50/50 dark:bg-black/20 border-2 border-transparent focus:border-emerald-500 rounded-2xl outline-none dark:text-white transition-all"
-              />
-              <button 
-                onClick={generateLocation}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95"
-              >
-                Generar Ubicación
+          {/* MÓDULO UBICACIÓN */}
+          <div className="group bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-10 border border-gray-100 dark:border-white/10 shadow-2xl transition-all">
+            <div className="flex justify-between items-start mb-8">
+              <h2 className="text-2xl font-black italic uppercase tracking-tighter flex items-center gap-3">
+                <span className="w-3 h-8 bg-emerald-500 rounded-full"></span>
+                Location Core
+              </h2>
+              <button onClick={() => resetFields('loc')} className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                <RefreshCcw size={18} />
               </button>
             </div>
 
-            <div className="mt-8 p-6 bg-white rounded-3xl border-2 border-dashed border-gray-100 flex flex-col items-center justify-center min-h-[200px]">
-              <svg ref={locSvgRef} className={locDownloadUrl ? 'block' : 'hidden'}></svg>
-              {!locDownloadUrl && !locError && <Barcode size={64} className="text-gray-200" />}
-              {locError && <p className="text-red-500 text-sm flex items-center gap-2 text-center font-medium"><AlertCircle size={18}/> {locError}</p>}
+            <div className="space-y-6">
+              <div className="relative">
+                <input 
+                  type="text"
+                  value={locInput}
+                  onChange={(e) => setLocInput(e.target.value.toUpperCase())}
+                  onKeyPress={(e) => e.key === 'Enter' && generateLocation()}
+                  placeholder="AC6-OR-09-01-01"
+                  className="w-full px-6 py-5 bg-gray-50 dark:bg-white/5 border-2 border-transparent focus:border-emerald-500 rounded-[1.5rem] outline-none font-bold dark:text-white transition-all placeholder:opacity-30"
+                />
+              </div>
+              <button 
+                onClick={generateLocation}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-widest text-xs py-5 rounded-[1.5rem] transition-all shadow-xl active:scale-[0.98]"
+              >
+                Generar Etiqueta
+              </button>
+            </div>
+
+            <div className="mt-10 p-8 bg-white rounded-[2rem] border-2 border-dashed border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
+              {locDownloadUrl ? (
+                <div className="animate-in fade-in zoom-in duration-300">
+                  <svg ref={locSvgRef}></svg>
+                </div>
+              ) : (
+                !locError && <Barcode size={80} className="text-gray-100 dark:text-gray-800" />
+              )}
+              {locError && (
+                <div className="flex flex-col items-center gap-2 text-red-500 bg-red-50 px-6 py-4 rounded-xl font-bold text-xs text-center leading-tight">
+                  <AlertCircle size={20}/> {locError}
+                </div>
+              )}
             </div>
 
             {locDownloadUrl && (
-              <a href={locDownloadUrl} download="ubicacion.svg" className="flex items-center justify-center gap-2 mt-6 p-3 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl font-bold hover:bg-emerald-100 transition-colors">
-                <Download size={18} /> Descargar SVG
+              <a href={locDownloadUrl} download={`loc_${locInput}.svg`} className="flex items-center justify-center gap-3 mt-8 p-5 bg-emerald-600 text-white rounded-[1.5rem] font-black uppercase tracking-widest text-[10px] hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20">
+                <Download size={18} /> Descargar Vector SVG
               </a>
             )}
           </div>
         </div>
 
-        <footer className="mt-16 text-center border-t border-gray-200 dark:border-white/10 pt-8">
-          <p className="text-xs text-gray-400 uppercase tracking-[0.2em]">
-            Herramienta de optimización logística • Soporte interno anexo 5121
-          </p>
-        </footer>
+        {/* Info Box */}
+        <div className="mt-16 p-8 rounded-[2rem] bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
+          <div className="flex flex-col md:flex-row gap-8 items-center text-center md:text-left">
+            <div className="p-4 bg-white dark:bg-gray-900 rounded-2xl shadow-sm">
+              <AlertCircle className="text-blue-500" size={32} />
+            </div>
+            <div>
+              <h4 className="font-black uppercase tracking-widest text-xs mb-2">Especificación CODE128</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                Esta herramienta genera códigos de alta densidad que permiten caracteres alfanuméricos. 
+                Los archivos SVG son vectoriales, ideales para impresión térmica sin pérdida de calidad.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </PageLayout>
   );

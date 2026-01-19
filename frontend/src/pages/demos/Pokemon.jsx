@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import PageLayout from '../../components/PageLayout'
 import PokemonCard from '../../components/pokemon/PokemonCard'
 import PokemonFilters from '../../components/pokemon/PokemonFilters'
 import PokemonModal from '../../components/pokemon/PokemonModal'
 import SEO from '../../components/SEO'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Search, Sparkles, LayoutGrid, Info, Loader2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
@@ -20,7 +20,6 @@ function Pokemon() {
     rarity: ''
   })
   const [selectedCard, setSelectedCard] = useState(null)
-
   const [sets, setSets] = useState([])
   const [types, setTypes] = useState([])
   const [rarities, setRarities] = useState([])
@@ -33,7 +32,6 @@ function Pokemon() {
           fetch(`${API_URL}/api/pokemon/types/`),
           fetch(`${API_URL}/api/pokemon/rarities/`)
         ])
-        
         setSets(await setsRes.json())
         setTypes(await typesRes.json())
         setRarities(await raritiesRes.json())
@@ -57,7 +55,6 @@ function Pokemon() {
 
       const response = await fetch(`${API_URL}/api/pokemon/search/?${params}`)
       const data = await response.json()
-      
       setCards(data.cards || [])
     } catch (error) {
       console.error('Error buscando cartas:', error)
@@ -84,87 +81,124 @@ function Pokemon() {
 
   return (
     <PageLayout
-      titulo="Pokemon TCG"
-      subtitulo="Busca cartas de todas las ediciones y consulta informacion detallada"
-      icono="🎴"
+      titulo="TCG Database"
+      subtitulo="Explorador avanzado de cartas Pokémon con datos de mercado en tiempo real."
     >
       <SEO 
-      title="Pokemon TCG - Buscador de Cartas"
-      description="Busca cartas Pokemon TCG con precios de mercado en USD, EUR y CLP."
-      url="/demos/pokemon"
-    />
-      <Link 
-        to="/herramientas" 
-        className="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 mb-6 font-bold transition-all"
-      >
-        <ArrowLeft size={20} /> Volver a Herramientas
-      </Link>
-      <div className="mb-8">
-        <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-grow">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por nombre (ej: Charizard, Pikachu...)"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        title="Pokemon TCG Explorer | Fehu Developers"
+        description="Analítica y búsqueda de cartas Pokémon TCG con conversión de precios a CLP."
+        url="/demos/pokemon"
+      />
+
+      <div className="max-w-6xl mx-auto">
+        {/* Botón Volver Refinado */}
+        <Link 
+          to="/herramientas" 
+          className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-gray-400 hover:text-red-500 mb-10 transition-colors"
+        >
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+          Volver a Herramientas
+        </Link>
+
+        {/* Barra de Búsqueda Estilo Consola */}
+        <div className="relative z-10 mb-12">
+          <form onSubmit={handleSearch} className="relative flex flex-col md:flex-row gap-4">
+            <div className="relative flex-grow group">
+              <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                <Search size={20} className="text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+              </div>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Nombre del Pokémon (ej: Umbreon, Gengar...)"
+                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white dark:bg-gray-900 border-0 shadow-2xl focus:ring-2 focus:ring-blue-500/50 outline-none font-medium text-lg transition-all"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 disabled:opacity-50 shadow-xl shadow-blue-600/20 transition-all flex items-center justify-center gap-3"
+            >
+              {loading ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />}
+              {loading ? 'Sincronizando...' : 'Ejecutar Búsqueda'}
+            </button>
+          </form>
+
+          {/* Filtros Integrados */}
+          <div className="mt-4">
+            <PokemonFilters
+              filters={filters}
+              setFilters={setFilters}
+              sets={sets}
+              types={types}
+              rarities={rarities}
+              onApply={() => searchCards()}
             />
           </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:opacity-90 transition disabled:opacity-50"
-          >
-            {loading ? 'Buscando...' : 'Buscar'}
-          </button>
-        </form>
+        </div>
 
-        <PokemonFilters
-          filters={filters}
-          setFilters={setFilters}
-          sets={sets}
-          types={types}
-          rarities={rarities}
-          onApply={() => searchCards()}
-        />
+        {/* Resultados */}
+        <div className="space-y-8">
+          <AnimatePresence mode='wait'>
+            {loading ? (
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="flex flex-col justify-center items-center py-32 gap-4"
+              >
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
+                  </div>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Consultando API de TCGdex...</span>
+              </motion.div>
+            ) : cards.length > 0 ? (
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                className="space-y-6"
+              >
+                <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/5 pb-4">
+                  <div className="flex items-center gap-2 text-gray-500">
+                    <LayoutGrid size={16} />
+                    <span className="text-xs font-bold uppercase tracking-widest">{cards.length} Resultados</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                  {cards.map((card, index) => (
+                    <motion.div
+                      key={card.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.03 }}
+                    >
+                      <PokemonCard
+                        card={card}
+                        onClick={() => loadCardDetail(card.id)}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                className="text-center py-32 border-2 border-dashed border-gray-100 dark:border-white/5 rounded-[3rem]"
+              >
+                <div className="inline-flex p-6 rounded-full bg-gray-50 dark:bg-white/5 text-gray-400 mb-6">
+                  <Info size={40} strokeWidth={1} />
+                </div>
+                <h3 className="text-xl font-black uppercase tracking-tighter mb-2">Base de datos lista</h3>
+                <p className="text-gray-500 max-w-xs mx-auto text-sm">
+                  Utiliza los parámetros de búsqueda para filtrar por nombre, edición o rareza.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-
-      {cards.length > 0 && (
-        <p className="text-gray-600 dark:text-gray-400 mb-4">
-          {cards.length} cartas encontradas
-        </p>
-      )}
-
-      {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      ) : cards.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {cards.map((card, index) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.02 }}
-            >
-              <PokemonCard
-                card={card}
-                onClick={() => loadCardDetail(card.id)}
-              />
-            </motion.div>
-          ))}
-        </div>
-      ) : search || filters.set || filters.types || filters.rarity ? (
-        <div className="text-center py-20 text-gray-500">
-          No se encontraron cartas con esos criterios
-        </div>
-      ) : (
-        <div className="text-center py-20 text-gray-500">
-          <p className="text-6xl mb-4">🔍</p>
-          <p>Ingresa un nombre o aplica filtros para buscar cartas</p>
-        </div>
-      )}
 
       <PokemonModal
         card={selectedCard}
