@@ -4,9 +4,8 @@ import Card from '../../components/Card'
 import SEO from '../../components/SEO'
 import { 
   ShoppingCart, Car, Droplets, ArrowRight, 
-  ArrowLeft, CheckCircle2, ChevronRight, Sparkles, ArrowLeft
+  ArrowLeft, CheckCircle2, ChevronRight, Sparkles
 } from 'lucide-react'
-import {Link} from 'react-router-dom'
 
 function Ventas() {
   const opciones = [
