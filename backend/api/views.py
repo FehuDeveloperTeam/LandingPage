@@ -157,7 +157,8 @@ class ContactoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
-permission_classes = [permissions.AllowAny]
+@authentication_classes([])
+@permission_classes([AllowAny])
 
 def pokemon_search(request):
     name = request.query_params.get('name', '')
@@ -180,6 +181,8 @@ def pokemon_search(request):
     return Response(cached_data)
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 
 def pokemon_card_detail(request, card_id):
     """Obtener detalle de una carta"""
@@ -190,6 +193,8 @@ def pokemon_card_detail(request, card_id):
     return Response({'error': 'Carta no encontrada'}, status=404)
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 
 def pokemon_sets(request):
     
@@ -198,6 +203,8 @@ def pokemon_sets(request):
     return Response(sets)
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 
 def pokemon_rarities(request):
     
@@ -206,6 +213,8 @@ def pokemon_rarities(request):
     return Response(rarities)
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 
 def pokemon_types(request):
     
