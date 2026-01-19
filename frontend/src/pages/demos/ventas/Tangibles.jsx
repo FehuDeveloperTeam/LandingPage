@@ -3,7 +3,7 @@ import { getProductos } from '../../../services/api'
 import { useCart } from '../../../context/CartContext'
 import DemoLayout from '../../../components/DemoLayout'
 import Cart from '../../../components/Cart'
-import ProductCard from '../../../ProductCard' // Mantenemos el componente ProductCard que ya tienes
+import ProductCard from '../../../components/ProductCard' // Mantenemos el componente ProductCard que ya tienes
 import { 
   Search, ShoppingCart, ChevronLeft, ChevronRight, 
   Filter, ArrowLeft, LayoutGrid 
