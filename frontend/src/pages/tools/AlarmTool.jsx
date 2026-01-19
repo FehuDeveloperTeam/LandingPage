@@ -3,7 +3,7 @@ import {
   Plus, Trash2, X, ArrowLeft, Save, Bell, Play, Pause, RotateCcw 
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import DemoLayout from '../../../components/DemoLayout'; // Ajusta la ruta a tu layout
+import DemoLayout from '../../components/DemoLayout'; // Ajusta la ruta a tu layout
 
 const AlarmaTool = () => {
   // --- ESTADOS GLOBALES ---
