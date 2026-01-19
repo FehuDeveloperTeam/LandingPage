@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
-import { Barcode, Settings, Search, LayoutGrid, ArrowRight, Zap } from 'lucide-react';
+import { Barcode, Settings, Search, LayoutGrid, ArrowRight, Zap, Clock, ArrowLeft} from 'lucide-react';
 
 const TOOLS = [
   {
@@ -22,6 +22,15 @@ const TOOLS = [
     path: '/herramientas/pokemon',
     color: 'from-rose-600 to-orange-500',
     glow: 'group-hover:shadow-rose-500/30'
+  },
+  {
+    id: 'alarma-sistema',
+    name: 'System Alarm',
+    description: 'Módulo de monitoreo y alertas para sistemas críticos. Notificaciones en tiempo real.',
+    icon: Clock,
+    path: '/tools/alarma',
+    color: 'from-blue-600 to-indigo-500',
+    glow: 'group-hover:shadow-blue-500/30'
   },
   {
     id: 'proximamente',
@@ -45,6 +54,17 @@ function ToolsGallery() {
         title="Herramientas | Fehu Developers" 
         description="Utilidades de productividad, generadores de códigos y buscadores técnicos." 
       />
+
+      {/* BOTÓN VOLVER (Navegación entre herramientas) */}
+        <div className="flex justify-start">
+          <Link 
+            to="/herramientas" // Ajusta esta ruta a tu menú principal de herramientas
+            className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors"
+          >
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+            Volver a Herramientas
+          </Link>
+        </div>
       
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         {TOOLS.map((tool) => {

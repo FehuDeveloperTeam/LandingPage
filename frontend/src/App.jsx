@@ -39,6 +39,7 @@ function AnimatedRoutes() {
         <Route path="/demos/presentacion" element={<PageTransition><Presentacion /></PageTransition>} />
         <Route path="/admin/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/herramientas" element={<ToolsGallery />} />
+        <Route path="/tools/alarma" element={<AlarmaTool />} />
         <Route path="/herramientas/generador-barras" element={<BarcodeGenerator />} />
         <Route path="/herramientas/pokemon" element={<PageTransition><Pokemon /></PageTransition>} />
         <Route 
