@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { generatePDF } from '../components/CurriculumPDF.jsx' // Verifica que esta sea la ruta correcta
+import { generatePDF } from '../components/CurriculumPDF.jsx'
 import PageLayout from '../components/PageLayout'
 import Card from '../components/Card'
 import { IconAcademic, IconPhone, IconMail, IconLocation, IconBolt } from '../components/Icons'
 import SEO from '../components/SEO'
-import { Download, Terminal, Briefcase, RefreshCcw } from 'lucide-react' // Añadido RefreshCcw
+import { Download, Terminal, Briefcase, RefreshCcw } from 'lucide-react'
 
 function Curriculum() {
   const [generando, setGenerando] = useState(false)
@@ -23,7 +23,7 @@ function Curriculum() {
     experienciaLaboral: [
       { periodo: '2025 - Presente', cargo: 'Asistente Logístico', empresa: 'COPEVAL San Carlos', descripcion: 'Gestión de entrega de producto a cliente final y manejo de sistema WMS para control de inventario y despachos.' },
       { periodo: '2024 - 2025', cargo: 'Control Logístico SAP', empresa: 'Comfrut SA (Planta San Carlos)', descripcion: 'Encargado del control y correcto funcionamiento en líneas de producción, generando informes de producto final y consumos de materias primas.' },
-      { periodo: '2020 - 2024', cargo: 'Encargado de Local', empresa: 'Importadora SOCAR', descripcion: 'Mantención total de local, contacto con proveedores, manejo de costos, proyección de ventas. Gestor de importaciones desde China y Tailandia.' },
+      { periodo: '2020 - 2024', cargo: 'Encargado de Local', empresa: 'Importadora SOCAR', descripcion: 'Mantención total de local, contacto con proveedores, manejo de costos, proyección de ventas.' },
       { periodo: '2019 - 2020', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Blobel SPA', descripcion: 'Depuración de cartera de clientes por áreas geográficas. Atención a clientes B2B.' },
       { periodo: '2012 - 2019', cargo: 'Ejecutivo de Ventas', empresa: 'Importadora Bicimoto Ltda.', descripcion: 'Contacto con cliente intermedio (B2B), manejo de productos automotrices.' },
     ],
@@ -42,7 +42,7 @@ function Curriculum() {
   }
 
   const handleDownload = async (e) => {
-    e.preventDefault(); // Evita cualquier comportamiento por defecto del botón
+    e.preventDefault();
     setGenerando(true)
     try {
       await generatePDF(data)
@@ -59,41 +59,47 @@ function Curriculum() {
 
       <div className="max-w-4xl mx-auto space-y-16">
         
-        {/* Botón Descarga Corregido */}
+        {/* Botón Descarga */}
         <div className="flex justify-end sticky top-24 z-10 pointer-events-none">
           <button 
             onClick={handleDownload}
             disabled={generando}
-            className={`pointer-events-auto flex items-center gap-2 px-6 py-3 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest text-xs shadow-2xl transition-all hover:scale-105 active:scale-95 ${generando ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`pointer-events-auto flex items-center gap-2 px-6 py-3 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest text-xs shadow-2xl transition-all hover:scale-105 active:scale-95 ${generando ? 'opacity-50' : ''}`}
           >
             {generando ? <RefreshCcw className="animate-spin" size={14} /> : <Download size={14} />}
             {generando ? 'Procesando...' : 'Descargar PDF'}
           </button>
         </div>
 
-        {/* Contacto Grid - Iconos Achicados */}
+        {/* Contacto Grid - ICONOS ACHICADOS POR CONTENEDOR */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card className="p-4 flex items-center gap-3 border-none bg-blue-50/50 dark:bg-blue-500/5">
-                <IconPhone size={16} className="text-blue-500 shrink-0" />
-                <a href={`tel:${data.contacto.telefono}`} className="text-[11px] font-bold dark:text-gray-300">{data.contacto.telefono}</a>
+            <Card className="p-3 flex items-center gap-3 border-none bg-blue-50/50 dark:bg-blue-500/5">
+                <div className="w-4 h-4 flex items-center justify-center shrink-0">
+                  <IconPhone size={14} className="text-blue-500" />
+                </div>
+                <a href={`tel:${data.contacto.telefono}`} className="text-[10px] font-bold dark:text-gray-300">{data.contacto.telefono}</a>
             </Card>
-            <Card className="p-4 flex items-center gap-3 border-none bg-purple-50/50 dark:bg-purple-500/5">
-                <IconMail size={16} className="text-purple-500 shrink-0" />
-                <a href={`mailto:${data.contacto.email}`} className="text-[11px] font-bold dark:text-gray-300 truncate">{data.contacto.email}</a>
+            <Card className="p-3 flex items-center gap-3 border-none bg-purple-50/50 dark:bg-purple-500/5">
+                <div className="w-4 h-4 flex items-center justify-center shrink-0">
+                  <IconMail size={14} className="text-purple-500" />
+                </div>
+                <a href={`mailto:${data.contacto.email}`} className="text-[10px] font-bold dark:text-gray-300 truncate">{data.contacto.email}</a>
             </Card>
-            <Card className="p-4 flex items-center gap-3 border-none bg-amber-50/50 dark:bg-amber-500/5">
-                <IconLocation size={16} className="text-amber-500 shrink-0" />
-                <span className="text-[11px] font-bold dark:text-gray-300">{data.contacto.ubicacion}</span>
+            <Card className="p-3 flex items-center gap-3 border-none bg-amber-50/50 dark:bg-amber-500/5">
+                <div className="w-4 h-4 flex items-center justify-center shrink-0">
+                  <IconLocation size={14} className="text-amber-500" />
+                </div>
+                <span className="text-[10px] font-bold dark:text-gray-300">{data.contacto.ubicacion}</span>
             </Card>
         </div>
 
-        {/* Secciones de Experiencia - Iconos en Títulos */}
+        {/* Tech Experience */}
         <section>
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg rotate-3">
-              <Terminal size={20} />
+            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg rotate-3">
+              <Terminal size={16} />
             </div>
-            <h2 className="text-2xl font-black italic uppercase tracking-tighter">Tech Experience</h2>
+            <h2 className="text-2xl font-black italic uppercase tracking-tighter dark:text-white">Tech Experience</h2>
           </div>
           <div className="space-y-6">
             {data.experienciaTI.map((exp, i) => (
@@ -111,11 +117,14 @@ function Curriculum() {
           </div>
         </section>
 
-        {/* Educación y Skillset - Iconos Corregidos */}
+        {/* Educación y Skillset - ICONOS CORREGIDOS */}
         <div className="grid md:grid-cols-2 gap-12">
             <section>
-                <h2 className="text-lg font-black uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <IconAcademic size={18} className="text-blue-500" /> Educación
+                <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2 dark:text-white">
+                    <div className="w-5 h-5 flex items-center justify-center bg-blue-500/10 rounded-lg shrink-0">
+                      <IconAcademic size={12} className="text-blue-500" />
+                    </div>
+                    Educación
                 </h2>
                 <div className="space-y-4">
                     {data.educacion.map((edu, i) => (
@@ -130,8 +139,11 @@ function Curriculum() {
             </section>
 
             <section>
-                <h2 className="text-lg font-black uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <IconBolt size={18} className="text-amber-500" /> Skillset
+                <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2 dark:text-white">
+                    <div className="w-5 h-5 flex items-center justify-center bg-amber-500/10 rounded-lg shrink-0">
+                      <IconBolt size={12} className="text-amber-500" />
+                    </div>
+                    Skillset
                 </h2>
                 <div className="flex flex-wrap gap-2">
                     {data.habilidades.flatMap(h => h.items).map((skill, i) => (
