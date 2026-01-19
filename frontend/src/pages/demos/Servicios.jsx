@@ -3,8 +3,9 @@ import DemoLayout from '../../components/DemoLayout'
 import ContactModal from '../../components/ContactModal'
 import { 
   Smartphone, Code2, Box, Cpu, Database, 
-  Bot, ArrowUpRight, CheckCircle2, X, Terminal 
+  Bot, ArrowUpRight, CheckCircle2, X, Terminal, ArrowLeft
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 function Servicios() {
   const [servicioActivo, setServicioActivo] = useState(null)
@@ -60,6 +61,12 @@ function Servicios() {
     <DemoLayout tema="servicios">
       {(tema) => (
         <div className="max-w-7xl mx-auto space-y-24 py-12 px-4">
+
+          <div className="flex justify-start mb-8">
+            <Link to="/demos" className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors">
+              <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Volver a Soluciones
+            </Link>
+          </div>
           
           {/* Header de Ingeniería */}
           <header className="text-center space-y-6 relative">

@@ -4,8 +4,9 @@ import ContactModal from '../../components/ContactModal'
 import { 
   Laptop, BarChart3, Globe, ShieldCheck, Rocket, 
   Target, Handshake, Zap, Quote, MapPin, 
-  Phone, Mail, ArrowRight, ChevronDown 
+  Phone, Mail, ArrowRight, ChevronDown, ArrowLeft
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 // Sub-componente para el contador animado con Intersection Observer
 function StatCounter({ targetValue, duration = 2000, suffix = "" }) {
@@ -76,6 +77,11 @@ function Presentacion() {
     <DemoLayout tema="presentacion">
       {(tema) => (
         <div className="max-w-7xl mx-auto space-y-32 pb-20 px-4">
+          <div className="flex justify-start mb-8">
+            <Link to="/demos" className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors">
+              <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Volver a Soluciones
+            </Link>
+          </div>
           
           {/* Hero Section */}
           <header className="relative min-h-[80vh] flex flex-col items-center justify-center text-center space-y-8 overflow-hidden">

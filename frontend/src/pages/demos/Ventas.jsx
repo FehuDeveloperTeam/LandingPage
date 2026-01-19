@@ -4,8 +4,9 @@ import Card from '../../components/Card'
 import SEO from '../../components/SEO'
 import { 
   ShoppingCart, Car, Droplets, ArrowRight, 
-  ArrowLeft, CheckCircle2, ChevronRight, Sparkles 
+  ArrowLeft, CheckCircle2, ChevronRight, Sparkles, ArrowLeft
 } from 'lucide-react'
+import {Link} from 'react-router-dom'
 
 function Ventas() {
   const opciones = [
@@ -39,6 +40,12 @@ function Ventas() {
         description="Explora demos de tiendas online y sistemas de cotización automatizados."
         url="/demos/ventas"
       />
+
+      <div className="flex justify-start mb-8">
+            <Link to="/demos" className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors">
+              <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Volver a Soluciones
+            </Link>
+          </div>
 
       {/* Header Central Icon */}
       <div className="flex flex-col items-center mb-16">

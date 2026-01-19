@@ -31,7 +31,7 @@ function Demos() {
       icon: <Briefcase size={32} />,
       color: 'from-blue-600 to-indigo-600',
       links: [
-        { nombre: 'Explorar Demo', url: '/demos/servicios' },
+        { nombre: 'Explorar Solución', url: '/demos/servicios' },
       ]
     },
     {
@@ -47,12 +47,12 @@ function Demos() {
 
   return (
     <PageLayout
-      titulo="Showcase de Demos"
+      titulo="Showcase de Soluciones"
       subtitulo="Arquitecturas digitales diseñadas para escalar tu visión de negocio al siguiente nivel."
     >
       <SEO 
-        title="Demos de Software | Fehu Developers"
-        description="Explora demos interactivas de E-commerce, Landings y Aplicaciones Web profesionales."
+        title="Soluciones en Software | Fehu Developers"
+        description="Explora soluciones interactivas de E-commerce, Landings y Aplicaciones Web profesionales."
         url="/demos"
       />
 
