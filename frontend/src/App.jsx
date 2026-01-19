@@ -20,6 +20,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import ToolsGallery from './pages/ToolsGallery';
 import BarcodeGenerator from './pages/tools/BarcodeGenerator';
+import AlarmTool from './pages/tools/AlarmTool';
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -39,7 +40,7 @@ function AnimatedRoutes() {
         <Route path="/demos/presentacion" element={<PageTransition><Presentacion /></PageTransition>} />
         <Route path="/admin/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/herramientas" element={<ToolsGallery />} />
-        <Route path="/tools/alarma" element={<AlarmaTool />} />
+        <Route path="/tools/alarma" element={<AlarmTool />} />
         <Route path="/herramientas/generador-barras" element={<BarcodeGenerator />} />
         <Route path="/herramientas/pokemon" element={<PageTransition><Pokemon /></PageTransition>} />
         <Route 
