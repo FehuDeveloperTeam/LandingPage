@@ -31,7 +31,7 @@ function ProjectCard({ proyecto }) {
         
         {/* Frente: Visual & Tech */}
         <div className="absolute w-full h-full backface-hidden">
-          <Card hover={false} className="h-full overflow-hidden flex flex-col border-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-xl">
+          <Card hover={false} className="h-full overflow-hidden flex flex-col border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl">
             <div className="h-1/2 relative overflow-hidden bg-gray-100 dark:bg-gray-800">
               {imagen ? (
                 <img 
@@ -48,7 +48,7 @@ function ProjectCard({ proyecto }) {
             </div>
             
             <div className="p-6 flex flex-col items-center justify-center flex-grow text-center">
-              <h3 className="text-xl font-black tracking-tighter mb-4 italic uppercase">{proyecto.nombre}</h3>
+              <h3 className="text-xl font-black tracking-tighter mb-4 italic uppercase text-gray-900 dark:text-white">{proyecto.nombre}</h3>
               <div className="flex flex-wrap gap-2 justify-center">
                 {proyecto.tecnologias.slice(0, 3).map((t, j) => (
                   <span key={j} className="text-[10px] font-bold px-3 py-1 bg-blue-600/10 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-widest">
@@ -57,20 +57,20 @@ function ProjectCard({ proyecto }) {
                 ))}
               </div>
               <div className="mt-6 flex items-center gap-2 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
-                <Sparkles size={12} /> Info Detallada
+                <Sparkles size={12} className="text-blue-500" /> Info Detallada
               </div>
             </div>
           </Card>
         </div>
 
-        {/* Atrás: Descripción Pro */}
+        {/* Atrás: Descripción Pro (CORREGIDO) */}
         <div className="absolute w-full h-full backface-hidden rotate-y-180">
-          <Card hover={false} className="h-full p-8 flex flex-col items-center justify-center bg-gray-900 text-white dark:bg-white dark:text-gray-900 border-0 shadow-2xl">
-            <Code className="mb-6 opacity-50" size={32} />
-            <p className="text-center leading-relaxed font-medium text-sm md:text-base">
+          <Card hover={false} className="h-full p-8 flex flex-col items-center justify-center bg-white dark:bg-gray-900 border-2 border-blue-500/10 dark:border-white/5 shadow-2xl">
+            <Code className="mb-6 text-blue-600 dark:text-blue-400 opacity-80" size={32} />
+            <p className="text-center leading-relaxed font-bold text-sm md:text-base text-gray-800 dark:text-gray-200">
               {proyecto.descripcion || 'Solución tecnológica personalizada diseñada para optimizar procesos y mejorar la experiencia del usuario final.'}
             </p>
-            <div className="mt-8 px-4 py-2 border border-current opacity-30 rounded-full text-[10px] font-black uppercase tracking-[0.3em]">
+            <div className="mt-8 px-4 py-2 bg-gray-100 dark:bg-white/5 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-black uppercase tracking-[0.3em]">
               Tech Stack Completo
             </div>
           </Card>
@@ -131,7 +131,6 @@ function Home() {
             <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-[2.5rem] bg-white dark:bg-gray-800 p-2 shadow-2xl overflow-hidden">
               <div className="w-full h-full rounded-[2rem] bg-gray-100 dark:bg-gray-900 flex items-center justify-center overflow-hidden">
                  <User className="w-24 h-24 text-gray-300" />
-                 {/* Aquí puedes poner tu foto real: <img src="/tu-foto.jpg" className="object-cover w-full h-full" /> */}
               </div>
               <div className="absolute bottom-4 right-4 w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-xl ring-4 ring-white dark:ring-gray-800">
                 <CheckCircle2 size={24} />
@@ -169,7 +168,7 @@ function Home() {
             <div className="inline-flex p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 mb-4">
               <Folder size={24} />
             </div>
-            <h2 className="text-4xl font-black tracking-tighter uppercase italic">Proyectos de Autor</h2>
+            <h2 className="text-4xl font-black tracking-tighter uppercase italic dark:text-white">Proyectos de Autor</h2>
             <div className="h-1 w-20 bg-blue-600 mt-4 rounded-full" />
           </div>
           
@@ -187,7 +186,7 @@ function Home() {
               <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/20">
                 <Zap size={24} fill="currentColor" />
               </div>
-              <h2 className="text-3xl font-black tracking-tighter uppercase">Ecosistema Tech</h2>
+              <h2 className="text-3xl font-black tracking-tighter uppercase dark:text-white">Ecosistema Tech</h2>
             </div>
           </div>
           
