@@ -40,18 +40,18 @@ function ProjectCard({ proyecto }) {
           
           {/* Info - altura fija con contenido centrado */}
           <div className="h-36 flex flex-col items-center justify-center p-4">
-            <h3 className="text-lg font-bold text-center mb-3">{proyecto.nombre}</h3>
+            <h3 className="text-lg font-bold text-center mb-3 text-gray-900 dark:text-white">{proyecto.nombre}</h3>
             <div className="flex flex-wrap gap-2 justify-center">
               {proyecto.tecnologias.slice(0, 4).map((t, j) => (
                 <span 
                   key={j} 
-                  className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full"
+                  className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full"
                 >
                   {t}
                 </span>
               ))}
               {proyecto.tecnologias.length > 4 && (
-                <span className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
+                <span className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
                   +{proyecto.tecnologias.length - 4}
                 </span>
               )}
@@ -59,9 +59,9 @@ function ProjectCard({ proyecto }) {
           </div>
         </div>
 
-        {/* Atrás */}
-        <div className="absolute w-full h-full backface-hidden rotate-y-180 border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
-          <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed text-sm">
+        {/* Atrás - CORREGIDO COLOR DE FONDO Y TEXTO */}
+        <div className="absolute w-full h-full backface-hidden rotate-y-180 border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-900 flex items-center justify-center shadow-lg">
+          <p className="text-gray-800 dark:text-gray-200 text-center font-medium leading-relaxed text-sm">
             {proyecto.descripcion || 'Proyecto en desarrollo. Más información próximamente.'}
           </p>
         </div>
