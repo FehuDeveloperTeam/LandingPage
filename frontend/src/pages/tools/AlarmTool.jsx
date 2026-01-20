@@ -176,7 +176,7 @@ const AlarmaTool = () => {
 
           {activeTab === 'cronometro' && (
             <div className="flex flex-col items-center py-10 space-y-10">
-              <div className="text-7xl md:text-[10rem] font-black italic tracking-tighter text-blue-600 leading-none">
+              <div className="text-7xl md:text-[10rem] font-black italic tracking-tighter text-blue-600 leading-none font-mono tabular-nums">
                 {formatChrono(chronoTime)}
               </div>
               <div className="flex gap-6">
@@ -203,7 +203,7 @@ const AlarmaTool = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-7xl md:text-[10rem] font-black italic tracking-tighter text-blue-600 leading-none">
+                <div className="text-7xl md:text-[10rem] font-black italic tracking-tighter text-blue-600 leading-none font-mono tabular-nums">
                   {new Date(timerSeconds * 1000).toISOString().substr(11, 8)}
                 </div>
               )}
