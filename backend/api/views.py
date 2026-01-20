@@ -9,7 +9,6 @@ import threading
 import resend
 import os
 from rest_framework.decorators import api_view, action, permission_classes, authentication_classes
-from rest_framework.response import Response
 from .pokemon_service import PokemonTCGService
 from .models import Post
 from .serializers import PostSerializer, PostListSerializer
@@ -17,7 +16,7 @@ from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from django.shortcuts import get_object_or_404
 
-
+# ... (ViewSets de Proyecto, Tecnologia y Producto se mantienen igual)
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Proyecto.objects.all()
@@ -64,24 +63,25 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 def enviar_correos_async(contacto):
-    """Envía correos usando Resend"""
+    """Envía correos usando Resend con dominio verificado"""
     resend.api_key = os.environ.get('RESEND_API_KEY', '')
     
     if not resend.api_key:
         print("ERROR: RESEND_API_KEY no configurada")
         return
+
+    from_email = "Fehu Developers <contacto@fehudevelopers.cl>"
     
-    # Correo al cliente
+    # 1. Correo de confirmación al CLIENTE
     try:
         resend.Emails.send({
-            "from": "Fehu Developers <contacto@fehudevelopers.cl>",
+            "from": from_email,
             "to": [contacto.correo],
             "subject": f"Hemos recibido tu solicitud - {contacto.ticket}",
             "text": f"""
 Hola {contacto.nombre},
 
 Gracias por contactarnos. Hemos recibido tu solicitud correctamente.
-
 Tu número de ticket es: {contacto.ticket}
 
 Detalles de tu consulta:
@@ -90,17 +90,17 @@ Detalles de tu consulta:
 Nos pondremos en contacto contigo a la brevedad.
 
 Saludos,
-Fehu Developers
+Equipo Fehu Developers
             """
         })
         print(f"Correo enviado al cliente: {contacto.correo}")
     except Exception as e:
         print(f"ERROR enviando correo al cliente: {e}")
 
-    # Correo al administrador
+    # 2. Correo de notificación al ADMINISTRADOR
     try:
         resend.Emails.send({
-            "from": "Fehu Developers <contacto@fehudevelopers.cl>",
+            "from": from_email,
             "to": ["fehu.developers@gmail.com"],
             "subject": f"Nueva solicitud de contacto - {contacto.ticket}",
             "text": f"""
@@ -115,35 +115,15 @@ Mensaje:
 {contacto.mensaje}
             """
         })
-        print(f"Correo enviado al admin")
-    except Exception as e:
-        print(f"ERROR enviando correo al admin: {e}")
-
-    # Correo al administrador
-    try:
-        resend.Emails.send({
-            "from": "Fehu Developers <onboarding@resend.dev>",
-            "to": ["fehu.developers@gmail.com"],
-            "subject": f"Nueva solicitud de contacto - {contacto.ticket}",
-            "text": f"""
-Nueva solicitud de contacto recibida:
-
-Ticket: {contacto.ticket}
-Nombre: {contacto.nombre} {contacto.apellido}
-Teléfono: {contacto.telefono}
-Correo: {contacto.correo}
-
-Mensaje:
-{contacto.mensaje}
-            """
-        })
-        print(f"Correo enviado al admin")
+        print(f"Correo de notificación enviado al admin")
     except Exception as e:
         print(f"ERROR enviando correo al admin: {e}")
 
 class ContactoViewSet(viewsets.ModelViewSet):
     queryset = Contacto.objects.all()
     serializer_class = ContactoSerializer
+    # AGREGADO: Permite que usuarios no autenticados envíen el formulario
+    permission_classes = [permissions.AllowAny] 
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -155,6 +135,8 @@ class ContactoViewSet(viewsets.ModelViewSet):
         thread.start()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# ... (El resto de las funciones de Pokemon y el PostViewSet se mantienen idénticos)
 
 @api_view(['GET'])
 @authentication_classes([])
@@ -227,11 +209,8 @@ class IsOwnerOnly(permissions.BasePermission):
     Permiso que solo permite a un usuario específico (azwb) realizar cambios.
     """
     def has_permission(self, request, view):
-        # Si es una consulta (GET), permitimos a todos
         if request.method in permissions.SAFE_METHODS:
             return True
-        
-        # Si es escritura (POST, PUT, DELETE), verificamos el nombre de usuario
         return request.user.is_authenticated and request.user.username == 'azwb'
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -241,7 +220,6 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_permissions(self):
-        # El público solo lee, tú (Admin) puedes hacer de todo
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsOwnerOnly()]
         return [permissions.AllowAny()]
@@ -252,18 +230,15 @@ class PostViewSet(viewsets.ModelViewSet):
         return PostSerializer
     
     def get_queryset(self):
-        # 1. Base inicial: Staff ve todo, otros solo activos
         if self.request.user.is_staff:
             queryset = Post.objects.all()
         else:
             queryset = Post.objects.filter(activo=True)
         
-        # 2. Captura de parámetros desde la URL
         categoria = self.request.query_params.get('categoria')
         estado = self.request.query_params.get('estado')
         destacado = self.request.query_params.get('destacado')
         
-        # 3. Aplicación de filtros
         if categoria:
             queryset = queryset.filter(categoria=categoria)
         
@@ -273,14 +248,11 @@ class PostViewSet(viewsets.ModelViewSet):
         if destacado == 'true':
             queryset = queryset.filter(destacado=True)
         
-        # 4. Orden cronológico y retorno
         return queryset.order_by('-fecha_creacion')
     
-    # Obtener por slug
     @action(detail=False, methods=['get'], url_path='slug/(?P<slug>[^/.]+)')
     def by_slug(self, request, slug=None):
         queryset = self.get_queryset()
         post = get_object_or_404(queryset, slug=slug)
         serializer = self.get_serializer(post)
         return Response(serializer.data)
-        return Response({'error': 'Post no encontrado'}, status=404)

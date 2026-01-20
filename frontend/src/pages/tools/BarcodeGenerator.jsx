@@ -23,26 +23,10 @@ const BarcodeGenerator = () => {
     };
   }, [taskDownloadUrl, locDownloadUrl]);
 
-  // FUNCIÓN MÁSCARA AUTOMÁTICA PARA UBICACIÓN (XXX-XX-XX-XX-XX)
   const handleLocChange = (e) => {
-    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Solo Alfanumérico
+    let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     let formatted = '';
 
-    for (let i = 0; i < value.length; i++) {
-      if (i === 3 || i === 5 || i === 7 || i === 9) {
-        // Lógica de inserción de guiones según el formato XXX-XX-XX-XX-XX
-        if (i === 3) formatted += '-';
-        if (i === 5) formatted += '-';
-        if (i === 7) formatted += '-';
-        if (i === 9) formatted += '-';
-      }
-      // Limitar a la longitud máxima del formato
-      if (formatted.replace(/-/g, '').length < 11) {
-        formatted += value[i];
-      }
-    }
-    
-    // Formateo final preciso: XXX-XX-XX-XX-XX
     const v = value;
     if (v.length > 3) {
       formatted = v.slice(0, 3) + '-' + v.slice(3, 5);
@@ -52,7 +36,6 @@ const BarcodeGenerator = () => {
     } else {
       formatted = v;
     }
-
     setLocInput(formatted);
   };
 
@@ -64,6 +47,19 @@ const BarcodeGenerator = () => {
     setDownloadUrl(url);
   };
 
+  // CONFIGURACIÓN TÉCNICA PARA LECTURA ÓPTIMA
+  const barcodeConfig = {
+    format: "CODE128",
+    lineColor: "#000",
+    width: 2,         // Reducido de 2.5 para evitar desbordamiento
+    height: 80,        // Altura optimizada para sensor lineal
+    displayValue: true,
+    fontSize: 14,
+    fontOptions: "bold",
+    margin: 40,        // ZONA DE SILENCIO: Fundamental para que la pistola no detecte bordes
+    background: "#fff"
+  };
+
   const generateTask = () => {
     setTaskError('');
     const cleanInput = taskInput.trim().replace(/[^\x00-\x7F]/g, "");
@@ -72,16 +68,7 @@ const BarcodeGenerator = () => {
     setTimeout(() => {
       try {
         if (taskSvgRef.current) {
-          JsBarcode(taskSvgRef.current, cleanInput, {
-            format: "CODE128",
-            lineColor: "#000",
-            width: 2.5,
-            height: 100,
-            displayValue: true,
-            fontSize: 16,
-            fontOptions: "bold",
-            margin: 10
-          });
+          JsBarcode(taskSvgRef.current, cleanInput, barcodeConfig);
           prepareDownload(taskSvgRef.current, setTaskDownloadUrl);
         }
       } catch (e) {
@@ -99,22 +86,12 @@ const BarcodeGenerator = () => {
       const parts = input.split('-');
       if (parts.length < 2) throw new Error("Formato incompleto.");
       
-      // Mantenemos la lógica de refactorización para el motor de etiquetas
       const refactored = `${parts[0]}_${parts[1]}${parts[2] || ''}${parts[3] || ''}_${parts[4] || ''}`;
       
       setTimeout(() => {
         try {
           if (locSvgRef.current) {
-            JsBarcode(locSvgRef.current, refactored, {
-              format: "CODE128",
-              lineColor: "#000",
-              width: 2.5,
-              height: 100,
-              displayValue: true,
-              fontSize: 16,
-              fontOptions: "bold",
-              margin: 10
-            });
+            JsBarcode(locSvgRef.current, refactored, barcodeConfig);
             prepareDownload(locSvgRef.current, setLocDownloadUrl);
           }
         } catch (e) {
@@ -149,10 +126,10 @@ const BarcodeGenerator = () => {
       <div className="max-w-6xl mx-auto px-4 pb-20">
         <div className="flex justify-between items-center mb-12">
           <Link 
-            to="/herramientas" // Ajusta esta ruta a tu menú principal de herramientas
+            to="/herramientas"
             className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 transition-colors"
           >
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
             Volver a Herramientas
           </Link>
           <div className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
@@ -190,8 +167,8 @@ const BarcodeGenerator = () => {
               </button>
             </div>
 
-            <div className="mt-10 p-8 bg-white rounded-[2rem] border-2 border-dashed border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
-              <svg ref={taskSvgRef} className={taskDownloadUrl ? 'block' : 'hidden'}></svg>
+            <div className="mt-10 p-4 bg-white rounded-[2rem] border-2 border-dashed border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
+              <svg ref={taskSvgRef} className={`${taskDownloadUrl ? 'block' : 'hidden'} max-w-full h-auto`}></svg>
               {!taskDownloadUrl && !taskError && (
                 <Barcode size={80} className="text-gray-100 dark:text-gray-800 opacity-50" />
               )}
@@ -209,7 +186,7 @@ const BarcodeGenerator = () => {
             )}
           </div>
 
-          {/* MÓDULO UBICACIÓN CON AUTO-GUIÓN */}
+          {/* MÓDULO UBICACIÓN */}
           <div className="group bg-white dark:bg-gray-900 rounded-[3rem] p-8 md:p-10 border border-gray-100 dark:border-white/10 shadow-2xl transition-all">
             <div className="flex justify-between items-start mb-8">
               <h2 className="text-2xl font-black italic uppercase tracking-tighter flex items-center gap-3">
@@ -238,8 +215,8 @@ const BarcodeGenerator = () => {
               </button>
             </div>
 
-            <div className="mt-10 p-8 bg-white rounded-[2rem] border-2 border-dashed border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
-              <svg ref={locSvgRef} className={locDownloadUrl ? 'block' : 'hidden'}></svg>
+            <div className="mt-10 p-4 bg-white rounded-[2rem] border-2 border-dashed border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
+              <svg ref={locSvgRef} className={`${locDownloadUrl ? 'block' : 'hidden'} max-w-full h-auto`}></svg>
               {!locDownloadUrl && !locError && (
                 <Barcode size={80} className="text-gray-100 dark:text-gray-800 opacity-50" />
               )}
