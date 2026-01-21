@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '../components/PageLayout';
 import SEO from '../components/SEO';
-import { Barcode, Settings, Search, LayoutGrid, ArrowRight, Zap, Clock, ArrowLeft} from 'lucide-react';
+import { Barcode, Settings, Search, LayoutGrid, ArrowRight, Zap, Clock, ArrowLeft, Skull} from 'lucide-react';
 
 const TOOLS = [
   {
@@ -22,6 +22,14 @@ const TOOLS = [
     path: '/herramientas/pokemon',
     color: 'from-rose-600 to-orange-500',
     glow: 'group-hover:shadow-rose-500/30'
+  },
+  {
+    title: "Brainrot Lore Index",
+    description: "Enciclopedia dinámica de la cultura Alpha. Analizando niveles de Aura y Rizz en tiempo real.",
+    icon: <Skull className="w-6 h-6 text-purple-500" />,
+    link: "/herramientas/brainrot-lore", // Esta debe coincidir con la ruta en App.jsx
+    color: "border-purple-500/20 hover:border-purple-500",
+    badge: "ALPHA"
   },
   {
     id: 'alarma-sistema',
