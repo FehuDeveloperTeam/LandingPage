@@ -24,12 +24,13 @@ const TOOLS = [
     glow: 'group-hover:shadow-rose-500/30'
   },
   {
-    title: "Brainrot Lore Index",
-    description: "Enciclopedia dinámica de la cultura Alpha. Analizando niveles de Aura y Rizz en tiempo real.",
-    icon: <Skull className="w-6 h-6 text-purple-500" />,
-    link: "/herramientas/brainrot-lore", // Esta debe coincidir con la ruta en App.jsx
-    color: "border-purple-500/20 hover:border-purple-500",
-    badge: "ALPHA"
+    id: 'brainrot-lore',
+    name: 'Brainrot Lore Index', // Usamos 'name' para que el .map lo encuentre
+    description: 'Enciclopedia dinámica de la cultura Alpha. Analizando niveles de Aura y Rizz en tiempo real.',
+    icon: Skull, // PASAMOS SOLO LA REFERENCIA (Igual que Barcode)
+    path: '/herramientas/brainrot-lore',
+    color: 'from-purple-600 to-fuchsia-500',
+    glow: 'group-hover:shadow-purple-500/30'
   },
   {
     id: 'alarma-sistema',
