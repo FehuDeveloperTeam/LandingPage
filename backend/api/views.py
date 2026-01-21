@@ -3,19 +3,21 @@ from rest_framework.response import Response
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Proyecto, Tecnologia, Producto, Contacto, Post
-from .serializers import ProyectoSerializer, TecnologiaSerializer, ProductoSerializer, ContactoSerializer, PostSerializer, PostListSerializer
+from .models import Proyecto, Tecnologia, Producto, Contacto
+from .serializers import ProyectoSerializer, TecnologiaSerializer, ProductoSerializer, ContactoSerializer
 import threading
 import resend
 import os
 from rest_framework.decorators import api_view, action, permission_classes, authentication_classes
 from .pokemon_service import PokemonTCGService
-from .brainrot_service import BrainrotService
+from .models import Post
+from .serializers import PostSerializer, PostListSerializer
 from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from django.shortcuts import get_object_or_404
+from .brainrot_service import BrainrotService
 
-# --- VIEWSETS EXISTENTES ---
+# ... (ViewSets de Proyecto, Tecnologia y Producto)
 
 class ProyectoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Proyecto.objects.all()
@@ -35,9 +37,11 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = Producto.objects.all()
         search = self.request.query_params.get('search', None)
+        
         if search:
             terminos = search.split()
             q = Q()
+            
             for termino in terminos:
                 if termino.isdigit() and len(termino) == 4:
                     anio = int(termino)
@@ -54,14 +58,17 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
                         Q(proveedor__icontains=termino) |
                         Q(marca_prod__icontains=termino)
                     )
+            
             queryset = queryset.filter(q)
+        
         return queryset
 
-# --- LÓGICA DE CORREO (RESEND) ---
-
 def enviar_correos_async(contacto):
+    """Envía correos usando Resend con dominio verificado"""
     resend.api_key = os.environ.get('RESEND_API_KEY', '')
+    
     if not resend.api_key:
+        print("ERROR: RESEND_API_KEY no configurada")
         return
 
     from_email = "Fehu Developers <contacto@fehudevelopers.cl>"
@@ -74,17 +81,17 @@ def enviar_correos_async(contacto):
             "text": f"Hola {contacto.nombre},\n\nGracias por contactarnos. Ticket: {contacto.ticket}\n\nMensaje:\n{contacto.mensaje}"
         })
     except Exception as e:
-        print(f"Error cliente: {e}")
+        print(f"ERROR enviando correo al cliente: {e}")
 
     try:
         resend.Emails.send({
             "from": from_email,
             "to": ["fehu.developers@gmail.com"],
-            "subject": f"Nueva solicitud - {contacto.ticket}",
+            "subject": f"Nueva solicitud de contacto - {contacto.ticket}",
             "text": f"Ticket: {contacto.ticket}\nNombre: {contacto.nombre}\nCorreo: {contacto.correo}\nMensaje: {contacto.mensaje}"
         })
     except Exception as e:
-        print(f"Error admin: {e}")
+        print(f"ERROR enviando correo al admin: {e}")
 
 class ContactoViewSet(viewsets.ModelViewSet):
     queryset = Contacto.objects.all()
@@ -99,7 +106,7 @@ class ContactoViewSet(viewsets.ModelViewSet):
         thread.start()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# --- SERVICIOS EXTERNOS (POKEMON & BRAINROT) ---
+# --- POKEMON SERVICES ---
 
 @api_view(['GET'])
 @authentication_classes([])
@@ -110,7 +117,12 @@ def pokemon_search(request):
     types = request.query_params.get('types', '')
     rarity = request.query_params.get('rarity', '')
     
-    result = PokemonTCGService.search_cards(name=name, set_id=set_id, types=types, rarity=rarity)
+    result = PokemonTCGService.search_cards(
+        name=name if name else None,
+        set_id=set_id if set_id else None,
+        types=types if types else None,
+        rarity=rarity if rarity else None
+    )
     return Response(result)
 
 @api_view(['GET'])
@@ -126,23 +138,43 @@ def pokemon_card_detail(request, card_id):
 @authentication_classes([])
 @permission_classes([AllowAny])
 def pokemon_sets(request):
-    return Response(PokemonTCGService.get_sets())
+    sets = PokemonTCGService.get_sets()
+    return Response(sets)
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def pokemon_rarities(request):
+    rarities = PokemonTCGService.get_rarities()
+    return Response(rarities)
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def pokemon_types(request):
+    types = PokemonTCGService.get_types()
+    return Response(types)
+
+# --- BRAINROT SERVICE ---
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny])
 def brainrot_list(request):
+    """Obtener la enciclopedia dinámica de Brainrot"""
     try:
         cache_key = 'brainrot_lore_cache'
         data = cache.get(cache_key)
+        
         if not data:
             data = BrainrotService.get_latest_lore()
-            cache.set(cache_key, data, 60 * 30)
+            cache.set(cache_key, data, 60 * 30)  # Cache por 30 minutos
+            
         return Response(data)
     except Exception as e:
-        return Response({"error": str(e)}, status=500)
+        return Response({"error": f"Error al procesar el Lore: {str(e)}"}, status=500)
 
-# --- BLOG / POSTS ---
+# --- BLOG POSTS ---
 
 class IsOwnerOnly(permissions.BasePermission):
     def has_permission(self, request, view):
