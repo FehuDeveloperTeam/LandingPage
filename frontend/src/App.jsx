@@ -21,6 +21,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ToolsGallery from './pages/ToolsGallery';
 import BarcodeGenerator from './pages/tools/BarcodeGenerator';
 import AlarmaTool from './pages/tools/AlarmTool';
+import BrainrotIndex from './pages/tools/BrainrotIndex';
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -30,6 +31,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
         <Route path="/demos/ventas/intangibles" element={<PageTransition><Intangibles /></PageTransition>} />
+        <Route path="/herramientas/brainrot-lore" element={<BrainrotIndex />} />
         <Route path="/curriculum" element={<PageTransition><Curriculum /></PageTransition>} />
         <Route path="/demos" element={<PageTransition><Demos /></PageTransition>} />
         <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
