@@ -15,6 +15,7 @@ from .serializers import PostSerializer, PostListSerializer
 from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from django.shortcuts import get_object_or_404
+from .brainrot_service import BrainrotService
 
 # ... (ViewSets de Proyecto, Tecnologia y Producto se mantienen igual)
 
@@ -256,3 +257,21 @@ class PostViewSet(viewsets.ModelViewSet):
         post = get_object_or_404(queryset, slug=slug)
         serializer = self.get_serializer(post)
         return Response(serializer.data)
+
+    @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def brainrot_list(request):
+    """Obtener la enciclopedia dinámica de Brainrot"""
+    try:
+        # Podríamos implementar cache aquí como hiciste con Pokemon
+        cache_key = 'brainrot_lore_cache'
+        data = cache.get(cache_key)
+        
+        if not data:
+            data = BrainrotService.get_latest_lore()
+            cache.set(cache_key, data, 60 * 30)  # Cache por 30 minutos
+            
+        return Response(data)
+    except Exception as e:
+        return Response({"error": f"Error al procesar el Lore: {str(e)}"}, status=500)

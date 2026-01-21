@@ -4,6 +4,7 @@ from .views import (
     ProyectoViewSet, TecnologiaViewSet, ProductoViewSet, ContactoViewSet, PostViewSet,
     pokemon_search, pokemon_card_detail, pokemon_sets, pokemon_rarities, pokemon_types
 )
+from . import views
 
 router = DefaultRouter()
 router.register(r'proyectos', ProyectoViewSet)
@@ -20,4 +21,5 @@ urlpatterns = [
     path('pokemon/sets/', pokemon_sets, name='pokemon-sets'),
     path('pokemon/rarities/', pokemon_rarities, name='pokemon-rarities'),
     path('pokemon/types/', pokemon_types, name='pokemon-types'),
+    path('brainrot/', views.brainrot_list, name='brainrot-list'),
 ]
